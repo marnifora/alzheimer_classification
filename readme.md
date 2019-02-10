@@ -1,9 +1,45 @@
 # Alzheimer classification
 
 
+<br></br>
 ### The aim of this project is to classify patients into groups healthy/ill based on their genetic information.
+<br></br>
 
-##### Three sets of data have been used:
+#### Versions
+
+GNU bash 4.4.19(1)
+
+gatk 4.0.10.1 (https://software.broadinstitute.org/gatk/)
+
+Python 3.6.6
+- boruta 0.1.5
+- numpy 1.15.4
+- pandas 0.23.4
+- scikit-learn 0.20.1
+
+<br></br>
+#### How to use
+
+Processing vcf files:
+
+- prepreparing.sh
+- make_pit-diagnoses.py
+- makeY.py
+- makeX_pooling.sh
+
+Selection of attributes and classification:
+
+- boruta_classification.py
+
+<br></br>
+#### Description
+
+Project initially started as the part of my Bachelor's degree thesis, named "Classification of patients with Alzheimer's 
+disease based on DNA polymorphisms". Later it has developed into bigger project of patients classification based on WGS 
+and GWAS data from ADNI and Rosmap consortia.
+
+##### Used data
+Three sets of data have been used:
 1. Whole genome sequencing (WGS) data of 486 patients (235 cases, 251 controls), obtained from ADNI consortium 
 (https://adni.loni.usc.edu/).
 2. WGS data of 1033 patients (530 cases, 503 controls), obtained from Rosmap project 
@@ -11,14 +47,36 @@
 3. Data from Genome-wide association study (GWAS) of 432 patients, obtained from ADNI consortium.
 
 
-Project initially started as the part of my Bachelor's degree thesis, named "Classification of patients with Alzheimer's 
-disease based on DNA polymorphisms". Later it has developed into bigger project of patients classification based on WGS 
-and GWAS data from ADNI and Rosmap consortia.
+##### Basic steps of analysis
+The basic analysis of each data set can be described by following steps:
+
+1. Rewriting genetic data into matrices and information about patients and diagnoses into text files.
+2. Division of patients into training and testing set.
+3. Selection of the most important SNPs by **Boruta algorithm** based on training set of patients.
+4. Training the **Random Forest** classifier based on selected SNPs.
+5. Testing the classifier based on testing set of patients.
+
+##### Boruta algorithm
+
+**Boruta algorithm** has been developed by Miron B. Kursa and Witold R. Rudnicki ("Feature Selection with the Boruta Package" - 
+Journal of Statistical Software, Vol 36 (2010), https://www.jstatsoft.org/article/view/v036i11). In this project Boruta
+implementation for Python made by Daniel Homola 
+(http://danielhomola.com/2015/05/08/borutapy-an-all-relevant-feature-selection-method/) was used.
+
+Boruta is a feature selection method. It is designed as a wrapper around a Random Forest classification algorithm. 
+It iteratively removes the features which are proved by a statistical test to be less relevant than random probes. 
+
+##### Additional analysis
+
+- analysis of subset of SNPs (e.g. SNPs shared between two data sets)
+- removing of outlier patients
 
 
-### Preprocessing vcf files downloaded from the database
-
-
+<br></br><br></br>
+### Scripts documentation
+<br></br>
+#### Preprocessing vcf files downloaded from the database
+<br></br>
 #### prepreparing.sh
 
 Preprocessing of downloaded vcf files. Unpacking, filtering SNPs, running vcf_to_matrix.py for every given chromosome 
@@ -27,7 +85,8 @@ Preprocessing of downloaded vcf files. Unpacking, filtering SNPs, running vcf_to
 Multiprocessing for Bash used in this file is available thanks to script job_pool.sh created by Vince Tse with changes 
 by Geoff Clements (https://github.com/vincetse/shellutils/blob/master/job_pool.sh).
 
-Selection of SNPs variants from vcf files was carried out using GATK tool (https://software.broadinstitute.org/gatk/).
+Selection of SNPs variants from vcf files was carried out using GATK tool (https://software.broadinstitute.org/gatk/). 
+It should be in the same directory as the running script (*./gatk-4.0.10.1/*).
 
 ##### Input:
 - {istart}{chr}{iend}.vcf.gz.tar files containing WGS information for each chromosome
@@ -54,7 +113,7 @@ If -matrix or -stats options are on there is more output from different scripts 
 - -indir [DIR] – input directory
 - -outdir [DIR] – output directory
 
-
+<br></br>
 #### vcf_stats.py
 
 Making basic statistics of given vcf file. Writing number of SNPs, number of patients and their IDs into file.
@@ -69,6 +128,7 @@ Making basic statistics of given vcf file. Writing number of SNPs, number of pat
 - -input [NAME] - set path+name of the input file
 
 
+<br></br>
 #### vcf_to_matrix.py
 
 Processing given vcf file. Writing order of patients IDs into txt file, writing order of SNPs and their values into txt 
@@ -81,28 +141,33 @@ SNPs and MNPs
 ##### Output:
 - pid_chr{chr_number}.txt - order of patients ID numbers in data for given chromosome (each line is one ID number), 
 example:
+```
     1280
+    
     1901
+    
     2300
+```    
 - snps_chr{chr_number}.txt - information about SNPs on given chromosome: each line is one SNP, first column contains 
 position of given SNP on the chromosome, second column is the reference nucleobase in this position, third column 
 contains alternative nucleobases occurred in the given position, example:
-
+```
     1234    A    C
     
     2344    C    G,A,T
     
     3071    C    T,A
-    
+```    
 - matrix_chr{chr_number}.npy - information about SNPs (each column is one SNP) from given chromosome for all patient 
 (each row is one patient), example:
 
-  [ [[0,1]  ,  [-1,-1]  ,  [1,2]], 
+```
+  [ [ [0,1]  ,  [-1,-1]  ,  [1,2] ], 
   
-    [[1,1]  ,  [2,3]  ,  [0,1]], 
+    [ [1,1]  ,   [2,3]   ,  [0,1] ], 
     
-    [[0,0]  ,  [-1,-1]  ,  [2,2]]  ]
-    
+    [ [0,0]  ,  [-1,-1]  ,  [2,2] ]  ]
+``` 
 
 To sum up all given examples for given chromosome:
 
@@ -123,10 +188,10 @@ the second allele (beacuse second number is 3).
 - -output [DIR] – output directory
 
 
+<br></br>
+#### Making X and Y matrices needed to classification
 
-### Making X and Y matrices needed to classification
-
-
+<br></br>
 #### make_pit-diagnoses.py
 
 Unification all pid_chr{chr_number}.txt files in one pid_chr.txt file (after checking whether the order is the same in 
@@ -151,6 +216,7 @@ rosmap dataset
 - -dataset [NAME] - name of data set for which diagnoses should be established (e.g. adni or rosmap)
 
 
+<br></br>
 #### makeY.py
 
 Making csv file with Y matrix needed for classification process (it contains information about classes to which the 
@@ -175,6 +241,7 @@ in pid_chr file
 - -outdir [DIR] - output directory
 
 
+<br></br>
 #### makeX_pooling.sh
 
 Running function makeX.py for every given chromosome.
@@ -197,6 +264,7 @@ see output for makeX.py script (below)
 - -outdir [DIR] - output directory
 
 
+<br></br>
 #### makeX.py
 
 Selection of patients with appropriate diagnosis (rejection of diagnoses different than AD/NL – see makeY.py above). 
@@ -218,10 +286,10 @@ matrix_chr{chr_number}.npy but only for first allele (one number in each positio
 - -outdir [DIR] - output directory
 
 
+<br></br><br></br>
+#### Selection of the most important SNPs (Boruta algorithm), building classifier, carrying out the classification
 
-### Selection of the most important SNPs (Boruta algorithm), building classifier, carrying out the classification
-
-
+<br></br>
 #### boruta_classification.py
 
 Running Boruta algorithm on the given data set(s), building classifier based on the chosen by Boruta SNPs from given 
@@ -231,7 +299,7 @@ train set, conducting classification based on the given test set.
 - genome_stats.txt - file with information about number of patients and SNPs on each chromosome
 - X_chr{chr_number}_nodif.csv - csv table, where columns are SNPs, rows are patients, output of makeX.py
 - Y_chr.csv - list of diagnoses for each patient, output of makeY.py
-Optional input:
+###### Optional input:
 - {subset}_snps_chr{chr_number}.txt - list of SNPs from chromosome {chr_number}, belonging to {subset} (see section 
 “Subsets of SNPs” below)
 
@@ -260,14 +328,14 @@ not given first value from perc list is set as class_perc
 - -chr [RANGE] - set of chromosomes to analyze from given data set, e.g. '-chr 1-12,14,18-20', default = ‘1-23’
 - -class - if only classification should be run
 - -boruta - if only Boruta analysis should be run
-- -run [VALUE] - number of run of both Boruta and classification analyses
+- -run [VALUE] - number of run of both Boruta and classification analyses, default is the next number from run files
 - -borutarun [VALUE] - number of run of Boruta analysis
 - -classrun [VALUE] - number of run of classification analysis
 - -fixed - if number of run or list of chromosomes shouldn't be changed even is it was run before
 - -subset [NAME] - name of SNPs subset which should be under consideration during analysis, e.g. '-subset shared'
 - -cont - if continuation of started Boruta analysis should be run (for different chromosomes)
 
-Parameters required for different type of analyses:
+##### Parameters required for different type of analyses:
 1. Boruta + classification
     - -dataset [NAME] [DIR]
     - -testset [NAME] [DIR] or -test [SIZE]
@@ -286,29 +354,17 @@ Parameters required for different type of analyses:
 
 
 
+<br></br><br></br>
+#### Additional analyzes
 
-## Additional functions
-
-
-### Subset of SNPs
-
-#### Shared SNPs
+<br></br>
+#### Subset of shared SNPs
 
 Subset 'shared' contains SNPs which occur in two different data sets.
 
 1. shared_snps_chr{chr_number}.txt - list of SNPs from chromosome {chr_number} which get through the pruning AND occur 
 also in data from other cohort. Output of compare_snps_pruned.py
 
+<br></br><br></br>
 
-## Versions
-
-Python 3.6.6
-
-GNU bash 4.4.19(1)
-
-##### Python's packages:
-
-- boruta 0.1.5
-- numpy 1.15.4
-- pandas 0.23.4
 
