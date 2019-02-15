@@ -18,7 +18,7 @@ Output:
 
 def make_ref(dbsnp, plink, indir, outdir):
 
-    dbsnp = open('%s%s' % (indir, '_ascii.'.join(dbsnp.split('.'))), 'r')
+    dbsnp = open('_ascii.'.join(dbsnp.split('.')), 'r')
 
     mapfile = open('%s%s_ascii.map' % (indir, plink), 'r')
 

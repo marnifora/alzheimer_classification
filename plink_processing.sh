@@ -58,7 +58,7 @@ fi
 if [[ ${nosort} -eq 0 ]]; then
     echo Sorting has just began!
     export LC_ALL=C
-    sort -k1 ${indir}${dbsnp} >${indir}${dbsnp/./_ascii.}
+    sort -k1 ${dbsnp} >${dbsnp/./_ascii.}
     sort -k2 ${indir}${plink}".map" >${indir}${plink}"_ascii.map"
     echo Files were sorted succesfully!
 fi
