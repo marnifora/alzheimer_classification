@@ -29,7 +29,7 @@ function vcf {
         if [[ $7 -eq 1 ]]; then
                 echo $8           
                 echo "running SelectVariants for chr=$4"
-                ./gatk-4.0.10.1/gatk SelectVariants -R $3 -V $1 -O $2 -select-type-to-include SNP
+                ${12}gatk-4.0.10.1/gatk SelectVariants -R $3 -V $1 -O $2 -select-type-to-include SNP
                 echo "$4 SNPs.vcf done!"
         fi
 
@@ -64,10 +64,12 @@ stats=0
 matrix=0
 
 # name of database
-base="rosmap"
+base="dataset1"
 
 # directory to the input files
-indir="/mnt/chr11/Data/rosmap/"
+indir="./"
+outdir="./"
+gatkdir="./"
 
 while [[ "$1" != "" ]]; do
         case $1 in
@@ -105,6 +107,9 @@ while [[ "$1" != "" ]]; do
                                 ;;
         -outdir )               shift
                                 outdir=$1
+                                ;;
+        -gatkdir )              shift
+                                gatkdir=$1
                                 ;;
         *)                      usage
                                 exit 1
@@ -147,7 +152,7 @@ if [[ $all -eq 1 ]]; then
                         
                 output=${indir}${ostart}${i}${oend}
 
-                job_pool_run vcf ${input} ${output} ${reference} ${i} ${tar} ${gz} ${snp} ${stats} ${matrix} ${genomestats} ${outdir}
+                job_pool_run vcf ${input} ${output} ${reference} ${i} ${tar} ${gz} ${snp} ${stats} ${matrix} ${genomestats} ${outdir} ${gatkdir}
 
         done
 
@@ -156,5 +161,5 @@ if [[ $all -eq 1 ]]; then
 else
         input=${indir}${istart}${chr}${iend}
         output=${indir}${ostart}${chr}${oend}
-        vcf ${input} ${output} ${reference} ${chr} ${tar} ${gz} ${snp} ${stats} ${matrix} ${genomestats} ${outdir}
+        vcf ${input} ${output} ${reference} ${chr} ${tar} ${gz} ${snp} ${stats} ${matrix} ${genomestats} ${outdir} ${gatkdir}
 fi

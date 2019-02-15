@@ -67,3 +67,22 @@ class FilesError(Exception):
 
     def __str__(self):
         return repr(self.pro)
+
+
+class KeyOverwriting(Exception):
+
+    def __init__(self, key):
+        self.pro = 'Error: key %s has already been in the dictionary!' % key
+
+    def __str__(self):
+        return repr(self.pro)
+
+
+class PlinkWrongValue(Exception):
+
+    def __init__(self, snp, ch, pat, a, aa):
+        self.pro = 'Error: SNP number %s from chr %s for patient %d has unpredicted values - %s and %s!' % \
+                   (snp, ch, pat, a, aa)
+
+    def __str__(self):
+        return repr(self.pro)

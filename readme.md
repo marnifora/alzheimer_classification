@@ -9,7 +9,7 @@
 
 GNU bash 4.4.19(1)
 
-gatk 4.0.10.1 (https://software.broadinstitute.org/gatk/)
+GATK 4.0.10.1 (https://software.broadinstitute.org/gatk/)
 
 Python 3.6.6
 - boruta 0.1.5
@@ -85,8 +85,7 @@ Preprocessing of downloaded vcf files. Unpacking, filtering SNPs, running vcf_to
 Multiprocessing for Bash used in this file is available thanks to script job_pool.sh created by Vince Tse with changes 
 by Geoff Clements (https://github.com/vincetse/shellutils/blob/master/job_pool.sh).
 
-Selection of SNPs variants from vcf files was carried out using GATK tool (https://software.broadinstitute.org/gatk/). 
-It should be in the same directory as the running script (*./gatk-4.0.10.1/*).
+Selection of SNPs variants from vcf files was carried out using GATK tool (https://software.broadinstitute.org/gatk/).
 
 ##### Input:
 - {istart}{chr}{iend}.vcf.gz.tar files containing WGS information for each chromosome
@@ -112,6 +111,7 @@ If -matrix or -stats options are on there is more output from different scripts 
 - -base [DATABASE] - set name of database where data comes from
 - -indir [DIR] – input directory
 - -outdir [DIR] – output directory
+- -gatkdir [DIR] - directory to folder with GATK tool
 
 <br></br>
 #### vcf_stats.py
@@ -232,7 +232,8 @@ diagnoses:
 	NN - no data
 
 ##### Output:
-- Y_chr.csv - list of diagnoses for each patients in the order corresponding to the order in pid_chr file
+- Y_chr.csv - list of diagnoses coded as 0 (NL) or 1 (AD) in the order corresponding to the order in pid_chr file. 
+Patients with DIF diagnosis was excluded from this file.
 - dif_chr.txt - list of IDs of patients having other diagnosis than NL/AD and number of line in which they are written 
 in pid_chr file
 
