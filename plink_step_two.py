@@ -16,6 +16,37 @@ Output:
 '''
 
 
+def make_snps_ref(outdir):
+
+    snps_ref = {}
+    o = open('%ssnps_ref.txt' % outdir, 'r')
+    for line in o:
+        line = line.split()
+        if line[1] in snps_ref:
+            raise exceptions.KeyOverwriting(line[1])
+        snps_ref[line[1]] = line[2]
+    o.close()
+
+    return snps_ref
+
+
+def make_snps_count(plink, indir):
+
+    pedfile = open('%s%s.ped' % (indir, plink), 'r')
+    snps_count = [{'A': 0, 'C': 0, 'T': 0, 'G': 0} for i in range(len(pedfile.readline().split()[6:])//2)]
+    pedfile.seek(0, 0)
+    for i, line in enumerate(pedfile):
+        line = line.split()[6:]
+        for j, a, aa in zip(list(range(len(line)//2)), line[0::2], line[1::2]):
+            if a != '0':
+                snps_count[j][a] += 1
+            if aa != '0':
+                snps_count[j][aa] += 1
+    pedfile.close()
+
+    return snps_count
+
+
 def write_snps_list(plink, indir, outdir):
 
     snps_ref = make_snps_ref(outdir)
@@ -33,9 +64,11 @@ def write_snps_list(plink, indir, outdir):
             file = open('%ssnps_chr%s.txt' % (outdir, line[0]), 'w')
             prevch = line[0]
             snps_val[prevch] = []
-        snps_val[prevch].append(sorted(snps_count[i], key=snps_count[i].get, reverse=True)[:len([i for i in snps_count[0].values() if i != 0])])
-        if snps_val[prevch][-1][0] != snps_ref[line[1]]:
-            print('SNP %s is untypical: reference = %s, its values = %s' % (line[1], snps_ref[line[1]], snps_count[i]))
+        snps_val[prevch].append(sorted(snps_count[i], key=snps_count[i].get, reverse=True)[:len([jj for jj in snps_count[i].values() if jj != 0])])
+        if not snps_val[prevch][-1]:
+            snps_val[prevch][-1].append(snps_ref[line[1]])
+        elif snps_val[prevch][-1][0] != snps_ref[line[1]]:
+            #print('SNP %s is untypical: reference = %s, its values = %s' % (line[1], snps_ref[line[1]], snps_count[i]))
             try:
                 snps_val[prevch][-1].remove(snps_ref[line[1]])
             except ValueError:
@@ -46,38 +79,6 @@ def write_snps_list(plink, indir, outdir):
     file.close()
 
     return snps_val
-
-
-def make_snps_ref(outdir):
-
-    snps_ref = {}
-    o = open('%ssnps_ref.txt' % outdir, 'r')
-    for line in o:
-        line = line.split()
-        if line[1] in snps_ref:
-            raise exceptions.KeyOverwriting(line[1])
-        snps_ref[line[1]] = line[2]
-    o.close()
-
-    return snps_ref
-
-
-def make_snps_count(plink, indir):
-
-    snps_count = []
-    pedfile = open('%s%s.ped' % (indir, plink), 'r')
-    snps_count = [{'A': 0, 'C': 0, 'T': 0, 'G': 0} for i in range(len(pedfile.readline().split()[6:])//2)]
-    pedfile.seek(0, 0)
-    for i, line in enumerate(pedfile):
-        line = line.split()[6:]
-        for j, a, aa in zip(list(range(len(line)//2)), line[0::2], line[1::2]):
-            if a != '0':
-                snps_count[j][a] += 1
-            if aa != '0':
-                snps_count[j][aa] += 1
-    pedfile.close()
-
-    return snps_count
 
 
 def write_matrix(plink, indir, outdir, snps_val):

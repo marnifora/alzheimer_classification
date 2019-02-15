@@ -11,7 +11,7 @@ SNP_ID  REF_BASE
 binary=0
 step1=0
 step2=0
-nosort=0
+sort=0
 
 indir="./"
 outdir="./"
@@ -38,7 +38,7 @@ while [[ "$1" != "" ]]; do
         -outdir )               shift
                                 outdir=$1
                                 ;;
-        -nosort )               nosort=1
+        -sort )                 sort=1
                                 ;;
         -plinkdir )             shift
                                 plinkdir=$1
@@ -55,7 +55,8 @@ if [[ ${binary} -eq 1 ]]; then
     echo Convertion of binary plink files into text format done!
 fi
 
-if [[ ${nosort} -eq 0 ]]; then
+# sort SNPs in dbsnp and in map file
+if [[ ${sort} -eq 1 ]]; then
     echo Sorting has just began!
     export LC_ALL=C
     sort -k1 ${dbsnp} >${dbsnp/./_ascii.}
