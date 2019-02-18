@@ -1,6 +1,7 @@
 import exceptions
 import sys
 import numpy as np
+import os
 
 '''
 Input:
@@ -55,20 +56,28 @@ def write_snps_list(plink, indir, outdir):
     mapfile = open('%s%s.map' % (indir, plink), 'r')
     prevch = mapfile.readline()[0]
     mapfile.seek(0, 0)
-    file = open('%ssnps_chr%s.txt' % (outdir, prevch), 'w')
+    filename = '%ssnps_chr%s.txt' % (outdir, prevch)
+    if not os.path.isfile(filename):
+        file = open(filename, 'w')
+    else:
+        raise exceptions.FileOverwriteError(filename)
     snps_val = {prevch: []}
     for i, line in enumerate(mapfile):
         line = line.split()
         if line[0] != prevch:
             file.close()
-            file = open('%ssnps_chr%s.txt' % (outdir, line[0]), 'w')
+            filename = '%ssnps_chr%s.txt' % (outdir, line[0])
+            if not os.path.isfile(filename):
+                file = open(filename, 'w')
+            else:
+                raise exceptions.FileOverwriteError(filename)
             prevch = line[0]
             snps_val[prevch] = []
         snps_val[prevch].append(sorted(snps_count[i], key=snps_count[i].get, reverse=True)[:len([jj for jj in snps_count[i].values() if jj != 0])])
         if not snps_val[prevch][-1]:
             snps_val[prevch][-1].append(snps_ref[line[1]])
         elif snps_val[prevch][-1][0] != snps_ref[line[1]]:
-            #print('SNP %s is untypical: reference = %s, its values = %s' % (line[1], snps_ref[line[1]], snps_count[i]))
+            # print('SNP %s is untypical: reference = %s, its values = %s' % (line[1], snps_ref[line[1]], snps_count[i]))
             try:
                 snps_val[prevch][-1].remove(snps_ref[line[1]])
             except ValueError:

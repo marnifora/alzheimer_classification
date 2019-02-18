@@ -9,6 +9,7 @@ import pandas as pd
 import random
 from sklearn.ensemble import RandomForestClassifier
 import sys
+import corporate_funcs as funcs
 
 '''
 See readme.txt for input, output and possible options.
@@ -277,7 +278,7 @@ def classify(X_train, y_train, X_test, y_test):
 
 def first_run(fixed, outdir, pat, run, testsize):
 
-    run = establish_run('boruta', fixed, outdir, run)
+    run = funcs.establish_run('boruta', fixed, outdir, run)
     p = sum(pat.values())
 
     if testsize != 0:
@@ -307,7 +308,7 @@ def cont_run(chrlist, fixed, outdir, run):
             if isinstance(perc, int):
                 perc = [perc]
             r = int(line[6])
-            chrs = read_chrstr(line[-1]) + chrlist
+            chrs = funcs.read_chrstr(line[-1]) + chrlist
             for key, value in Counter(chrs).items():
                 if value > 1:
                     if not fixed:
@@ -319,7 +320,7 @@ def cont_run(chrlist, fixed, outdir, run):
                                                              'There are no chromosomes to analyze!!!')
             chrs = list(set(chrs))
             chrs.sort()
-            line[-1] = make_chrstr(chrs)
+            line[-1] = funcs.make_chrstr(chrs)
             strin = ''
             for el in line:
                 strin += str(el) + '\t'
@@ -343,108 +344,6 @@ def cont_run(chrlist, fixed, outdir, run):
         testpat = None
 
     return perc, r, subset, testpat, testsize, towrite
-
-
-def establish_run(analysistype, fixed, outdir, run):
-
-    try:
-        run_file = open('%s%s_runs.txt' % (outdir, analysistype), 'r+')
-        if run is None:
-            run = 0
-            runchanged = False
-        else:
-            runchanged = True
-        lines = run_file.readline()  # header
-        rr = []
-        rewrite = False
-        for line in run_file:
-            try:
-                val = int(line.split()[0])
-            except ValueError:
-                continue
-            rr.append(val)
-            if val != run:
-                lines += line
-            else:
-                rewrite = True
-        if rr:
-            d = [i for i in range(1, max(rr)+2)]
-            for el in rr:
-                d.remove(el)
-            if not runchanged:
-                run = min(d)
-                print('%s run number has been established! Run = %d' % (analysistype, run))
-            elif rewrite:
-                if not fixed:
-                    raise exceptions.WrongValueError('-run', run,
-                                                     "Run number %d has already been conducted (%s analysis)! "
-                                                     % (run, analysistype) +
-                                                     "If you want to overwrite it, please add '-fixed' atribute.")
-                else:
-                    run_file.seek(0)
-                    run_file.write(lines)
-                    run_file.truncate()
-        else:
-            if not runchanged:
-                run = 1
-                print('%s run number has been established! Run = %d' % (analysistype, run))
-
-    except FileNotFoundError:
-        run = 1
-        run_file = open('%s%s_runs.txt' % (outdir, analysistype), 'w')
-        if analysistype == 'boruta':
-            run_file.write('run\tdata_set\tpatients\tsnps_subset\ttest_size\tperc\twindow_size\tchromosomes\n')
-        elif analysistype == 'class':
-            run_file.write('run\ttest_set\ttest_pat\ttrain_run\ttrain_set\ttrain_pat\tperc\tSNPs\tchromosomes\n')
-        else:
-            raise exceptions.OtherError('First line for %s run file is not defined!' % analysistype)
-        print('%s run file has been made! Run number has been established! Run = %d' % (analysistype, run))
-
-    run_file.close()
-
-    return run
-
-
-def make_chrstr(chrlist):
-
-    cl = chrlist.copy()
-    cl.append(0)
-    chrstr = ''
-    first = cl[0]
-    och = first
-    for ch in cl:
-        if ch == och:
-            och += 1
-        elif first != och-1:
-            if len(chrstr) != 0:
-                chrstr += ', '
-            chrstr += '%d-%d' % (first, och-1)
-            first = ch
-            och = ch+1
-        else:
-            if len(chrstr) != 0:
-                chrstr += ', '
-            chrstr += '%d' % first
-            first = ch
-            och = ch+1
-
-    return chrstr
-
-
-def read_chrstr(chrstr):
-
-    chrstr = chrstr.strip('[]')
-    c = chrstr.split(',')
-    chrlist = []
-    for el in c:
-        el = el.split('-')
-        if len(el) == 1:
-            chrlist.append(int(el[0]))
-        else:
-            chrlist += [i for i in range(int(el[0]),int(el[1])+1)]
-    chrlist.sort()
-
-    return chrlist
 
 
 def patients(dataset):
@@ -517,7 +416,7 @@ for q in range(len(sys.argv)):
         boruta_only = True
 
     if sys.argv[q] == '-chr':
-        chrlist = read_chrstr(sys.argv[q + 1])
+        chrlist = funcs.read_chrstr(sys.argv[q + 1])
 
     if sys.argv[q] == '-run':
         borutarun = int(sys.argv[q + 1])
@@ -566,10 +465,9 @@ if not class_only:
         run_file.write(towrite)
     else:
         run_file = open('%sboruta_runs.txt' % outdir, 'a')
-        chrstr = make_chrstr(chrlist)
         run_file.write('%d\t%s\t%d\t%s\t%.1f\t%s\t%d\t%s\n' % (borutarun, ' + '.join(dataset.keys()), sum(pat.values()),
                                                                snp_subset, testsize, ','.join(list(map(str, perc))), r,
-                                                               make_chrstr(chrlist)))
+                                                               funcs.make_chrstr(chrlist)))
     run_file.close()
 
 
@@ -579,7 +477,7 @@ if not boruta_only:
     X_train, y_train = read_typedata(chrlist, outdir, class_perc, borutarun, 'train')
 
     # determination of number of class run
-    classrun = establish_run('class', fixed, outdir, classrun)
+    classrun = funcs.establish_run('class', fixed, outdir, classrun)
 
     # establishing testing data based on given test set(s) or test subset of patients
     if not testset:
@@ -624,10 +522,9 @@ if not boruta_only:
 
     # writing information about class run to class_run file
     run_file = open('%sclass_runs.txt' % outdir, 'a')
-    chrstr = make_chrstr(chrlist)
     'run\ttest_set\ttest_pat\ttrain_run\ttrain_set\ttrain_pat\tperc\tSNPs\tchromosomes\n'
     run_file.write('%d\t%s\t%d\t%d\t%s\t%d\t%d\t%d\t%s\n' % (classrun, teststr, testpat, borutarun, trainstr, trainpat,
-                                                             class_perc, all_snps, chrstr))
+                                                             class_perc, all_snps, funcs.make_chrstr(chrlist)))
     run_file.close()
 
     # saving matrices (on which was based the classification) to file

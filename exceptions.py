@@ -95,3 +95,25 @@ class NoFileError(Exception):
 
     def __str__(self):
         return repr(self.pro)
+
+
+class SNPReferenceError(Exception):
+
+    def __init__(self, ch, position, ref1, ref2):
+
+        self.pro = 'Different reference value for SNP on position %d from chromosome %d\nset1: %s\nset2: %s\n' % \
+                   (position, ch, ref1, ref2)
+
+    def __str__(self):
+        return repr(self.pro)
+
+
+class FileOverwriteError(Exception):
+
+    def __init__(self, filename):
+
+        self.pro = 'File %s filename already exist!' % filename
+
+    def __str__(self):
+
+        return repr(self.pro)
