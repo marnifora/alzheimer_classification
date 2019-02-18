@@ -89,7 +89,7 @@ def find_shared(dataset, chrlist, fixed, run):
 
     for setname in sets:
         run_file = open('%sshared_runs.txt' % dataset[setname], 'a')
-        run_file.write('%d\t%s\t%s\t%s\t%d\n' % (run, setname, ', '.join([k for k in dataset.keys() if k != setname]),
+        run_file.write('%d\t%s\t%s\t%s\t%d\n' % (runs[setname], setname, ', '.join([k for k in dataset.keys() if k != setname]),
                                                  funcs.make_chrstr(chrlist), shared_snps))
         run_file.close()
 
