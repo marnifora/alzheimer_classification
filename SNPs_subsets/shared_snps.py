@@ -1,5 +1,6 @@
-import exceptions
 import sys
+sys.path.insert(0, '../')
+import exceptions
 import corporate_funcs as funcs
 
 '''
@@ -107,18 +108,12 @@ for q in range(len(sys.argv)):
         else:
             raise exceptions.NoParameterError('directory',
                                               'After name of data set should appear a directory to folder with it.')
-    if sys.argv[q] == '-outdir':
-        outdir = sys.argv[q+1]
     if sys.argv[q] == '-chr':
         chrlist = funcs.read_chrstr(sys.argv[q + 1])
     if sys.argv[q] == '-run':
         run = int(sys.argv[q+1])
     if sys.argv[q] == '-fixed':
         fixed = True
-
-
-if 'outdir' not in globals():
-    outdir = next(iter(dataset.values()))
 
 found = find_shared(dataset, chrlist, fixed, run)
 print('%d shared SNPs found!' % found)
