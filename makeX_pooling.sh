@@ -19,7 +19,6 @@ all=0
 from=1
 to=24
 indir='./'
-outdir='./'
 
 while [[ "$1" != "" ]]; do
         case $1 in
@@ -48,6 +47,9 @@ while [[ "$1" != "" ]]; do
     esac
     shift
 done
+
+if [[ ! -v outdir ]]; then
+    outdir=${indir}
 
 if [[ ${all} -eq 1 ]]; then
         job_pool_init $((to-from+1)) 0

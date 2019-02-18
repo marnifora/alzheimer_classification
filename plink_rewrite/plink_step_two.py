@@ -124,7 +124,6 @@ def write_matrix(plink, indir, outdir, snps_val):
 
 
 indir = './'
-outdir = './'
 for q in range(len(sys.argv)):
     if sys.argv[q] == '-plink':
         plink = sys.argv[q+1]
@@ -132,6 +131,9 @@ for q in range(len(sys.argv)):
         indir = sys.argv[q+1]
     if sys.argv[q] == '-outdir':
         outdir = sys.argv[q+1]
+
+if 'outdir' not in globals():
+    outdir = indir
 
 if 'plink' not in globals():
     raise exceptions.NoParameterError('plink', 'name of plink files')

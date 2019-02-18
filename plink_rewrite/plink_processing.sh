@@ -14,7 +14,6 @@ step2=0
 sort=0
 
 indir="./"
-outdir="./"
 plinkdir="./"
 
 while [[ "$1" != "" ]]; do
@@ -48,6 +47,9 @@ while [[ "$1" != "" ]]; do
     esac
     shift
 done
+
+if [[ ! -v outdir ]]; then
+    outdir=${indir}
 
 # convert binary to text format
 if [[ ${binary} -eq 1 ]]; then

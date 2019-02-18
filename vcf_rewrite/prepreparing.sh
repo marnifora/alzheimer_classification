@@ -68,7 +68,6 @@ base="dataset1"
 
 # directory to the input files
 indir="./"
-outdir="./"
 gatkdir="./"
 
 while [[ "$1" != "" ]]; do
@@ -116,6 +115,9 @@ while [[ "$1" != "" ]]; do
     esac
     shift
 done
+
+if [[ ! -v outdir ]]; then
+    outdir=${indir}
 
 # prefix and sufix of name of vcf files containing WGS data, between them there should be only number of chromosome
 # (it will be added automatically)

@@ -540,7 +540,7 @@ for q in range(len(sys.argv)):
 
 
 if 'outdir' not in globals():
-    outdir = dataset.values()[0]
+    outdir = next(iter(dataset.values()))
 
 if 'class_perc' not in globals():
     class_perc = perc[0]
