@@ -38,12 +38,14 @@ def makeY(indir, outdir):
 
 
 indir = './'
-outdir = './'
 for q in range(len(sys.argv)):
     if sys.argv[q] == '-indir':
         indir = sys.argv[q+1]
     if sys.argv[q] == '-outdir':
         outdir = sys.argv[q+1]
+
+if 'outdir' not in globals():
+    outdir = indir
 
 ad, nl = makeY(indir, outdir)
 print('Number of patients for further analysis: %d (contains AD=%d, NL=%d)' % (ad+nl, ad, nl))

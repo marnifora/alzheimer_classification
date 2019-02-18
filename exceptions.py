@@ -86,3 +86,12 @@ class PlinkWrongValue(Exception):
 
     def __str__(self):
         return repr(self.pro)
+
+
+class NoFileError(Exception):
+
+    def __init__(self, file):
+        self.pro = "There is no %s file in input directory. It is required for analysis!" % file
+
+    def __str__(self):
+        return repr(self.pro)

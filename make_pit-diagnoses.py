@@ -83,7 +83,14 @@ def check_pidfiles(indir):
     Checking if number of patients and their order in vcf files for every chromosomes is the same.
     """
 
-    stat = open('%spid_chr1.txt' % indir, 'r')
+    try:
+        stat = open('%spid_chr1.txt' % indir, 'r')
+    except FileNotFoundError:
+        try:
+            open("%spid_chr.txt" % outdir, 'r')
+        except FileNotFoundError:
+            raise exceptions.NoFileError('pid_chr1.txt')
+        return 'pid_chr.txt file already exist!'
 
     p = 0
     for i, line in enumerate(stat):
@@ -144,14 +151,22 @@ def write_files(dataset, dd, indir, outdir):
     :return: (str) Info about written diagnoses
     """
 
-    o = open("%spid_chr1.txt" % indir, 'r')
-    fp = open("%spid_chr.txt" % outdir, 'w')
+    try:
+        o = open('%spid_chr1.txt' % indir, 'r')
+        fp = open("%spid_chr.txt" % outdir, 'w')
+    except FileNotFoundError:
+        try:
+            o = open("%spid_chr.txt" % outdir, 'r')
+        except FileNotFoundError:
+            raise exceptions.NoFileError('pid_chr1.txt')
+
     fd = open("%sdiagnoses.txt" % outdir, 'w')
 
     n = 0
     i = 0
     for line in o:
-        fp.write(line)
+        if 'fp' in globals():
+            fp.write(line)
         try:
             if dataset == 'adni':
                 pid = line.strip().split('_')[-1]
@@ -164,14 +179,15 @@ def write_files(dataset, dd, indir, outdir):
             n += 1
 
     o.close()
-    fp.close()
+    if 'fp' in globals():
+        fp.close()
     fd.close()
 
     return 'Number of written diagnoses: %d (NN=%d)' % (i+n, n)
 
 
 indir = './'
-outdir = './'
+diagdir = './'
 for q in range(len(sys.argv)):
     if sys.argv[q] == '-indir':
         indir = sys.argv[q+1]
@@ -179,16 +195,21 @@ for q in range(len(sys.argv)):
         outdir = sys.argv[q+1]
     if sys.argv[q] == '-dataset':
         dataset = sys.argv[q+1]
+    if sys.argv[q] == '-diagdir':
+        diagdir = sys.argv[q+1]
 
 if 'dataset' not in globals():
     raise exceptions.NoParameterError('dataset', 'e.g. adni or rosmap')
 
+if 'outdir' not in globals():
+    outdir = indir
+
 if dataset == 'adni':
     dfiles = ['dxsum.csv']
-    dd = adni_mapping(dfiles, indir)
+    dd = adni_mapping(dfiles, diagdir)
 elif dataset == 'rosmap':
     dfiles = ['diagnoses_Mayo.txt', 'diagnoses_MSBB.txt', 'diagnoses_Rosmap.txt']
-    dd = rosmap_mapping(dfiles, indir)
+    dd = rosmap_mapping(dfiles, diagdir)
 
 print(check_pidfiles(indir))
 print(write_files(dataset, dd, indir, outdir))
