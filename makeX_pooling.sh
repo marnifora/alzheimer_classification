@@ -50,6 +50,7 @@ done
 
 if [[ ! -v outdir ]]; then
     outdir=${indir}
+fi
 
 if [[ ${all} -eq 1 ]]; then
         job_pool_init $((to-from+1)) 0

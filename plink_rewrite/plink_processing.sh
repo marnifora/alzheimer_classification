@@ -50,6 +50,7 @@ done
 
 if [[ ! -v outdir ]]; then
     outdir=${indir}
+fi
 
 # convert binary to text format
 if [[ ${binary} -eq 1 ]]; then

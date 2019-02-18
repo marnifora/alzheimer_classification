@@ -118,6 +118,7 @@ done
 
 if [[ ! -v outdir ]]; then
     outdir=${indir}
+fi
 
 # prefix and sufix of name of vcf files containing WGS data, between them there should be only number of chromosome
 # (it will be added automatically)
