@@ -2,9 +2,10 @@ import sys
 import seaborn as sns
 import numpy as np
 import matplotlib.pyplot as plt
-import exceptions
 import scipy.cluster.hierarchy as hc
 import scipy.spatial as sp
+sys.path.insert(0, '../')
+import exceptions
 
 
 def make_lists(set1, set2, dataset):

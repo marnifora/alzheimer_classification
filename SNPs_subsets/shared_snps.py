@@ -78,7 +78,7 @@ def find_shared(dataset, chrlist, fixed, run):
         print('Writing found shared SNPs from chr %d to the file.' % ch)
 
         for n, setname in enumerate(sets):
-            file = open('%sshared_snps_chr%d_%d.txt' % (dataset[setname], ch, run[setname]), 'w')
+            file = open('%sshared_snps_chr%d_%d.txt' % (dataset[setname], ch, runs[setname]), 'w')
             for snp in sorted(shared.keys()):
                 file.write('%d\n' % shared[snp][n])
             file.close()

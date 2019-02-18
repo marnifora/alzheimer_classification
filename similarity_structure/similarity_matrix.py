@@ -1,6 +1,7 @@
 import numpy as np
 import multiprocessing as multi
 import sys
+sys.path.insert(0, '../')
 import exceptions
 
 

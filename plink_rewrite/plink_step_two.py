@@ -1,7 +1,9 @@
-import exceptions
 import sys
 import numpy as np
 import os
+sys.path.insert(0, '../')
+import exceptions
+
 
 '''
 Input:
