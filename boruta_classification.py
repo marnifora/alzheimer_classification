@@ -16,7 +16,7 @@ See readme.txt for input, output and possible options.
 '''
 
 
-def pooling(chrlist, class_perc, dataset, outdir, pat, perc, r, run, subset, testpat):
+def pooling(chrlist, class_perc, dataset, outdir, pat, perc, r, run, subset, subsetrun, testpat):
     """
     Running function one_process for every chr on chrlist.
     Getting list of selected SNPs for every chromosome (returned by every process).
@@ -35,7 +35,7 @@ def pooling(chrlist, class_perc, dataset, outdir, pat, perc, r, run, subset, tes
 
         p = multiprocessing.Process(target=one_process,
                                     args=(ch, class_perc, dataset, outdir, pat, perc, q, qytest, qytrain, r, run,
-                                          subset, testpat))
+                                          subset, subsetrun, testpat))
         procs.append(p)
         p.start()
 
@@ -72,7 +72,7 @@ def pooling(chrlist, class_perc, dataset, outdir, pat, perc, r, run, subset, tes
     return selected_snps
 
 
-def one_process(ch, class_perc, dataset, outdir, pat, perc, q, qytest, qytrain, r, run, subset, testpat):
+def one_process(ch, class_perc, dataset, outdir, pat, perc, q, qytest, qytrain, r, run, subset, subsetrun, testpat):
     """
     Loading data to matrices - function load_data.
     Selecting best SNPs subsets for every perc - function best_snps.
@@ -83,7 +83,7 @@ def one_process(ch, class_perc, dataset, outdir, pat, perc, q, qytest, qytrain, 
 
     print('Analysis for chromosome %d started\n' % ch)
 
-    X, y, snp, Xtest, ytest = load_data(ch, dataset, outdir, pat, run, subset, testpat)
+    X, y, snp, Xtest, ytest = load_data(ch, dataset, outdir, pat, run, subset, subsetrun, testpat)
 
     print('matrices X and y for chromosome %d have been loaded\n' % ch)
 
@@ -116,7 +116,7 @@ def one_process(ch, class_perc, dataset, outdir, pat, perc, q, qytest, qytrain, 
     q.put([ch, ll, snps[class_perc]])
 
 
-def load_data(ch, dataset, outdir, pat, run, subset, testpat):
+def load_data(ch, dataset, outdir, pat, run, subset, subsetrun, testpat):
     """
     Loading data from files into X and y matrices.
     Selection of patients not being in test set and SNPs present in subset-file.
@@ -125,7 +125,10 @@ def load_data(ch, dataset, outdir, pat, run, subset, testpat):
     snplist = {name: [] for name in dataset.keys()}
     if subset is not None:
         for name in dataset.keys():
-            cc = open('%s%s_snps_chr%d.txt' % (dataset[name], subset, ch), 'r')
+            if subsetrun is None:
+                cc = open('%s%s_snps_chr%d.txt' % (dataset[name], subset, ch), 'r')
+            else:
+                cc = open('%s%s_snps_chr%d_%d.txt' % (dataset[name], subset, ch, subsetrun), 'r')
             for line in cc:
                 snplist[name].append(int(line.split()[0]))
             cc.close()
@@ -302,7 +305,12 @@ def cont_run(chrlist, fixed, outdir, run):
     for line in lines:
         if line.startswith(str(run) + '\t'):
             line = line.strip().split('\t')
-            subset = line[3]
+            if len(line[3].split('-run')) == 2:
+                subset, subsetrun = line[3].strip('-run')
+                subsetrun = int(subsetrun)
+            else:
+                subset = line[3]
+                subsetrun = None
             testsize = float(line[4])
             perc = ast.literal_eval(line[5])
             if isinstance(perc, int):
@@ -343,7 +351,7 @@ def cont_run(chrlist, fixed, outdir, run):
     else:
         testpat = None
 
-    return perc, r, subset, testpat, testsize, towrite
+    return perc, r, subset, subsetrun, testpat, testsize, towrite
 
 
 def patients(dataset):
@@ -372,6 +380,7 @@ class_only = False
 boruta_only = False
 borutarun = None
 classrun = None
+subsetrun = None
 fixed = False
 snp_subset = None
 continuation = False
@@ -428,6 +437,9 @@ for q in range(len(sys.argv)):
     if sys.argv[q] == '-classrun':
         classrun = int(sys.argv[q + 1])
 
+    if sys.argv[q] == '-subsetrun':
+        subsetrun = int(sys.argv[q + 1])
+
     if sys.argv[q] == '-fixed':
         fixed = True
 
@@ -454,10 +466,10 @@ if not class_only:
     if not continuation:
         borutarun, testpat = first_run(fixed, outdir, pat, borutarun, testsize)
     else:
-        perc, r, subset, testpat, testsize, towrite = cont_run(chrlist, fixed, outdir, borutarun)
+        perc, r, subset, subsetrun, testpat, testsize, towrite = cont_run(chrlist, fixed, outdir, borutarun)
 
     # running Boruta analysis
-    selected_snps = pooling(chrlist, class_perc, dataset, outdir, pat, perc, r, borutarun, snp_subset, testpat)
+    selected_snps = pooling(chrlist, class_perc, dataset, outdir, pat, perc, r, borutarun, snp_subset, subsetrun, testpat)
 
     # saving information about done run to boruta_runs file
     if continuation:
@@ -465,8 +477,12 @@ if not class_only:
         run_file.write(towrite)
     else:
         run_file = open('%sboruta_runs.txt' % outdir, 'a')
+        if subsetrun is not None:
+            subsetstr = '%s-run%d' % (snp_subset, subsetrun)
+        else:
+            subsetstr = snp_subset
         run_file.write('%d\t%s\t%d\t%s\t%.1f\t%s\t%d\t%s\n' % (borutarun, ' + '.join(dataset.keys()), sum(pat.values()),
-                                                               snp_subset, testsize, ','.join(list(map(str, perc))), r,
+                                                               subsetstr, testsize, ','.join(list(map(str, perc))), r,
                                                                funcs.make_chrstr(chrlist)))
     run_file.close()
 

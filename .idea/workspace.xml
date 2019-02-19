@@ -2,19 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7e59d8fb-d331-40d5-a096-812f3a35a38f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/alzheimer_classification.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/marni.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SNPs_subsets/shared_snps.py" beforeDir="false" afterPath="$PROJECT_DIR$/SNPs_subsets/shared_snps.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plink_rewrite/plink_step_one.py" beforeDir="false" afterPath="$PROJECT_DIR$/plink_rewrite/plink_step_one.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plink_rewrite/plink_step_two.py" beforeDir="false" afterPath="$PROJECT_DIR$/plink_rewrite/plink_step_two.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/similarity_structure/similarity_matrix.py" beforeDir="false" afterPath="$PROJECT_DIR$/similarity_structure/similarity_matrix.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/similarity_structure/similarity_plot.py" beforeDir="false" afterPath="$PROJECT_DIR$/similarity_structure/similarity_plot.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/boruta_classification.py" beforeDir="false" afterPath="$PROJECT_DIR$/boruta_classification.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -25,43 +14,22 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/boruta_classification.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1126">
-              <caret line="310" column="36" selection-start-line="310" selection-start-column="30" selection-end-line="310" selection-end-column="36" />
-              <folding>
-                <element signature="e#0#10#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/corporate_funcs.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1995">
+            <state relative-caret-position="741">
               <caret line="105" selection-start-line="105" selection-end-line="105" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/exceptions.py">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/boruta_classification.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="321">
-              <caret line="103" column="87" selection-start-line="103" selection-start-column="87" selection-end-line="103" selection-end-column="87" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/documentation.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="540">
-                <caret line="135" column="46" selection-start-line="135" selection-start-column="46" selection-end-line="135" selection-end-column="46" />
-              </first_editor>
-              <second_editor />
+            <state relative-caret-position="1695">
+              <caret line="128" column="72" lean-forward="true" selection-start-line="128" selection-start-column="72" selection-end-line="128" selection-end-column="72" />
+              <folding>
+                <element signature="e#0#10#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -99,7 +67,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/similarity_structure/similarity_plot.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="105">
@@ -112,10 +80,27 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/plink_rewrite/plink_processing.sh">
+        <entry file="file://$PROJECT_DIR$/vcf_rewrite/vcf_stats.py">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/vcf_rewrite/vcf_to_matrix.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-135">
-              <caret line="52" column="2" selection-start-line="52" selection-start-column="2" selection-end-line="52" selection-end-column="2" />
+            <state relative-caret-position="30">
+              <caret line="2" column="25" selection-start-line="2" selection-start-column="25" selection-end-line="2" selection-end-column="25" />
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/vcf_rewrite/prepreparing.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1800">
+              <caret line="120" column="2" selection-start-line="120" selection-start-column="2" selection-end-line="120" selection-end-column="2" />
             </state>
           </provider>
         </entry>
@@ -123,8 +108,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SNPs_subsets/shared_snps.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="23">
-              <caret line="1" selection-start-line="1" selection-end-line="1" selection-end-column="25" />
+            <state relative-caret-position="506">
+              <caret line="91" column="62" selection-start-line="91" selection-start-column="62" selection-end-line="91" selection-end-column="62" />
             </state>
           </provider>
         </entry>
@@ -140,7 +125,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>x</find>
       <find>y_train</find>
       <find>input</find>
       <find>output</find>
@@ -170,6 +154,7 @@
       <find>establish</find>
       <find>chrstr</find>
       <find>run</find>
+      <find>snp_subset</find>
     </findStrings>
     <replaceStrings>
       <replace>arg</replace>
@@ -211,7 +196,6 @@
         <option value="$PROJECT_DIR$/plink_step_one.py" />
         <option value="$PROJECT_DIR$/plink_step_two.py" />
         <option value="$PROJECT_DIR$/plink_processing.sh" />
-        <option value="$PROJECT_DIR$/vcf_rewrite/vcf_to_matrix.py" />
         <option value="$PROJECT_DIR$/similarity_structure/exceptions.py" />
         <option value="$PROJECT_DIR$/plink_rewrite/exceptions.py" />
         <option value="$PROJECT_DIR$/vcf_rewrite/exceptions.py" />
@@ -227,12 +211,13 @@
         <option value="$PROJECT_DIR$/vcf_rewrite/prepreparing.sh" />
         <option value="$PROJECT_DIR$/exceptions.py" />
         <option value="$PROJECT_DIR$/corporate_funcs.py" />
-        <option value="$PROJECT_DIR$/boruta_classification.py" />
-        <option value="$PROJECT_DIR$/SNPs_subsets/shared_snps.py" />
         <option value="$PROJECT_DIR$/plink_rewrite/plink_step_one.py" />
         <option value="$PROJECT_DIR$/plink_rewrite/plink_step_two.py" />
         <option value="$PROJECT_DIR$/similarity_structure/similarity_matrix.py" />
         <option value="$PROJECT_DIR$/similarity_structure/similarity_plot.py" />
+        <option value="$PROJECT_DIR$/vcf_rewrite/vcf_to_matrix.py" />
+        <option value="$PROJECT_DIR$/SNPs_subsets/shared_snps.py" />
+        <option value="$PROJECT_DIR$/boruta_classification.py" />
       </list>
     </option>
   </component>
@@ -264,6 +249,11 @@
               <item name="alzheimer_classification" type="b2602c69:ProjectViewProjectNode" />
               <item name="alzheimer_classification" type="462c0819:PsiDirectoryNode" />
               <item name="similarity_structure" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="alzheimer_classification" type="b2602c69:ProjectViewProjectNode" />
+              <item name="alzheimer_classification" type="462c0819:PsiDirectoryNode" />
+              <item name="SNPs_subsets" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="alzheimer_classification" type="b2602c69:ProjectViewProjectNode" />
@@ -603,7 +593,21 @@
       <option name="project" value="LOCAL" />
       <updated>1550528654443</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Correction of importing exceptions package by scripts in different directory.">
+      <created>1550528957125</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1550528957125</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Small correction.">
+      <created>1550529182225</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1550529182225</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TodoView">
@@ -669,7 +673,9 @@
     <MESSAGE value="Correct error in sh files: adding 'fi'" />
     <MESSAGE value="Making shared_snps.py, moving some functions from boruta_classification to a new file corporate_funcs.py." />
     <MESSAGE value="Package from different directory." />
-    <option name="LAST_COMMIT_MESSAGE" value="Package from different directory." />
+    <MESSAGE value="Correction of importing exceptions package by scripts in different directory." />
+    <MESSAGE value="Small correction." />
+    <option name="LAST_COMMIT_MESSAGE" value="Small correction." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -861,21 +867,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/vcf_rewrite/vcf_stats.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-77" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vcf_rewrite/vcf_to_matrix.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="675">
-          <caret line="72" column="20" selection-start-line="72" selection-start-column="10" selection-end-line="72" selection-end-column="20" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/make_pit-diagnoses.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="594">
@@ -887,13 +878,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
           <caret line="26" column="23" selection-start-line="26" selection-start-column="16" selection-end-line="26" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vcf_rewrite/prepreparing.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="469">
-          <caret line="120" column="2" selection-start-line="120" selection-start-column="2" selection-end-line="120" selection-end-column="2" />
         </state>
       </provider>
     </entry>
@@ -928,34 +912,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/boruta_classification.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1126">
-          <caret line="310" column="36" selection-start-line="310" selection-start-column="30" selection-end-line="310" selection-end-column="36" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/corporate_funcs.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1995">
-          <caret line="105" selection-start-line="105" selection-end-line="105" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/exceptions.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="321">
           <caret line="103" column="87" selection-start-line="103" selection-start-column="87" selection-end-line="103" selection-end-column="87" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SNPs_subsets/shared_snps.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="23">
-          <caret line="1" selection-start-line="1" selection-end-line="1" selection-end-column="25" />
         </state>
       </provider>
     </entry>
@@ -990,6 +950,50 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="7" column="17" lean-forward="true" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vcf_rewrite/vcf_stats.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vcf_rewrite/vcf_to_matrix.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="25" selection-start-line="2" selection-start-column="25" selection-end-line="2" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vcf_rewrite/prepreparing.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1800">
+          <caret line="120" column="2" selection-start-line="120" selection-start-column="2" selection-end-line="120" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/corporate_funcs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="741">
+          <caret line="105" selection-start-line="105" selection-end-line="105" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SNPs_subsets/shared_snps.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="506">
+          <caret line="91" column="62" selection-start-line="91" selection-start-column="62" selection-end-line="91" selection-end-column="62" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/boruta_classification.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1695">
+          <caret line="128" column="72" lean-forward="true" selection-start-line="128" selection-start-column="72" selection-end-line="128" selection-end-column="72" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
