@@ -50,7 +50,7 @@ def make_snps_count(plink, indir):
     return snps_count
 
 
-def write_snps_list(plink, indir, outdir):
+def write_snps_list(plink, indir, outdir, overwrite):
 
     snps_ref = make_snps_ref(outdir)
     snps_count = make_snps_count(plink, indir)
@@ -59,7 +59,7 @@ def write_snps_list(plink, indir, outdir):
     prevch = mapfile.readline()[0]
     mapfile.seek(0, 0)
     filename = '%ssnps_chr%s.txt' % (outdir, prevch)
-    if not os.path.isfile(filename):
+    if not os.path.isfile(filename) or overwrite:
         file = open(filename, 'w')
     else:
         raise exceptions.FileOverwriteError(filename)
@@ -135,6 +135,7 @@ def write_matrix(plink, indir, outdir, snps_val):
 
 
 indir = './'
+overwrite = False
 for q in range(len(sys.argv)):
     if sys.argv[q] == '-plink':
         plink = sys.argv[q+1]
@@ -142,6 +143,8 @@ for q in range(len(sys.argv)):
         indir = sys.argv[q+1]
     if sys.argv[q] == '-outdir':
         outdir = sys.argv[q+1]
+    if sys.argv[q] == '-overwrite':
+        overwrite = True
 
 if 'outdir' not in globals():
     outdir = indir
@@ -149,5 +152,5 @@ if 'outdir' not in globals():
 if 'plink' not in globals():
     raise exceptions.NoParameterError('plink', 'name of plink files')
 
-snps_val = write_snps_list(plink, indir, outdir)
+snps_val = write_snps_list(plink, indir, outdir, overwrite)
 write_matrix(plink, indir, outdir, snps_val)

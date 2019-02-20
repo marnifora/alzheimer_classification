@@ -115,5 +115,22 @@ class FileOverwriteError(Exception):
         self.pro = 'File %s filename already exist!' % filename
 
     def __str__(self):
+        return repr(self.pro)
 
+
+class NoSNPFound(Exception):
+
+    def __init__(self, ch, perc):
+        self.pro = 'Warning: no SNPs were chosen from chromosome %d using Boruta with class perc = %d' % (ch, perc)
+
+    def __str__(self):
+        return repr(self.pro)
+
+
+class WrongParameterName(Exception):
+
+    def __init__(self, parameter):
+        self.pro = "There is no command parameter named '%d'!" % parameter
+
+    def __str__(self):
         return repr(self.pro)

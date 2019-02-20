@@ -16,11 +16,12 @@ See readme.txt for input, output and possible options.
 '''
 
 
-def pooling(chrlist, class_perc, dataset, outdir, pat, perc, r, run, subset, subsetrun, testpat):
+def pooling(chrlist, classperc, dataset, outdir, pat, perc, r, run, subset, subsetrun, testpat):
     """
     Running function one_process for every chr on chrlist.
     Getting list of selected SNPs for every chromosome (returned by every process).
-    Returning selected SNPs for class_perc as a dictionary named selected_snps (keys - chromosomes, values - numbers of SNPs).
+    Returning selected SNPs for every perc in class_perc as a dictionary named selected_snps (keys - chromosomes,
+    values - dict (keys - perc, values -numbers of SNPs)).
     Writing number of selected SNPs for every chromosome for every perc to file named all_snps<run>.txt.
     """
     procs = []
@@ -34,7 +35,7 @@ def pooling(chrlist, class_perc, dataset, outdir, pat, perc, r, run, subset, sub
     for ch in chrlist:
 
         p = multiprocessing.Process(target=one_process,
-                                    args=(ch, class_perc, dataset, outdir, pat, perc, q, qytest, qytrain, r, run,
+                                    args=(ch, classperc, dataset, outdir, pat, perc, q, qytest, qytrain, r, run,
                                           subset, subsetrun, testpat))
         procs.append(p)
         p.start()
@@ -49,6 +50,10 @@ def pooling(chrlist, class_perc, dataset, outdir, pat, perc, r, run, subset, sub
         selected_snps[qq[0]] = qq[2]
         for j, p in enumerate(perc):
             all_snps[p] += qq[1][p]
+
+    for p, n in all_snps.items():
+        if all_snps[p] == 0 and p in classperc:
+            classperc.remove(p)
 
     if qytest is None:
         params = [[qytrain, 'train']]
@@ -69,10 +74,10 @@ def pooling(chrlist, class_perc, dataset, outdir, pat, perc, r, run, subset, sub
         a.write('%d\t%d\n' % (p, all_snps[p]))
     a.close()
 
-    return selected_snps
+    return selected_snps, classperc
 
 
-def one_process(ch, class_perc, dataset, outdir, pat, perc, q, qytest, qytrain, r, run, subset, subsetrun, testpat):
+def one_process(ch, classperc, dataset, outdir, pat, perc, q, qytest, qytrain, r, run, subset, subsetrun, testpat):
     """
     Loading data to matrices - function load_data.
     Selecting best SNPs subsets for every perc - function best_snps.
@@ -91,14 +96,14 @@ def one_process(ch, class_perc, dataset, outdir, pat, perc, q, qytest, qytrain, 
 
     print('best SNPs for chromosome %d have been selected by Boruta\n' % ch)
 
-    if not snps[class_perc]:
-        raise exceptions.OtherError('Warning: no SNPs were chosen from chromosome %d using Boruta with chosen class perc = %d' % (ch, class_perc))
     qytrain.put(y)
-    np.save('%sX_train_chr%d_%d_%d.npy' % (outdir, ch, class_perc, run), X[:, snps[class_perc]])
-    print('X train matrix for chr %d was saved to file' % ch)
     if testpat:
         qytest.put(ytest)
-        np.save('%sX_test_chr%d_%d_%d.npy' % (outdir, ch, class_perc, run), Xtest[:, snps[class_perc]])
+    for p in classperc:
+        np.save('%sX_train_chr%d_%d_%d.npy' % (outdir, ch, p, run), X[:, snps[p]])
+        print('X train matrix for chr %d was saved to file' % ch)
+        if testpat:
+            np.save('%sX_test_chr%d_%d_%d.npy' % (outdir, ch, p, run), Xtest[:, snps[p]])
 
     ll = {p: 0 for p in perc}
     for p in perc:
@@ -113,7 +118,7 @@ def one_process(ch, class_perc, dataset, outdir, pat, perc, q, qytest, qytrain, 
 
     print('process for chr %d finished\n' % ch)
 
-    q.put([ch, ll, snps[class_perc]])
+    q.put([ch, ll, snps])
 
 
 def load_data(ch, dataset, outdir, pat, run, subset, subsetrun, testpat):
@@ -148,7 +153,7 @@ def load_data(ch, dataset, outdir, pat, run, subset, subsetrun, testpat):
             if 'snp' is None:
                 raise exceptions.OtherError('There is no information about chromosome %d in %sgenome_stats.txt file'
                                             % (ch, list(dataset.values())[0]))
-            snplist[list(dataset.keys())[0]] = list(range(snp))
+            snplist[next(iter(dataset.keys()))] = list(range(snp))
 
     if testpat is None:
         testpat = []
@@ -242,19 +247,19 @@ def read_typedata(chrlist, outdir, p, run, type):
     return X, y
 
 
-def build_testdata(chrlist, selected_snps, testset):
+def build_testdata(chrlist, p, selected_snps, testset):
 
     pat = patients(testset)
     for name in testset.keys():
 
-        xx = np.zeros(shape=(pat[name], sum(list(map(len, selected_snps.values())))), dtype=np.int8)
+        xx = np.zeros(shape=(pat[name], sum([len(x) for x in [selected_snps[ch][p] for ch in chrlist]])), dtype=np.int8)
         col = 0
         for ch in chrlist:
             o = open('%sX_chr%d_nodif.csv' % (testset[name], ch), 'r')
             reader = csv.reader(o, delimiter=',')
             next(reader)
 
-            snps = selected_snps[ch]
+            snps = selected_snps[ch][p]
             for i, line in enumerate(reader):
                 xx[i][col:col+len(snps)] = [line[1:][ii] for ii in snps]
 
@@ -393,6 +398,7 @@ for q in range(len(sys.argv)):
         else:
             raise exceptions.NoParameterError('directory',
                                               'After name of data set should appear a directory to folder with it.')
+        continue
 
     if sys.argv[q] == '-testset':
         if sys.argv[q + 2][0] in ['.', '~', '/']:
@@ -400,61 +406,82 @@ for q in range(len(sys.argv)):
         else:
             raise exceptions.NoParameterError('directory',
                                               'After name of test set should appear a directory to folder with it.')
+        continue
 
     if sys.argv[q] == '-test':
         testsize = float(sys.argv[q + 1])
+        continue
 
     if sys.argv[q] == '-perc':
         perc = ast.literal_eval(sys.argv[q + 1])
         if isinstance(perc, int):
             perc = [perc]
+        continue
 
     if sys.argv[q] == '-classperc':
-        class_perc = int(sys.argv[q + 1])
+        classperc = ast.literal_eval(sys.argv[q + 1])
+        if isinstance(classperc, int):
+            classperc = [classperc]
+        continue
 
     if sys.argv[q] == '-subset':
         snp_subset = sys.argv[q + 1]
+        continue
 
     if sys.argv[q] == '-r':
         r = int(sys.argv[q + 1])
+        continue
 
     if sys.argv[q] == '-class':
         class_only = True
+        continue
 
     if sys.argv[q] == '-boruta':
         boruta_only = True
+        continue
 
     if sys.argv[q] == '-chr':
         chrlist = funcs.read_chrstr(sys.argv[q + 1])
+        continue
 
     if sys.argv[q] == '-run':
         borutarun = int(sys.argv[q + 1])
         classrun = int(sys.argv[q + 1])
+        continue
 
     if sys.argv[q] == '-borutarun':
         borutarun = int(sys.argv[q + 1])
+        continue
 
     if sys.argv[q] == '-classrun':
         classrun = int(sys.argv[q + 1])
+        continue
 
     if sys.argv[q] == '-subsetrun':
         subsetrun = int(sys.argv[q + 1])
+        continue
 
     if sys.argv[q] == '-fixed':
         fixed = True
+        continue
 
     if sys.argv[q] == '-outdir':
         outdir = sys.argv[q + 1]
+        continue
 
     if sys.argv[q] == '-cont':
         continuation = True
+        continue
+
+    if sys.argv[q].startswith('-'):
+        raise exceptions.WrongParameterName(sys.argv[q])
 
 
 if 'outdir' not in globals():
     outdir = next(iter(dataset.values()))
 
-if 'class_perc' not in globals():
-    class_perc = perc[0]
+if 'classperc' not in globals():
+    classperc = perc
 
 
 if not class_only:
@@ -469,7 +496,7 @@ if not class_only:
         perc, r, subset, subsetrun, testpat, testsize, towrite = cont_run(chrlist, fixed, outdir, borutarun)
 
     # running Boruta analysis
-    selected_snps = pooling(chrlist, class_perc, dataset, outdir, pat, perc, r, borutarun, snp_subset, subsetrun, testpat)
+    selected_snps, classperc = pooling(chrlist, classperc, dataset, outdir, pat, perc, r, borutarun, snp_subset, subsetrun, testpat)
 
     # saving information about done run to boruta_runs file
     if continuation:
@@ -489,33 +516,32 @@ if not class_only:
 
 if not boruta_only:
 
+    # determination of number of class run
+    classrun = funcs.establish_run('class', fixed, outdir, classrun)
     scores_file = open('%sclass_scores_%d.txt' % (outdir, classrun), 'w', 1)
     all_snps_perc = []
-    for i, p in enumerate(class_perc):
+    selected_snps = {ch: {} for ch in chrlist}
+    for i, p in enumerate(classperc):
         # reading training data from given run of boruta analysis
-        X_train, y_train = read_typedata(chrlist, outdir, class_perc, borutarun, 'train')
-
-        # determination of number of class run
-        classrun = funcs.establish_run('class', fixed, outdir, classrun)
+        X_train, y_train = read_typedata(chrlist, outdir, p, borutarun, 'train')
 
         # establishing testing data based on given test set(s) or test subset of patients
         if not testset:
             if testsize == 0:
                 raise exceptions.NoParameterError(
                     'testset', 'Test size was not given - define what set should be used as a testset.')
-            X_test, y_test = read_typedata(chrlist, outdir, class_perc, borutarun, 'test')
+            X_test, y_test = read_typedata(chrlist, outdir, p, borutarun, 'test')
 
         else:
             if class_only:
-                selected_snps = {ch: [] for ch in chrlist}
                 for ch in chrlist:
-                    o = open('%sbestsnps_chr%d_%d_%d.txt' % (outdir, ch, class_perc, borutarun), 'r')
+                    o = open('%sbestsnps_chr%d_%d_%d.txt' % (outdir, ch, p, borutarun), 'r')
                     for i in range(2):  # header
                         o.readline()
                     for line in o:
-                        selected_snps[ch].append(int(line.strip()))
+                        selected_snps[ch][p] = selected_snps[ch].setdefault(p, []).append(int(line.strip()))
                     o.close()
-            X_test, y_test = build_testdata(chrlist, class_perc, selected_snps, testset)
+            X_test, y_test = build_testdata(chrlist, p, classperc, selected_snps, testset)
 
         # running of classification
         score_train, score_test = classify(X_train, y_train, X_test, y_test)
@@ -550,7 +576,6 @@ if not boruta_only:
     run_file = open('%sclass_runs.txt' % outdir, 'a')
     'run\ttest_set\ttest_pat\ttrain_run\ttrain_set\ttrain_pat\tperc\tSNPs\tchromosomes\n'
     run_file.write('%d\t%s\t%d\t%d\t%s\t%d\t%s\t%s\t%s\n' % (classrun, teststr, testpat, borutarun, trainstr, trainpat,
-                                                             class_perc, all_snps_perc, funcs.make_chrstr(chrlist)))
+                                                             classperc, all_snps_perc, funcs.make_chrstr(chrlist)))
     run_file.close()
-
 
