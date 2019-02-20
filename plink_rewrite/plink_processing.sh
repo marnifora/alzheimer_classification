@@ -12,6 +12,7 @@ binary=0
 step1=0
 step2=0
 sort=0
+overwrite=0
 
 indir="./"
 plinkdir="./"
@@ -41,6 +42,8 @@ while [[ "$1" != "" ]]; do
                                 ;;
         -plinkdir )             shift
                                 plinkdir=$1
+                                ;;
+        -overwrite )            overwrite=1
                                 ;;
         *)                      usage
                                 exit 1
@@ -74,7 +77,7 @@ fi
 # compare SNPs with reference, make pid_chr.txt and genome_stats.txt, filter plink files
 if [[ ${step1} -eq 1 ]]; then
     echo "Step one has just began!"
-    python3 plink_step_one.py -indir ${indir} -outdir ${outdir} -plink ${plink} -dbsnp ${dbsnp}
+    python3 plink_step_one.py -indir ${indir} -outdir ${outdir} -plink ${plink} -dbsnp ${dbsnp} -overwrite ${overwrite}
     echo "Step one done!"
     ${plinkdir}plink-1.9/plink --file ${indir}${plink} --exclude ${outdir}"missing_snps_ref.txt" --recode --out ${indir}${plink}"_filtered"
     echo "SNPs were excluded, filtered plink files have been made."

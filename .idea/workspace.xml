@@ -3,16 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="7e59d8fb-d331-40d5-a096-812f3a35a38f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SNPs_subsets/shared_snps.py" beforeDir="false" afterPath="$PROJECT_DIR$/SNPs_subsets/shared_snps.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/boruta_classification.py" beforeDir="false" afterPath="$PROJECT_DIR$/boruta_classification.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/documentation.md" beforeDir="false" afterPath="$PROJECT_DIR$/documentation.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/makeY.py" beforeDir="false" afterPath="$PROJECT_DIR$/makeY.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/make_pit-diagnoses.py" beforeDir="false" afterPath="$PROJECT_DIR$/make_pid-diagnoses.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plink_rewrite/plink_step_one.py" beforeDir="false" afterPath="$PROJECT_DIR$/plink_rewrite/plink_step_one.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plink_rewrite/plink_step_two.py" beforeDir="false" afterPath="$PROJECT_DIR$/plink_rewrite/plink_step_two.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/similarity_structure/similarity_plot.py" beforeDir="false" afterPath="$PROJECT_DIR$/similarity_structure/similarity_plot.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vcf_rewrite/prepreparing.sh" beforeDir="false" afterPath="$PROJECT_DIR$/vcf_rewrite/prepreparing.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vcf_rewrite/vcf_to_matrix.py" beforeDir="false" afterPath="$PROJECT_DIR$/vcf_rewrite/vcf_to_matrix.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plink_rewrite/plink_processing.sh" beforeDir="false" afterPath="$PROJECT_DIR$/plink_rewrite/plink_processing.sh" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -25,11 +16,20 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/boruta_classification.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="281">
-              <caret line="140" column="37" selection-start-line="140" selection-start-column="25" selection-end-line="140" selection-end-column="37" />
+            <state relative-caret-position="179">
+              <caret line="480" column="41" lean-forward="true" selection-start-line="480" selection-start-column="41" selection-end-line="480" selection-end-column="41" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/exceptions.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="341">
+              <caret line="132" column="59" selection-start-line="132" selection-start-column="59" selection-end-line="132" selection-end-column="59" />
             </state>
           </provider>
         </entry>
@@ -46,7 +46,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/documentation.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
@@ -67,11 +67,20 @@
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/plink_rewrite/plink_processing.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="310">
+              <caret line="23" column="40" lean-forward="true" selection-start-line="23" selection-start-column="40" selection-end-line="23" selection-end-column="40" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/plink_rewrite/plink_step_two.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-359">
-              <caret line="100" column="22" lean-forward="true" selection-start-line="100" selection-start-column="22" selection-end-line="100" selection-end-column="22" />
+            <state relative-caret-position="279">
+              <caret line="155" column="44" lean-forward="true" selection-start-line="155" selection-start-column="44" selection-end-line="155" selection-end-column="44" />
             </state>
           </provider>
         </entry>
@@ -79,24 +88,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/make_pid-diagnoses.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-189">
+            <state relative-caret-position="1635">
               <caret line="96" column="22" selection-start-line="96" selection-start-column="22" selection-end-line="96" selection-end-column="22" />
             </state>
           </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/vcf_rewrite/prepreparing.sh">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="131" column="6" selection-start-line="131" selection-end-line="131" selection-end-column="6" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/vcf_rewrite/vcf_stats.py">
-          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
@@ -104,18 +99,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="1079">
               <caret line="59" column="30" lean-forward="true" selection-start-line="59" selection-start-column="30" selection-end-line="59" selection-end-column="30" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/vcf_rewrite/vcf_to_matrix.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="349">
-              <caret line="59" column="35" lean-forward="true" selection-start-line="59" selection-start-column="35" selection-end-line="59" selection-end-column="35" />
-              <folding>
-                <element signature="e#0#18#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -131,13 +114,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>, 'w'</find>
-      <find>, 'r'</find>
-      <find>, 'a'</find>
-      <find>filese</find>
-      <find>&gt;</find>
-      <find>.ped</find>
-      <find>random</find>
       <find>snps_val</find>
       <find>gatk</find>
       <find>dbsnp</find>
@@ -159,8 +135,15 @@
       <find>snp_subset</find>
       <find>subset</find>
       <find>typedata</find>
-      <find>genome</find>
       <find>genome_stats</find>
+      <find>build</find>
+      <find>selected_snps</find>
+      <find>s</find>
+      <find>snplist</find>
+      <find>class_perc</find>
+      <find>classperc</find>
+      <find>pooling</find>
+      <find>genome</find>
     </findStrings>
     <replaceStrings>
       <replace>arg</replace>
@@ -169,6 +152,7 @@
       <replace>outdir</replace>
       <replace>{</replace>
       <replace>}</replace>
+      <replace>classperc</replace>
       <replace>snp</replace>
     </replaceStrings>
   </component>
@@ -211,19 +195,20 @@
         <option value="$PROJECT_DIR$/make_pit-diagnoses.py" />
         <option value="$PROJECT_DIR$/makeX.py" />
         <option value="$PROJECT_DIR$/makeX_pooling.sh" />
-        <option value="$PROJECT_DIR$/plink_rewrite/plink_processing.sh" />
         <option value="$PROJECT_DIR$/vcf_rewrite/prepreparing.sh" />
-        <option value="$PROJECT_DIR$/exceptions.py" />
         <option value="$PROJECT_DIR$/corporate_funcs.py" />
         <option value="$PROJECT_DIR$/similarity_structure/similarity_matrix.py" />
         <option value="$PROJECT_DIR$/SNPs_subsets/shared_snps.py" />
         <option value="$PROJECT_DIR$/plink_rewrite/plink_step_one.py" />
-        <option value="$PROJECT_DIR$/plink_rewrite/plink_step_two.py" />
         <option value="$PROJECT_DIR$/vcf_rewrite/vcf_to_matrix.py" />
         <option value="$PROJECT_DIR$/makeY.py" />
-        <option value="$PROJECT_DIR$/boruta_classification.py" />
         <option value="$PROJECT_DIR$/similarity_structure/similarity_plot.py" />
         <option value="$PROJECT_DIR$/documentation.md" />
+        <option value="$PROJECT_DIR$/exceptions.py" />
+        <option value="$USER_HOME$/anaconda3/envs/alzheimer_classification/lib/python3.6/site-packages/boruta/boruta_py.py" />
+        <option value="$PROJECT_DIR$/plink_rewrite/plink_step_two.py" />
+        <option value="$PROJECT_DIR$/boruta_classification.py" />
+        <option value="$PROJECT_DIR$/plink_rewrite/plink_processing.sh" />
       </list>
     </option>
   </component>
@@ -290,7 +275,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.plink_step_two">
+  <component name="RunManager" selected="Python.boruta_classification">
     <configuration name="plink_processing.sh" type="BashConfigurationType" factoryName="Bash" temporary="true">
       <module name="alzheimer_classification" />
       <option name="INTERPRETER_OPTIONS" value="bash" />
@@ -323,6 +308,27 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="boruta_classification" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="alzheimer_classification" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/boruta_classification.py" />
+      <option name="PARAMETERS" value="-dataset dataset1 $USER_HOME$/Dokumenty/dataset1/ -perc [90,100] -test 0.1 -outdir $USER_HOME$/Dokumenty/outdir/ -chr 1-2" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="check_similarity" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="alzheimer_classification" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -337,27 +343,6 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/similarity_kdeplot.py" />
       <option name="PARAMETERS" value="-dataset dataset1 $USER_HOME$/Dokumenty/dataset1/ -dataset dataset2 $USER_HOME$/Dokumenty/dataset2/ -seta1 dataset1 all -setb1 dataset2 all -matrix $USER_HOME$/Dokumenty/outdir/similarity_structure.npy" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="exclude_snps" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="alzheimer_classification" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/exclude_snps.py" />
-      <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -497,17 +482,17 @@
     <list>
       <item itemvalue="Bash.plink_processing.sh" />
       <item itemvalue="Python.check_similarity" />
-      <item itemvalue="Python.exclude_snps" />
       <item itemvalue="Python.plink_step_one" />
       <item itemvalue="Python.plink_step_two" />
+      <item itemvalue="Python.boruta_classification" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.boruta_classification" />
         <item itemvalue="Python.plink_step_two" />
         <item itemvalue="Python.plink_step_one" />
         <item itemvalue="Bash.plink_processing.sh" />
         <item itemvalue="Python.check_similarity" />
-        <item itemvalue="Python.exclude_snps" />
       </list>
     </recent_temporary>
   </component>
@@ -620,7 +605,21 @@
       <option name="project" value="LOCAL" />
       <updated>1550591135714</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Correction of writing the genome_stats file.">
+      <created>1550669423901</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1550669423901</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Small corrections.">
+      <created>1550675824850</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1550675824850</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TodoView">
@@ -641,7 +640,7 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32937366" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.3088553" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.4287257" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.37041035" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -689,10 +688,44 @@
     <MESSAGE value="Correction of importing exceptions package by scripts in different directory." />
     <MESSAGE value="Small correction." />
     <MESSAGE value="Adding subset-run number to boruta_classification." />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding subset-run number to boruta_classification." />
+    <MESSAGE value="Correction of writing the genome_stats file." />
+    <MESSAGE value="Small corrections." />
+    <option name="LAST_COMMIT_MESSAGE" value="Small corrections." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/boruta_classification.py</url>
+          <line>141</line>
+          <option name="timeStamp" value="25" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/boruta_classification.py</url>
+          <line>182</line>
+          <option name="timeStamp" value="26" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/boruta_classification.py</url>
+          <line>165</line>
+          <option name="timeStamp" value="27" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/boruta_classification.py</url>
+          <line>184</line>
+          <option name="timeStamp" value="28" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/boruta_classification.py</url>
+          <line>189</line>
+          <option name="timeStamp" value="29" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/boruta_classification.py</url>
+          <line>186</line>
+          <option name="timeStamp" value="30" />
+        </line-breakpoint>
+      </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
           <properties notifyOnTerminate="true" exception="BaseException">
@@ -703,13 +736,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../advent_of_code/input4.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="352" column="12" selection-start-line="352" selection-start-column="12" selection-end-line="352" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../advent_of_code/day4.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="720">
@@ -888,13 +914,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/exceptions.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="321">
-          <caret line="103" column="87" selection-start-line="103" selection-start-column="87" selection-end-line="103" selection-end-column="87" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/similarity_structure/similarity_matrix.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
@@ -916,13 +935,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="529">
           <caret line="23" column="58" lean-forward="true" selection-start-line="23" selection-start-column="58" selection-end-line="23" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/plink_rewrite/plink_processing.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="39">
-          <caret line="52" column="2" selection-start-line="52" selection-start-column="2" selection-end-line="52" selection-end-column="2" />
         </state>
       </provider>
     </entry>
@@ -953,41 +965,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/plink_rewrite/plink_step_two.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-359">
-          <caret line="100" column="22" lean-forward="true" selection-start-line="100" selection-start-column="22" selection-end-line="100" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/make_pid-diagnoses.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-189">
-          <caret line="96" column="22" selection-start-line="96" selection-start-column="22" selection-end-line="96" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/makeY.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1079">
           <caret line="59" column="30" lean-forward="true" selection-start-line="59" selection-start-column="30" selection-end-line="59" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/plink_rewrite/plink_step_one.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="73" column="62" selection-start-line="73" selection-start-column="62" selection-end-line="73" selection-end-column="62" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/boruta_classification.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="281">
-          <caret line="140" column="37" selection-start-line="140" selection-start-column="25" selection-end-line="140" selection-end-column="37" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1008,6 +989,58 @@
             <caret line="166" column="28" selection-start-line="166" selection-start-column="28" selection-end-line="166" selection-end-column="28" />
           </first_editor>
           <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/make_pid-diagnoses.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1635">
+          <caret line="96" column="22" selection-start-line="96" selection-start-column="22" selection-end-line="96" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plink_rewrite/plink_step_one.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="73" column="62" selection-start-line="73" selection-start-column="62" selection-end-line="73" selection-end-column="62" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/exceptions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="341">
+          <caret line="132" column="59" selection-start-line="132" selection-start-column="59" selection-end-line="132" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/anaconda3/envs/alzheimer_classification/lib/python3.6/site-packages/boruta/boruta_py.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="403">
+          <caret line="419" column="26" lean-forward="true" selection-start-line="419" selection-start-column="26" selection-end-line="419" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/boruta_classification.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="179">
+          <caret line="480" column="41" lean-forward="true" selection-start-line="480" selection-start-column="41" selection-end-line="480" selection-end-column="41" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plink_rewrite/plink_step_two.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="279">
+          <caret line="155" column="44" lean-forward="true" selection-start-line="155" selection-start-column="44" selection-end-line="155" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plink_rewrite/plink_processing.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="310">
+          <caret line="23" column="40" lean-forward="true" selection-start-line="23" selection-start-column="40" selection-end-line="23" selection-end-column="40" />
         </state>
       </provider>
     </entry>
