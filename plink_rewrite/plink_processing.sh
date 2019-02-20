@@ -77,7 +77,7 @@ fi
 # compare SNPs with reference, make pid_chr.txt and genome_stats.txt, filter plink files
 if [[ ${step1} -eq 1 ]]; then
     echo "Step one has just began!"
-    python3 plink_step_one.py -indir ${indir} -outdir ${outdir} -plink ${plink} -dbsnp ${dbsnp} -overwrite ${overwrite}
+    python3 plink_step_one.py -indir ${indir} -outdir ${outdir} -plink ${plink} -dbsnp ${dbsnp}
     echo "Step one done!"
     ${plinkdir}plink-1.9/plink --file ${indir}${plink} --exclude ${outdir}"missing_snps_ref.txt" --recode --out ${indir}${plink}"_filtered"
     echo "SNPs were excluded, filtered plink files have been made."
@@ -86,6 +86,10 @@ fi
 # make files with matrices and snps lists
 if [[ ${step2} -eq 1 ]]; then
     echo "Step two has just began!"
-    python3 plink_step_two.py -indir ${indir} -outdir ${outdir} -plink ${plink}"_filtered"
+    if [[ ${overwrite} -eq 1 ]]; then
+        python3 plink_step_two.py -indir ${indir} -outdir ${outdir} -plink ${plink}"_filtered" -overwrite
+    else
+        python3 plink_step_two.py -indir ${indir} -outdir ${outdir} -plink ${plink}"_filtered"
+    fi
     echo "Step two done!"
 fi
