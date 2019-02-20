@@ -71,7 +71,7 @@ def genome_stats(pat, snps, outdir):
     chs = list(map(int, snps.keys()))
     chs.sort()
     for ch in chs:
-        stats.write('%d\t%d\t%d\n' % (ch, pat, snps[str(ch)]))
+        stats.write('%d\t%d\t%d\n' % (ch, snps[str(ch)], pat))
     stats.close()
 
 

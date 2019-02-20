@@ -52,12 +52,12 @@ def vcf_to_matrix(c, inp, outdir):
                     v1, v2 = map(int, e.split("|"))
                 except ValueError:
                     v1, v2 = -1, -1
-            matrix[j,i] = [v1, v2]
+            matrix[j, i] = [v1, v2]
     s.close()   
     np.save('%smatrix_chr%s.npy' % (outdir, c), matrix)
     
     o.close()
-    return "%s\t%d\t%d" % (c, pat, snp)
+    return "%s\t%d\t%d\n" % (c, snp, pat)
 
 
 ch = '1'

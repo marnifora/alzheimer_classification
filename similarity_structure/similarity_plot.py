@@ -170,7 +170,7 @@ for sets, name in [[seta, 'setA'], [setb, 'setB']]:
                     raise exceptions.WrongValueError('%s%d' % (name, i), el, 'There is no such data set as %s' % el[0])
 
 for d in dataset:
-    o = open('%sgenome_stats.txt' % d[1], 'r')
+    o = open('%sgenome_stats.txt' % d[3], 'r')
     line = o.readline()
     pat = int(line.split()[1])
     d.append(pat)

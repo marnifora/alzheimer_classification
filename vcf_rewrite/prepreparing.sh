@@ -44,7 +44,7 @@ function vcf {
                 echo "matrixes for chr $4 done!"
         fi
         # after this, run only once each function:
-        # > make_pit-diagnoses.py (change rules for establishing diagnoses)
+        # > make_pid-diagnoses.py (change rules for establishing diagnoses)
         # > makeY.py
         # > makeX_pooling.sh
         

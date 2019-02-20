@@ -99,7 +99,7 @@ def write_matrix(plink, indir, outdir, snps_val):
 
     done = 0
     for line in stats:
-        ch, pat, snp = line.split()
+        ch, snp, pat = line.split()
         pat, snp = int(pat), int(snp)
         matrix = np.zeros(shape=(pat, snp, 2), dtype=np.int8)
         pedfile.seek(0, 0)

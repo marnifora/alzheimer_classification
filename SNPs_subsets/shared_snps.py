@@ -15,6 +15,14 @@ For each dataset:
 
 
 def find_shared(dataset, chrlist, fixed, run):
+    """
+    Searching for shared SNPs among given data sets, writing them into files.
+    :param dataset: (dict) the keys are name of data sets, values are directories to folders with them
+    :param chrlist: (list) chromosomes for analysis
+    :param fixed: (boolean) if number of run can be overwritten
+    :param run: (int or None) number of run given as a parameter - None if not given
+    :return: number of shared SNPs for the given data sets
+    """
 
     shared_snps = 0
     sets = list(dataset.keys())

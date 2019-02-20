@@ -142,7 +142,7 @@ def load_data(ch, dataset, outdir, pat, run, subset, subsetrun, testpat):
             snp = None
             for line in cc:
                 if line.startswith('%d\t' % ch):
-                    snp = int(line.split()[-1])
+                    snp = int(line.split()[1])
                     break
             cc.close()
             if 'snp' is None:
@@ -242,7 +242,7 @@ def read_typedata(chrlist, outdir, p, run, type):
     return X, y
 
 
-def build_testdata(chrlist, class_perc, selected_snps, testset):
+def build_testdata(chrlist, selected_snps, testset):
 
     pat = patients(testset)
     for name in testset.keys():
@@ -360,9 +360,9 @@ def patients(dataset):
     for name in dataset.keys():
         g = open('%sgenome_stats.txt' % dataset[name], 'r')
         line = g.readline()
-        p = int(line.split()[1])
+        p = int(line.split()[3])
         for line in g:
-            if int(line.split()[1]) != p:
+            if int(line.split()[3]) != p:
                 raise exceptions.OtherError('Error: there is different number of patients for different chromosomes!')
         pat[name] = p
         g.close()
@@ -489,60 +489,68 @@ if not class_only:
 
 if not boruta_only:
 
-    # reading training data from given run of boruta analysis
-    X_train, y_train = read_typedata(chrlist, outdir, class_perc, borutarun, 'train')
-
-    # determination of number of class run
-    classrun = funcs.establish_run('class', fixed, outdir, classrun)
-
-    # establishing testing data based on given test set(s) or test subset of patients
-    if not testset:
-        if testsize == 0:
-            raise exceptions.NoParameterError('testset',
-                                              'Test size was not given - define what set should be used as a testset.')
-        X_test, y_test = read_typedata(chrlist, outdir, class_perc, borutarun, 'test')
-
-    else:
-        if class_only:
-            selected_snps = {ch: [] for ch in chrlist}
-            for ch in chrlist:
-                o = open('%sbestsnps_chr%d_%d_%d.txt' % (outdir, ch, class_perc, borutarun), 'r')
-                for i in range(2):  # header
-                    o.readline()
-                for line in o:
-                    selected_snps[ch].append(int(line.strip()))
-                o.close()
-        X_test, y_test = build_testdata(chrlist, class_perc, selected_snps, testset)
-
-    # running of classification
-    score_train, score_test = classify(X_train, y_train, X_test, y_test)
-    print('Classification done!')
-
-    # saving scores to class_scores file
-    trainpat, all_snps = X_train.shape
-    testpat = y_test.shape[0]
-    trainstr = ' + '.join(dataset.keys())
-    if not testset:
-        teststr = '%.1f*(%s)' % (testsize, trainstr)
-    else:
-        teststr = ' + '.join(testset.keys())
     scores_file = open('%sclass_scores_%d.txt' % (outdir, classrun), 'w', 1)
-    scores_file.write('Random forest classification\n' +
-                      'TRAINING DATA:\nData set =  %s\nPatients = %d\nSNPs = %d\nperc = %d\ntrain run = %d\n'
-                      % (trainstr, trainpat, all_snps, class_perc, borutarun) +
-                      'TESTING DATA:\nData set = %s\nPatients = %d\n'
-                      % (teststr, testpat))
-    scores_file.write('RESULT of ANALYSIS:\ntrain_score\ttest_score\n%.3f\t%.3f\n' % (score_train, score_test))
+    all_snps_perc = []
+    for i, p in enumerate(class_perc):
+        # reading training data from given run of boruta analysis
+        X_train, y_train = read_typedata(chrlist, outdir, class_perc, borutarun, 'train')
+
+        # determination of number of class run
+        classrun = funcs.establish_run('class', fixed, outdir, classrun)
+
+        # establishing testing data based on given test set(s) or test subset of patients
+        if not testset:
+            if testsize == 0:
+                raise exceptions.NoParameterError(
+                    'testset', 'Test size was not given - define what set should be used as a testset.')
+            X_test, y_test = read_typedata(chrlist, outdir, class_perc, borutarun, 'test')
+
+        else:
+            if class_only:
+                selected_snps = {ch: [] for ch in chrlist}
+                for ch in chrlist:
+                    o = open('%sbestsnps_chr%d_%d_%d.txt' % (outdir, ch, class_perc, borutarun), 'r')
+                    for i in range(2):  # header
+                        o.readline()
+                    for line in o:
+                        selected_snps[ch].append(int(line.strip()))
+                    o.close()
+            X_test, y_test = build_testdata(chrlist, class_perc, selected_snps, testset)
+
+        # running of classification
+        score_train, score_test = classify(X_train, y_train, X_test, y_test)
+        print('Classification done!')
+
+        # saving scores to class_scores file
+        if i == 1:
+            trainpat = X_train.shape[0]
+            testpat = y_test.shape[0]
+            trainstr = ' + '.join(dataset.keys())
+            if not testset:
+                teststr = '%.1f*(%s)' % (testsize, trainstr)
+            else:
+                teststr = ' + '.join(testset.keys())
+            scores_file.write('Random forest classification\n' +
+                              'TRAINING DATA:\nData set =  %s\nPatients = %d\ntrain run = %d\n'
+                              % (trainstr, trainpat, borutarun) +
+                              'TESTING DATA:\nData set = %s\nPatients = %d\n'
+                              % (teststr, testpat))
+            scores_file.write('RESULT of ANALYSIS:\nperc\tSNPs\ttrain_score\ttest_score\n')
+        all_snps = X_train.shape[1]
+        all_snps_perc.append(all_snps)
+        scores_file.write('%d\t%d\t%.3f\t%.3f\n' % (p, all_snps, score_train, score_test))
+        print('Scores for perc=%d saved to file' % p)
+
+        # saving matrices (on which was based the classification) to file
+        for name in ['X_train', 'y_train', 'X_test', 'y_test']:
+            np.save('%s%s_genome_%d_%d.npy' % (outdir, name, p, classrun), eval(name))
     scores_file.close()
-    print('Scores saved to file')
 
     # writing information about class run to class_run file
     run_file = open('%sclass_runs.txt' % outdir, 'a')
     'run\ttest_set\ttest_pat\ttrain_run\ttrain_set\ttrain_pat\tperc\tSNPs\tchromosomes\n'
-    run_file.write('%d\t%s\t%d\t%d\t%s\t%d\t%d\t%d\t%s\n' % (classrun, teststr, testpat, borutarun, trainstr, trainpat,
-                                                             class_perc, all_snps, funcs.make_chrstr(chrlist)))
+    run_file.write('%d\t%s\t%d\t%d\t%s\t%d\t%s\t%s\t%s\n' % (classrun, teststr, testpat, borutarun, trainstr, trainpat,
+                                                             class_perc, all_snps_perc, funcs.make_chrstr(chrlist)))
     run_file.close()
 
-    # saving matrices (on which was based the classification) to file
-    for name in ['X_train', 'y_train', 'X_test', 'y_test']:
-        np.save('%s%s_genome_%d.npy' % (outdir, name, classrun), eval(name))
+

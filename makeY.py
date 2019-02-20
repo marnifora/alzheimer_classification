@@ -37,6 +37,25 @@ def makeY(indir, outdir):
     return ad, nl
 
 
+def update_genome_stats(indir, pat):
+    """
+    Writing in addition to genome_stats.txt number of patients with diagnosis NL or AD (who can be used for further
+    analysis)
+    :param indir: input directory
+    :param pat: number of patients with NL or AD diagnosis
+    :return: None
+    """
+
+    stats = open('%sgenome_stats.txt' % indir, 'r')
+    lines = stats.readlines().split('\n')
+    stats.close()
+    stats = open('%sgenome_stats.txt' % indir, 'w')
+    for line in lines:
+        stats.write(line + '\t%d\n' % pat)
+    stats.close()
+    return None
+
+
 indir = './'
 for q in range(len(sys.argv)):
     if sys.argv[q] == '-indir':
@@ -48,4 +67,5 @@ if 'outdir' not in globals():
     outdir = indir
 
 ad, nl = makeY(indir, outdir)
+update_genome_stats(indir, ad+nl)
 print('Number of patients for further analysis: %d (contains AD=%d, NL=%d)' % (ad+nl, ad, nl))

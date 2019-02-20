@@ -145,7 +145,9 @@ rosmap dataset
 #### makeY.py
 
 Making csv file with Y matrix needed for classification process (it contains information about classes to which the 
-objects are assigned). Writing numbers of patients with diagnoses different than NL/AD into txt file.
+objects are assigned). Writing numbers of patients with diagnoses different than NL/AD into txt file. Updating 
+genome_stats.txt file - add to every line number of patients with diagnosis NL or AD (who can be used in further 
+analysis).
 
 ##### Input:
 - pid_chr.txt - list of patients' IDs, output of make_pit-diagnoses.py
@@ -155,12 +157,14 @@ diagnoses:
 	DIF - different diagnosis (for example Mild Cognitive Impairment)
 	NL - normal
 	NN - no data
+- genome_stats.txt - file with information about number of patients and SNPs on each chromosome
 
 ##### Output:
 - Y_chr.csv - list of diagnoses coded as 0 (NL) or 1 (AD) in the order corresponding to the order in pid_chr file. 
 Patients with DIF diagnosis was excluded from this file.
 - dif_chr.txt - list of IDs of patients having other diagnosis than NL/AD and number of line in which they are written 
 in pid_chr file
+- genome_stats.txt (UPDATED)
 
 ##### Cmd parameters:
 - -indir [DIR] - input directory
@@ -284,9 +288,11 @@ not given first value from perc list is set as class_perc
 #### Additional analyzes
 
 <br></br>
-#### Subset of shared SNPs
+#### SNPs subsets
 
-Subset 'shared' contains SNPs which occur in two different data sets.
+##### shared_snps.py
+
+Subset 'shared' from the given group of data sets contains SNPs which occur in every of them.
 
 1. shared_snps_chr{chr_number}.txt - list of SNPs from chromosome {chr_number} which get through the pruning AND occur 
 also in data from other cohort. Output of compare_snps_pruned.py
