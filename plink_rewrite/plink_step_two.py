@@ -69,7 +69,7 @@ def write_snps_list(plink, indir, outdir, overwrite):
         if line[0] != prevch:
             file.close()
             filename = '%ssnps_chr%s.txt' % (outdir, line[0])
-            if not os.path.isfile(filename):
+            if not os.path.isfile(filename) or overwrite:
                 file = open(filename, 'w')
             else:
                 raise exceptions.FileOverwriteError(filename)

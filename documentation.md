@@ -244,6 +244,16 @@ where {perc} is a value of argument perc for Boruta analysis
 Make in first run (another runs write in addition):
 - boruta_runs.txt -  list of conducted runs of Boruta analysis with their parameters
 - class_runs.txt – list of conducted runs of classification with their parameters
+- X_train_genome_{perc}_{run_number}.npy
+- y_train_genome_{perc}_{run_number}.npy
+- X_test_genome_{perc}_{run_number}.npy
+- y_test_genome_{perc}_{run_number}.npy
+- X_train_chr{chr_number}_{perc}_{run_number}.npy
+- y_train_{run_number}.npy
+- X_test_chr{chr_number}_{perc}_{run_number}.npy
+- y_test_{run_number}.npy
+
+
 
 ##### Cmd parameters:
 - -dataset [NAME] [DIR] - set of data which should be used to Boruta analysis

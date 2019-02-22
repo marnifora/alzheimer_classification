@@ -170,14 +170,15 @@ for sets, name in [[seta, 'setA'], [setb, 'setB']]:
                     raise exceptions.WrongValueError('%s%d' % (name, i), el, 'There is no such data set as %s' % el[0])
 
 for d in dataset:
-    o = open('%sgenome_stats.txt' % d[3], 'r')
+    o = open('%sgenome_stats.txt' % d[1], 'r')
     line = o.readline()
-    pat = int(line.split()[1])
+    pat = int(line.split()[3])
     d.append(pat)
 
 for set1, set2 in zip(seta, setb):
     rows1, rows2 = make_lists(set1, set2, dataset)
     linkage = hc.linkage(sp.distance.squareform(sims[rows1][:, rows2]), method='average')
+
     if clustermap:
         cmap = sns.cubehelix_palette(20, start=1, rot=-0.7, dark=0.3, light=1, reverse=True)
         sns.clustermap(sims[rows1][:, rows2], row_linkage=linkage, col_linkage=linkage, cmap=cmap)

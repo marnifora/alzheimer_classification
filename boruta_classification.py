@@ -51,10 +51,6 @@ def pooling(chrlist, classperc, dataset, outdir, pat, perc, r, run, subset, subs
         for j, p in enumerate(perc):
             all_snps[p] += qq[1][p]
 
-    for p, n in all_snps.items():
-        if all_snps[p] == 0 and p in classperc:
-            classperc.remove(p)
-
     if qytest is None:
         params = [[qytrain, 'train']]
     else:
@@ -74,7 +70,7 @@ def pooling(chrlist, classperc, dataset, outdir, pat, perc, r, run, subset, subs
         a.write('%d\t%d\n' % (p, all_snps[p]))
     a.close()
 
-    return selected_snps, classperc
+    return selected_snps
 
 
 def one_process(ch, classperc, dataset, outdir, pat, perc, q, qytest, qytrain, r, run, subset, subsetrun, testpat):
@@ -82,17 +78,17 @@ def one_process(ch, classperc, dataset, outdir, pat, perc, q, qytest, qytrain, r
     Loading data to matrices - function load_data.
     Selecting best SNPs subsets for every perc - function best_snps.
     Writing best SNPs for every chromosome into a file.
-    Adding to multiprocessing-queue an element: [number of chromsome,
+    Adding to multiprocessing-queue an element: [number of chromosome,
         dictionary - key: perc, value: selected SNPs by Boruta with perc.
     """
 
     print('Analysis for chromosome %d started\n' % ch)
 
-    X, y, snp, Xtest, ytest = load_data(ch, dataset, outdir, pat, run, subset, subsetrun, testpat)
+    X, y, snp, Xtest, ytest = load_data(ch, dataset, pat, subset, subsetrun, testpat)
 
     print('matrices X and y for chromosome %d have been loaded\n' % ch)
 
-    snps = best_snps(ch, perc, r, snp, X, y)
+    snps = best_snps(perc, r, snp, X, y)
 
     print('best SNPs for chromosome %d have been selected by Boruta\n' % ch)
 
@@ -101,7 +97,7 @@ def one_process(ch, classperc, dataset, outdir, pat, perc, q, qytest, qytrain, r
         qytest.put(ytest)
     for p in classperc:
         np.save('%sX_train_chr%d_%d_%d.npy' % (outdir, ch, p, run), X[:, snps[p]])
-        print('X train matrix for chr %d was saved to file' % ch)
+        print('X train matrix for chr %d for perc %d was saved to file' % (ch, p))
         if testpat:
             np.save('%sX_test_chr%d_%d_%d.npy' % (outdir, ch, p, run), Xtest[:, snps[p]])
 
@@ -121,7 +117,7 @@ def one_process(ch, classperc, dataset, outdir, pat, perc, q, qytest, qytrain, r
     q.put([ch, ll, snps])
 
 
-def load_data(ch, dataset, outdir, pat, run, subset, subsetrun, testpat):
+def load_data(ch, dataset, pat, subset, subsetrun, testpat):
     """
     Loading data from files into X and y matrices.
     Selection of patients not being in test set and SNPs present in subset-file.
@@ -201,7 +197,7 @@ def load_data(ch, dataset, outdir, pat, run, subset, subsetrun, testpat):
         return X_train, y_train, snp, None, None
 
 
-def best_snps(ch, perc, r, snp, X, y):
+def best_snps(perc, r, snp, X, y):
     s = snp // r
     snps = {a: [] for a in perc}
 
@@ -496,7 +492,8 @@ if not class_only:
         perc, r, subset, subsetrun, testpat, testsize, towrite = cont_run(chrlist, fixed, outdir, borutarun)
 
     # running Boruta analysis
-    selected_snps, classperc = pooling(chrlist, classperc, dataset, outdir, pat, perc, r, borutarun, snp_subset, subsetrun, testpat)
+    selected_snps = pooling(chrlist, classperc, dataset, outdir, pat, perc, r, borutarun, snp_subset,
+                            subsetrun, testpat)
 
     # saving information about done run to boruta_runs file
     if continuation:
@@ -519,7 +516,7 @@ if not boruta_only:
     # determination of number of class run
     classrun = funcs.establish_run('class', fixed, outdir, classrun)
     scores_file = open('%sclass_scores_%d.txt' % (outdir, classrun), 'w', 1)
-    all_snps_perc = []
+    num_snps_perc = []
     selected_snps = {ch: {} for ch in chrlist}
     for i, p in enumerate(classperc):
         # reading training data from given run of boruta analysis
@@ -541,14 +538,10 @@ if not boruta_only:
                     for line in o:
                         selected_snps[ch][p] = selected_snps[ch].setdefault(p, []).append(int(line.strip()))
                     o.close()
-            X_test, y_test = build_testdata(chrlist, p, classperc, selected_snps, testset)
+            X_test, y_test = build_testdata(chrlist, p, selected_snps, testset)
 
-        # running of classification
-        score_train, score_test = classify(X_train, y_train, X_test, y_test)
-        print('Classification done!')
-
-        # saving scores to class_scores file
-        if i == 1:
+        # writing heading to class_scores file
+        if i == 0:
             trainpat = X_train.shape[0]
             testpat = y_test.shape[0]
             trainstr = ' + '.join(dataset.keys())
@@ -562,20 +555,30 @@ if not boruta_only:
                               'TESTING DATA:\nData set = %s\nPatients = %d\n'
                               % (teststr, testpat))
             scores_file.write('RESULT of ANALYSIS:\nperc\tSNPs\ttrain_score\ttest_score\n')
-        all_snps = X_train.shape[1]
-        all_snps_perc.append(all_snps)
-        scores_file.write('%d\t%d\t%.3f\t%.3f\n' % (p, all_snps, score_train, score_test))
-        print('Scores for perc=%d saved to file' % p)
 
-        # saving matrices (on which was based the classification) to file
-        for name in ['X_train', 'y_train', 'X_test', 'y_test']:
-            np.save('%s%s_genome_%d_%d.npy' % (outdir, name, p, classrun), eval(name))
+        num_snps = X_train.shape[1]
+        num_snps_perc.append(num_snps)
+
+        # running classification and saving scores to class_scores file
+        if num_snps > 0:
+            score_train, score_test = classify(X_train, y_train, X_test, y_test)
+            print('Classification done!')
+            scores_file.write('%d\t%d\t%.3f\t%.3f\n' % (p, num_snps, score_train, score_test))
+            # saving matrices (on which was based the classification) to file
+            for name in ['X_train', 'y_train', 'X_test', 'y_test']:
+                np.save('%s%s_genome_%d_%d.npy' % (outdir, name, p, classrun), eval(name))
+        else:
+            print('No SNPs were chosen for perc %d' % p)
+            scores_file.write('%d\t%d\t-\t-\n' % (p, num_snps))
+
+        print('Scores for perc %d saved to file' % p)
+
     scores_file.close()
 
     # writing information about class run to class_run file
     run_file = open('%sclass_runs.txt' % outdir, 'a')
     'run\ttest_set\ttest_pat\ttrain_run\ttrain_set\ttrain_pat\tperc\tSNPs\tchromosomes\n'
     run_file.write('%d\t%s\t%d\t%d\t%s\t%d\t%s\t%s\t%s\n' % (classrun, teststr, testpat, borutarun, trainstr, trainpat,
-                                                             classperc, all_snps_perc, funcs.make_chrstr(chrlist)))
+                                                             classperc, num_snps_perc, funcs.make_chrstr(chrlist)))
     run_file.close()
 

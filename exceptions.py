@@ -130,7 +130,7 @@ class NoSNPFound(Exception):
 class WrongParameterName(Exception):
 
     def __init__(self, parameter):
-        self.pro = "There is no command parameter named '%d'!" % parameter
+        self.pro = "There is no command parameter named '%s'!" % parameter
 
     def __str__(self):
         return repr(self.pro)

@@ -47,11 +47,11 @@ def update_genome_stats(indir, pat):
     """
 
     stats = open('%sgenome_stats.txt' % indir, 'r')
-    lines = stats.readlines().split('\n')
+    lines = stats.readlines()
     stats.close()
     stats = open('%sgenome_stats.txt' % indir, 'w')
     for line in lines:
-        stats.write(line + '\t%d\n' % pat)
+        stats.write(line.strip() + '\t%d\n' % pat)
     stats.close()
     return None
 
