@@ -117,7 +117,7 @@ the second allele (beacuse second number is 3).
 #### Making X and Y matrices needed to classification
 
 <br></br>
-#### make_pit-diagnoses.py
+#### make_pid-diagnoses.py
 
 Unification all pid_chr{chr_number}.txt files in one pid_chr.txt file (after checking whether the order is the same in 
 every file). Making file diagnoses.txt with diagnose for every patient in the same order as in the pid_chr.txt file.

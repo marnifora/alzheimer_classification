@@ -23,7 +23,7 @@ Python 3.6.6
 Processing vcf files:
 
 - prepreparing.sh
-- make_pit-diagnoses.py
+- make_pid-diagnoses.py
 - makeY.py
 - makeX_pooling.sh
 
