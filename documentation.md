@@ -37,6 +37,9 @@ If -matrix or -stats options are on there is more output from different scripts 
 - -indir [DIR] – input directory
 - -outdir [DIR] – output directory
 - -gatkdir [DIR] - directory to folder with GATK tool
+- -reference [DIR+NAME] - name of the file with reference genome in fasta format
+- -name [NAME] - pattern of name of vcf file with genetic data, if the name is different for every chromosome it should 
+be marked as in the example: 'name{chr}rest' where {chr} is the number of the chromosome
 
 <br></br>
 #### vcf_stats.py

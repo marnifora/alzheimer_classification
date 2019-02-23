@@ -110,6 +110,14 @@ while [[ "$1" != "" ]]; do
         -gatkdir )              shift
                                 gatkdir=$1
                                 ;;
+        -reference )            shift
+                                reference=$1
+                                ;;
+        -name )                 shift
+                                s=(${1//\{chr\}/ })
+                                istart=${s[0]}
+                                iend=${s[1]}
+                                ;;
         *)                      usage
                                 exit 1
     esac
@@ -122,11 +130,13 @@ fi
 
 # prefix and sufix of name of vcf files containing WGS data, between them there should be only number of chromosome
 # (it will be added automatically)
-istart="NIA_JG_1898_samples_GRM_WGS_b37_JointAnalysis01_2017-12-08_"
-iend=".recalibrated_variants.vcf"
+
+# name of downloaded data for rosmap: NIA_JG_1898_samples_GRM_WGS_b37_JointAnalysis01_2017-12-08_{chr_number}.recalibrated_variants.vcf
+# name of dowloaded data for adni: ADNI.808_indiv.minGQ_21.pass.ADNI_ID.chr{chr_number}.vcf
 
 # name of fasta file with reference genome based on which WGS files were made
-reference=${indir}"human_g1k_v37.fasta"
+# reference for rosmap: human_g1k_v37.fasta
+# reference for adni: Homo_sapiens_assembly19.fasta
 
 # name of output file with stats for whole genome
 genomestats=${outdir}"genome_stats.txt"
