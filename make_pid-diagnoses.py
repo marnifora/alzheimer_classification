@@ -165,7 +165,7 @@ def write_files(dataset, dd, indir, outdir):
     n = 0
     i = 0
     for line in o:
-        if 'fp' in globals():
+        if 'fp' in locals():
             fp.write(line)
         try:
             if dataset == 'adni':

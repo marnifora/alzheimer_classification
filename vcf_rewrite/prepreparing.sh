@@ -13,23 +13,23 @@ function vcf {
 
                 tend=".tar"
                 tarfile=$1${tend}
-                tar -xvf ${tarfile}
-                echo "vcf.gz.tar for chr=$4 decompressed!"
+                tar -xvf ${tarfile} > ${13}
+                echo "tar file for chr=$4 decompressed!"
         fi
 
         if [[ $6 -eq 1 ]]; then
 
                 gend=".gz"
                 gzfile=$1${gend}
-                gunzip -f ${gzfile}
-                echo "vcf.gz for chr=$4 decompressed!"
+                gunzip -f ${gzfile} > $1
+                echo "gz file for chr=$4 decompressed!"
         fi
         
 
         if [[ $7 -eq 1 ]]; then
                 echo $8           
                 echo "running SelectVariants for chr=$4"
-                ${12}gatk-4.0.10.1/gatk SelectVariants -R $3 -V $1 -O $2 -select-type-to-include SNP
+                ${12}gatk SelectVariants -R $3 -V $1 -O $2 -select-type-to-include SNP
                 echo "$4 SNPs.vcf done!"
         fi
 
@@ -41,7 +41,8 @@ function vcf {
         if [[ $9 -eq 1 ]]; then
                 echo "running vcf_to_matrix for chr $4"
                 python3 vcf_to_matrix.py -chr $4 -input $2 -outdir ${11} >> ${10}
-                echo "matrixes for chr $4 done!"
+                sort -k1 -n -o ${10} ${10}
+                echo "matrices for chr $4 done!"
         fi
         # after this, run only once each function:
         # > make_pid-diagnoses.py (change rules for establishing diagnoses)
@@ -131,8 +132,8 @@ fi
 # prefix and sufix of name of vcf files containing WGS data, between them there should be only number of chromosome
 # (it will be added automatically)
 
-# name of downloaded data for rosmap: NIA_JG_1898_samples_GRM_WGS_b37_JointAnalysis01_2017-12-08_{chr_number}.recalibrated_variants.vcf
-# name of dowloaded data for adni: ADNI.808_indiv.minGQ_21.pass.ADNI_ID.chr{chr_number}.vcf
+# name of downloaded data for rosmap: NIA_JG_1898_samples_GRM_WGS_b37_JointAnalysis01_2017-12-08_{chr}.recalibrated_variants.vcf
+# name of dowloaded data for adni: ADNI.808_indiv.minGQ_21.pass.ADNI_ID.chr{chr}.vcf
 
 # name of fasta file with reference genome based on which WGS files were made
 # reference for rosmap: human_g1k_v37.fasta
@@ -165,7 +166,7 @@ if [[ $all -eq 1 ]]; then
                         
                 output=${indir}${ostart}${i}${oend}
 
-                job_pool_run vcf ${input} ${output} ${reference} ${i} ${tar} ${gz} ${snp} ${stats} ${matrix} ${genomestats} ${outdir} ${gatkdir}
+                job_pool_run vcf ${input} ${output} ${reference} ${i} ${tar} ${gz} ${snp} ${stats} ${matrix} ${genomestats} ${outdir} ${gatkdir} ${indir}
 
         done
 
@@ -174,5 +175,5 @@ if [[ $all -eq 1 ]]; then
 else
         input=${indir}${istart}${chr}${iend}
         output=${indir}${ostart}${chr}${oend}
-        vcf ${input} ${output} ${reference} ${chr} ${tar} ${gz} ${snp} ${stats} ${matrix} ${genomestats} ${outdir} ${gatkdir}
+        vcf ${input} ${output} ${reference} ${chr} ${tar} ${gz} ${snp} ${stats} ${matrix} ${genomestats} ${outdir} ${gatkdir} ${indir}
 fi

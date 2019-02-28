@@ -35,7 +35,7 @@ def count_similarity(row1, row2, snp):
     return sum(np.clip(abs(row1 - row2), 0, 1)) / snp
 
 
-def make_matrix(outdir, pat, procs):
+def make_matrix(dataset, outdir, pat, procs):
 
     sims = np.zeros(shape=(pat, pat), dtype=np.float16)
     oldr = 1
@@ -54,17 +54,18 @@ def make_matrix(outdir, pat, procs):
                     r += 1
                     c = r
             oldr, oldc = r, c
-    np.save('%ssimilarity_structure.npy' % outdir, sims)
+    np.save('%s%s_similarities.npy' % (outdir, '-'.join(list(dataset.keys()))), sims)
 
 
-datadir = []
+dataset = {}
 procs = 10
+shared = False
 
 for q in range(len(sys.argv)):
 
-    if sys.argv[q] == '-datadir':
-        if sys.argv[q + 1][0] in ['.', '~', '/']:
-            datadir.append(sys.argv[q + 1])
+    if sys.argv[q] == '-dataset':
+        if sys.argv[q + 2][0] in ['.', '~', '/']:
+            dataset[sys.argv[q + 1]] = sys.argv[q + 2]
         else:
             raise exceptions.NoParameterError('directory',
                                               'After name of data set should appear a directory to folder with it.')
@@ -79,15 +80,30 @@ for q in range(len(sys.argv)):
     if sys.argv[q] == '-procs':
         procs = int(sys.argv[q+1])
 
+    if sys.argv[q] == '-shared':
+        shared = True
 
-if len(datadir) != 2:
-    raise exceptions.WrongValueError('datadir', datadir, 'There must be exactly two data sets given.')
+
+if not dataset:
+    raise exceptions.NoParameterError('dataset', 'data set(s) for which similarities should be counted')
 
 if 'outdir' not in globals():
-    outdir = datadir[0]
+    if len(dataset) == 1:
+        outdir = next(iter(dataset.values()))
+    else:
+        raise exceptions.NoParameterError('outdir', 'to what directory output matrix should be written')
 
-matrix = np.concatenate((np.load('%sX_genome_shared.npy' % datadir[0]),
-                         np.load('%sX_genome_shared.npy' % datadir[1])), axis=0)
+dirs = list(dataset.values())
+if len(dirs) > 1 and not shared:
+    raise exceptions.WrongValueError('dataset', dataset, 'There is more than one data set and no SNPs subset given!')
+if not shared:
+    matrix = np.load('%sX_chr1_nodif.npy')
+    for ch in range(2, 24):
+        matrix = np.concatenate((matrix, np.load('X_chr%s_nodif.npy' % ch)), axis=1)
+else:
+    matrix = np.load('%sX_genome_shared.npy' % dirs[0])
+    for d in dirs[1:]:
+        matrix = np.concatenate((matrix, np.load('%sX_genome_shared.npy' % d)), axis=0)
 
 print('matrix loaded successfully')
 
@@ -131,6 +147,6 @@ print('Done')
 print('Number of similarities to count: %d' % sim)
 print('Number of operations in one process: %d' % operations)
 
-make_matrix(outdir, pat, procs)
+make_matrix(dataset, outdir, pat, procs)
 
 print('Similarity structure was written to npy file.')

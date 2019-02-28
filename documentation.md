@@ -142,6 +142,7 @@ rosmap dataset
 - -indir [DIR] - input directory
 - -outdir [DIR] - output directory
 - -dataset [NAME] - name of data set for which diagnoses should be established (e.g. adni or rosmap)
+- -diagdir [DIR] - directory to a folder with file(s) based on which diagnoses can be established
 
 
 <br></br>

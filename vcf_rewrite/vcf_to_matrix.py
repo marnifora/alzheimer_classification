@@ -57,7 +57,7 @@ def vcf_to_matrix(c, inp, outdir):
     np.save('%smatrix_chr%s.npy' % (outdir, c), matrix)
     
     o.close()
-    return "%s\t%d\t%d\n" % (c, snp, pat)
+    return "%s\t%d\t%d" % (c, snp, pat)
 
 
 ch = '1'
