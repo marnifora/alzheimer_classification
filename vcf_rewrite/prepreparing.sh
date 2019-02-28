@@ -13,7 +13,7 @@ function vcf {
 
                 tend=".tar"
                 tarfile=$1${tend}
-                tar -xvf ${tarfile} > ${13}
+                tar -xvf ${tarfile} -C ${13}
                 echo "tar file for chr=$4 decompressed!"
         fi
 

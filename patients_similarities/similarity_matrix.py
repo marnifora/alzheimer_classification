@@ -97,9 +97,9 @@ dirs = list(dataset.values())
 if len(dirs) > 1 and not shared:
     raise exceptions.WrongValueError('dataset', dataset, 'There is more than one data set and no SNPs subset given!')
 if not shared:
-    matrix = np.load('%sX_chr1_nodif.npy')
+    matrix = np.load('%sX_chr1_nodif.npy' % dirs[0])
     for ch in range(2, 24):
-        matrix = np.concatenate((matrix, np.load('X_chr%s_nodif.npy' % ch)), axis=1)
+        matrix = np.concatenate((matrix, np.load('%sX_chr%s_nodif.npy' % (dirs[0], ch))), axis=1)
 else:
     matrix = np.load('%sX_genome_shared.npy' % dirs[0])
     for d in dirs[1:]:
