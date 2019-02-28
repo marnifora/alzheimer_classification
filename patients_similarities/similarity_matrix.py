@@ -1,7 +1,6 @@
 import numpy as np
 import multiprocessing as multi
 import sys
-import pandas as pd
 sys.path.insert(0, '../')
 import exceptions
 
@@ -60,7 +59,6 @@ def make_matrix(dataset, outdir, pat, procs):
 
 dataset = {}
 procs = 10
-shared = False
 
 for q in range(len(sys.argv)):
 
@@ -81,10 +79,6 @@ for q in range(len(sys.argv)):
     if sys.argv[q] == '-procs':
         procs = int(sys.argv[q+1])
 
-    if sys.argv[q] == '-shared':
-        shared = True
-
-
 if not dataset:
     raise exceptions.NoParameterError('dataset', 'data set(s) for which similarities should be counted')
 
@@ -95,18 +89,10 @@ if 'outdir' not in globals():
         raise exceptions.NoParameterError('outdir', 'to what directory output matrix should be written')
 
 dirs = list(dataset.values())
-if len(dirs) > 1 and not shared:
-    raise exceptions.WrongValueError('dataset', dataset, 'There is more than one data set and no SNPs subset given!')
-if not shared:
-    matrix = pd.read_csv('%sX_chr1_nodif.csv' % dirs[0], header=None, delimiter=',').values
-    for ch in range(2, 24):
-        matrix = np.concatenate((matrix,
-                                 pd.read_csv('%sX_chr%s_nodif.csv' % (dirs[0], ch), header=None, delimiter=',').values),
-                                axis=1)
-else:
-    matrix = np.load('%sX_genome_shared.npy' % dirs[0])
-    for d in dirs[1:]:
-        matrix = np.concatenate((matrix, np.load('%sX_genome_shared.npy' % d)), axis=0)
+
+matrix = np.load('%sX_genome_shared.npy' % dirs[0])
+for d in dirs[1:]:
+    matrix = np.concatenate((matrix, np.load('%sX_genome_shared.npy' % d)), axis=0)
 
 print('matrix loaded successfully')
 
