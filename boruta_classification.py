@@ -1,6 +1,6 @@
 import ast
 import boruta
-from collections import Counter
+from collections import Counter, OrderedDict
 import csv
 import exceptions
 import multiprocessing
@@ -19,45 +19,26 @@ See readme.txt for input, output and possible options.
 def pooling(chrlist, classperc, dataset, outdir, pat, perc, r, run, subset, subsetrun, testpat):
     """
     Running function one_process for every chr on chrlist.
-    Checking whether y matrix for every chromosome is the same - writing it to a file named 'y_train_{run}.npy' and
-    'y_test_{run}.npy'.
     """
     procs = []
-    qytrain = multiprocessing.Queue()
-    if testpat:
-        qytest = multiprocessing.Queue()
-    else:
-        qytest = None
+
+    ytrain = build_y_matrices(dataset, run, outdir, pat, testpat=testpat)
 
     for ch in chrlist:
 
         p = multiprocessing.Process(target=one_process,
-                                    args=(ch, classperc, dataset, outdir, pat, perc, qytest, qytrain, r, run,
-                                          subset, subsetrun, testpat))
+                                    args=(ch, classperc, dataset, outdir, pat, perc, r, run, subset, subsetrun,
+                                          testpat, ytrain))
         procs.append(p)
         p.start()
 
     for p in procs:
         p.join()
 
-    if qytest is None:
-        params = [[qytrain, 'train']]
-    else:
-        params = [[qytrain, 'train'], [qytest, 'test']]
-    for qy, type in params:
-        yt = qy.get()
-        while qy.qsize():
-            vec = qy.get()
-            if np.array_equal(vec, yt):
-                pass
-            else:
-                raise exceptions.OtherError('Y %s matrix is different for different chromosomes!' % type)
-        np.save('%sy_%s_%d.npy' % (outdir, type, run), yt)
-
     return 0
 
 
-def one_process(ch, classperc, dataset, outdir, pat, perc, qytest, qytrain, r, run, subset, subsetrun, testpat):
+def one_process(ch, classperc, dataset, outdir, pat, perc, r, run, subset, subsetrun, testpat, ytrain):
     """
     Loading data to matrices - function load_data.
     Selecting best SNPs subsets for every perc - function best_snps.
@@ -66,19 +47,16 @@ def one_process(ch, classperc, dataset, outdir, pat, perc, qytest, qytrain, r, r
 
     print('Analysis for chromosome %d started\n' % ch)
 
-    X, y, snp, Xtest, ytest = load_data(ch, dataset, pat, subset, subsetrun, testpat)
+    Xtrain, Xtest, snp = load_data(ch, dataset, pat, subset, subsetrun, testpat)
 
     print('matrices X and y for chromosome %d have been loaded\n' % ch)
 
-    snps = best_snps(perc, r, snp, X, y)
+    snps = best_snps(perc, r, snp, Xtrain, ytrain)
 
     print('best SNPs for chromosome %d have been selected by Boruta\n' % ch)
 
-    qytrain.put(y)
-    if testpat:
-        qytest.put(ytest)
     for p in classperc:
-        np.save('%sX_train_chr%d_%d_%d.npy' % (outdir, ch, p, run), X[:, snps[p]])
+        np.save('%sX_train_chr%d_%d_%d.npy' % (outdir, ch, p, run), Xtrain[:, snps[p]])
         print('X train matrix for chr %d for perc %d was saved to file' % (ch, p))
         if testpat:
             np.save('%sX_test_chr%d_%d_%d.npy' % (outdir, ch, p, run), Xtest[:, snps[p]])
@@ -136,10 +114,8 @@ def load_data(ch, dataset, pat, subset, subsetrun, testpat):
     done = 0
 
     X_train = np.zeros(shape=(sum(pat.values()) - test, snp), dtype=np.int8)
-    y_train = np.zeros(shape=(sum(pat.values()) - test,), dtype=np.int8)
 
     X_test = np.zeros(shape=(test, snp), dtype=np.int8)
-    y_test = np.zeros(shape=(test,), dtype=np.int8)
 
     for name in dataset.keys():
 
@@ -147,19 +123,14 @@ def load_data(ch, dataset, pat, subset, subsetrun, testpat):
         reader = csv.reader(o, delimiter=',')
         next(reader)  # header
 
-        y = pd.read_csv('%sY_chr.csv' % dataset[name], header=None, index_col=0).values
-        y = y.ravel()
-
-        # writing values from file to matrix X and Y
+        # writing values from file to matrix X
 
         for i, line in enumerate(reader):
             if (done + i) not in testpat:
-                y_train[train_row] = y[i]
                 for j, s in enumerate(snplist[name]):
                     X_train[train_row][j] = line[s + 1]
                 train_row += 1
             else:
-                y_test[test_row] = y[i]
                 for j, s in enumerate(snplist[name]):
                     X_test[test_row][j] = line[s + 1]
                 test_row += 1
@@ -168,9 +139,9 @@ def load_data(ch, dataset, pat, subset, subsetrun, testpat):
         done += i + 1
 
     if testpat:
-        return X_train, y_train, snp, X_test, y_test
+        return X_train, X_test, snp
     else:
-        return X_train, y_train, snp, None, None
+        return X_train, None, snp
 
 
 def best_snps(perc, r, snp, X, y):
@@ -273,7 +244,7 @@ def first_run(fixed, outdir, pat, run, testsize):
     return run, testpat
 
 
-def cont_run(chrlist, fixed, outdir, run):
+def cont_run(chrlist, dataset, fixed, outdir, run):
 
     run_file = open('%sboruta_runs.txt' % outdir, 'r+')
     lines = run_file.readlines()
@@ -288,6 +259,19 @@ def cont_run(chrlist, fixed, outdir, run):
             else:
                 subset = line[3]
                 subsetrun = None
+            sets_order = line[1].strip().split(' + ')
+            if list(dataset.keys()) != sets_order:
+                if len(dataset.keys()) != len(sets_order):
+                    raise exceptions.WrongValueError('dataset', dataset,
+                                                     'Other data sets were used in the given boruta run')
+                else:
+                    for set in sets_order:
+                        try:
+                            dataset.move_to_end(set)
+                        except KeyError:
+                            raise exceptions.WrongValueError('dataset', dataset,
+                                                             'Data set named %s was not used in the given boruta run'
+                                                             % set)
             testsize = float(line[4])
             perc = ast.literal_eval(line[5])
             if isinstance(perc, int):
@@ -328,7 +312,7 @@ def cont_run(chrlist, fixed, outdir, run):
     else:
         testpat = None
 
-    return perc, r, subset, subsetrun, testpat, testsize, towrite
+    return dataset, perc, r, subset, subsetrun, testpat, testsize, towrite
 
 
 def patients(dataset):
@@ -360,12 +344,49 @@ def read_selected_snps(chrlist, directory, p, run):
     return selected_snps
 
 
+def build_y_matrices(dataset, run, outdir, pat, testpat=None):
+
+    if testpat is None:
+        ts = open('%stestpat_%d.txt' % (outdir, run), 'r')
+        testpat = []
+        for line in ts:
+            testpat.append(int(line.strip()))
+        ts.close()
+
+    y_train = np.zeros(shape=(sum(pat.values()) - len(testpat),), dtype=np.int8)
+    y_test = np.zeros(shape=(len(testpat),), dtype=np.int8)
+
+    train_row = 0
+    test_row = 0
+    done = 0
+
+    for name, directory in dataset.items():
+
+        y = pd.read_csv('%sY_chr.csv' % directory, header=None, index_col=0).values
+        y = y.ravel()
+
+        for i in range(pat[name]):
+            if (done + i) not in testpat:
+                y_train[train_row] = y[i]
+                train_row += 1
+            else:
+                y_test[test_row] = y[i]
+                test_row += 1
+
+        done += i + 1
+
+    np.save('%sy_train_%d.npy' % (outdir, run), y_train)
+    np.save('%sy_test_%d.npy' % (outdir, run), y_test)
+
+    return y_train
+
+
 perc = [90]
 r = 5000
 chrlist = [i for i in range(1, 24)]
 
-dataset = {}
-testset = {}
+dataset = OrderedDict()
+testset = OrderedDict()
 testsize = 0
 class_only = False
 boruta_only = False
@@ -375,6 +396,7 @@ subsetrun = None
 fixed = False
 snp_subset = None
 continuation = False
+makey = False
 
 for q in range(len(sys.argv)):
 
@@ -459,6 +481,10 @@ for q in range(len(sys.argv)):
         continuation = True
         continue
 
+    if sys.argv[q] == '-makeY':
+        makey = True
+        continue
+
     if sys.argv[q].startswith('-'):
         raise exceptions.WrongParameterName(sys.argv[q])
 
@@ -469,7 +495,6 @@ if 'outdir' not in globals():
 if 'classperc' not in globals():
     classperc = perc
 
-
 if not class_only:
 
     # determination number of patient in given data set
@@ -479,7 +504,8 @@ if not class_only:
     if not continuation:
         borutarun, testpat = first_run(fixed, outdir, pat, borutarun, testsize)
     else:
-        perc, r, subset, subsetrun, testpat, testsize, towrite = cont_run(chrlist, fixed, outdir, borutarun)
+        dataset, perc, r, subset, subsetrun, testpat, testsize, towrite = cont_run(chrlist, dataset, fixed, outdir,
+                                                                                   borutarun)
 
     # running Boruta analysis
     pooling(chrlist, classperc, dataset, outdir, pat, perc, r, borutarun, snp_subset, subsetrun, testpat)
@@ -506,6 +532,8 @@ if not boruta_only:
     classrun = funcs.establish_run('class', fixed, outdir, classrun)
     scores_file = open('%sclass_scores_%d.txt' % (outdir, classrun), 'w', 1)
     num_snps_perc = []
+    if makey:
+        build_y_matrices(dataset, borutarun, outdir, patients(dataset))
 
     for i, p in enumerate(classperc):
         # reading training data from given run of boruta analysis
@@ -520,7 +548,7 @@ if not boruta_only:
 
         else:
             selected_snps = read_selected_snps(chrlist, outdir, p, borutarun)
-            X_test, y_test = build_testdata(chrlist, p, selected_snps, testset)
+            X_test, y_test = build_testdata(chrlist, selected_snps, testset)
 
         # writing heading to class_scores file
         if i == 0:

@@ -276,7 +276,9 @@ not given first value from perc list is set as class_perc
 - -classrun [VALUE] - number of run of classification analysis
 - -fixed - if number of run or list of chromosomes shouldn't be changed even is it was run before
 - -subset [NAME] - name of SNPs subset which should be under consideration during analysis, e.g. '-subset shared'
+- -subsetrun [VALUE] - number of run of subset establishing
 - -cont - if continuation of started Boruta analysis should be run (for different chromosomes)
+- -makeY - if y matrices should be established before classification
 
 ##### Parameters required for different type of analyses:
 1. Boruta + classification
@@ -288,7 +290,7 @@ not given first value from perc list is set as class_perc
 3. Only classification
     - -class
     - -borutarun [VALUE]
-    - -testset [NAME] [DIR]
+    - -testset [NAME] [DIR] or -test [SIZE]
 4. Continuation of previous started Boruta analysis:
     - -cont
     - -boruta
