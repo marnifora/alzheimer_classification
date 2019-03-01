@@ -238,24 +238,23 @@ train set, conducting classification based on the given test set.
 “Subsets of SNPs” below)
 
 ##### Output:
-- bestsnps_chr{chr_number}_{perc}_{run_number}.txt - list of chosen SNPs from chromosome {chr} by Boruta with parameter 
+- bestsnps_chr{chr_number}\_{perc}\_{run_number}.txt - list of chosen SNPs from chromosome {chr} by Boruta with parameter 
 perc={perc} in the run {run_number}
 - testpat_{run_number}.txt – drawn test set of patients from the run {run_number}
 - class_scores_{run_number}.txt – result of classification conducted in the run {run_number}
-- all_snps{run_number}.txt - number of chosen by Boruta SNPs from run {run_number} in format:
-{perc}  {number of SNPs}
-where {perc} is a value of argument perc for Boruta analysis
-Make in first run (another runs write in addition):
-- boruta_runs.txt -  list of conducted runs of Boruta analysis with their parameters
-- class_runs.txt – list of conducted runs of classification with their parameters
 - X_train_genome_{perc}_{run_number}.npy
 - y_train_genome_{perc}_{run_number}.npy
 - X_test_genome_{perc}_{run_number}.npy
 - y_test_genome_{perc}_{run_number}.npy
-- X_train_chr{chr_number}_{perc}_{run_number}.npy
+- X_train_chr{chr_number}\_{perc}\_{run_number}.npy
 - y_train_{run_number}.npy
-- X_test_chr{chr_number}_{perc}_{run_number}.npy
+- X_test_chr{chr_number}\_{perc}\_{run_number}.npy
 - y_test_{run_number}.npy
+
+Make in first run (another runs write in addition):
+- boruta_runs.txt -  list of conducted runs of Boruta analysis with their parameters
+- class_runs.txt – list of conducted runs of classification with their parameters
+
 
 
 
