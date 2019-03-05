@@ -4,23 +4,40 @@ import sys
 import numpy as np
 sys.path.insert(0, '../')
 import exceptions
+import corporate_funcs as funcs
 
 
-def lower_threshold(thresh, sim):
-    linkage = hc.linkage(sp.distance.squareform(sim), method='average')
+def lower_threshold(thresh, linkage, pat):
+    toremove = set()
+    for row in linkage:
+        if row[2] < thresh:
+            if row[0] >= pat:
+                r = int(row[0]) - pat
+                toremove.add(int(linkage[r][0]))
+                toremove.add(int(linkage[r][1]))
+            else:
+                toremove.add(int(row[0]))
+        else:
+            break
+    return toremove
 
 
-def upper_threshold(thresh, sim):
-    pass
+def upper_threshold(thresh, linkage):
+    clusters = hc.fcluster(linkage, thresh, criterion='distance')
+    best = np.argmax(np.bincount(clusters))
+    selected = [i for i, el in enumerate(clusters) if el == best]
+    return selected
 
 
-sims = {}
+run = None
+fixed = False
 
 for q in range(len(sys.argv)):
 
-    if sys.argv[q] == '-sims':
+    if sys.argv[q] == '-dataset':
         if sys.argv[q + 2][0] in ['.', '~', '/']:
-            sims[sys.argv[q + 1]] = sys.argv[q + 2]
+            name = sys.argv[q + 1]
+            indir = sys.argv[q + 2]
         else:
             raise exceptions.NoParameterError('directory',
                                               'After name of data set should appear a directory to folder with it.')
@@ -38,13 +55,44 @@ for q in range(len(sys.argv)):
     if sys.argv[q] == '-upper':
         upper = float(sys.argv[q+1])
 
-if 'outdir' not in globals():
-    outdir = iter(next(sims.values()))
+    if sys.argv[q] == '-run':
+        run = int(sys.argv[q+1])
 
-for name, directory in sims.items():
-    sim = np.load('%s%s_similarities.npy' % (directory, name))
+    if sys.argv[q] == '-fixed':
+        fixed = True
+
+if 'name' not in globals():
+    raise exceptions.NoParameterError('dataset', 'Name and directory of the data set must be given!')
+
+if 'outdir' not in globals():
+    outdir = indir
+
+sims = np.load('%s%s_similarities.npy' % (indir, name))
+linkage = hc.linkage(sp.distance.squareform(sims), method='average')
+pat = sims.shape[0]
 
 if 'lower' in globals():
+    toremove = lower_threshold(lower, linkage, pat)
+    print('Number of patients to remove (below the lower threshold %.4f): %d' % (lower, len(toremove)))
+else:
+    print('No lower threshold given')
+    toremove = set()
 
-    toremove = lower_threshold(lower, sim)
+if 'upper' in globals():
+    selected = upper_threshold(upper, linkage)
+    print('Number of patients in the biggest cluster (the upper threshold %.4f): %d' % (upper, len(selected)))
+else:
+    print('No upper threshold given')
+    selected = [i for i in range(sims.shape[0])]
 
+final = [el for el in selected if el not in toremove]
+
+run = funcs.establish_run('similar', fixed, outdir, run)
+print('Number of selected patients: %d' % len(final))
+
+file = open('%ssimilar_patients_%d.txt' % (outdir, run), 'w')
+file.write('\n'.join([str(p) for p in final]))
+file.close()
+
+run_file = open('%ssimilar_runs.txt' % outdir, 'a')
+run_file.write('%d\t%s\t%.4f\t%.4f\t%d\t%d\n' % (run, name, lower, upper, len(selected), pat))
