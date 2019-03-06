@@ -35,8 +35,8 @@ def find_shared(dataset, chrlist, fixed, run):
         print('Analysis for chromosome %d has started!' % ch)
         shared = {}
         ref = {}
-        set0 = open('%ssnps_chr%d.txt' % (dataset[sets[0]], ch), 'r')
-        set1 = open('%ssnps_chr%d.txt' % (dataset[sets[1]], ch), 'r')
+        set0 = open('%smatrices/snps_chr%d.txt' % (dataset[sets[0]], ch), 'r')
+        set1 = open('%smatrices/snps_chr%d.txt' % (dataset[sets[1]], ch), 'r')
         line = [set0.readline().split(), set1.readline().split()]
         order = [0, 0]
 
@@ -63,7 +63,7 @@ def find_shared(dataset, chrlist, fixed, run):
         print('Found shared SNPs from chr %d for two first sets.' % ch)
 
         for setname in sets[2:]:
-            set = open('%ssnps_chr%d.txt' % (dataset[setname], ch), 'r')
+            set = open('%smatrices/snps_chr%d.txt' % (dataset[setname], ch), 'r')
             snps = iter(shared.keys())
             try:
                 snp = next(snps)
@@ -86,7 +86,7 @@ def find_shared(dataset, chrlist, fixed, run):
         print('Writing found shared SNPs from chr %d to the file.' % ch)
 
         for n, setname in enumerate(sets):
-            file = open('%sshared_snps_chr%d_%d.txt' % (dataset[setname], ch, runs[setname]), 'w')
+            file = open('%sshared/shared_snps_chr%d_%d.txt' % (dataset[setname], ch, runs[setname]), 'w')
             for snp in sorted(shared.keys()):
                 file.write('%d\n' % shared[snp][n])
             file.close()
@@ -96,7 +96,7 @@ def find_shared(dataset, chrlist, fixed, run):
     print('Run information for every dataset is writing to the file.')
 
     for setname in sets:
-        run_file = open('%sshared_runs.txt' % dataset[setname], 'a')
+        run_file = open('%sshared/shared_runs.txt' % dataset[setname], 'a')
         run_file.write('%d\t%s\t%s\t%s\t%d\n' % (runs[setname], setname, ', '.join([k for k in dataset.keys() if k != setname]),
                                                  funcs.make_chrstr(chrlist), shared_snps))
         run_file.close()

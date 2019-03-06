@@ -1,6 +1,7 @@
 import numpy as np
 import multiprocessing as multi
 import sys
+from collections import OrderedDict
 sys.path.insert(0, '../')
 import exceptions
 
@@ -57,7 +58,7 @@ def make_matrix(dataset, outdir, pat, procs):
     np.save('%s%s_similarities.npy' % (outdir, '-'.join(list(dataset.keys()))), sims)
 
 
-dataset = {}
+dataset = OrderedDict()
 procs = 10
 
 for q in range(len(sys.argv)):
@@ -84,14 +85,13 @@ if not dataset:
 
 if 'outdir' not in globals():
     if len(dataset) == 1:
-        outdir = next(iter(dataset.values()))
+        outdir = '%ssimilar/' % next(iter(dataset.values()))
     else:
         raise exceptions.NoParameterError('outdir', 'to what directory output matrix should be written')
 
-dirs = list(dataset.values())
-
-matrix = np.load('%sX_genome_shared.npy' % dirs[0])
-for d in dirs[1:]:
+dirs = dataset.values().__iter__()
+matrix = np.load('%sX_genome_shared.npy' % next(dirs))
+for d in dirs:
     matrix = np.concatenate((matrix, np.load('%sX_genome_shared.npy' % d)), axis=0)
 
 print('matrix loaded successfully')

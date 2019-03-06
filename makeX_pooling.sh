@@ -18,7 +18,7 @@ chr=0
 all=0
 from=1
 to=24
-indir='./'
+dir='./'
 
 while [[ "$1" != "" ]]; do
         case $1 in
@@ -36,6 +36,9 @@ while [[ "$1" != "" ]]; do
                                 all=1
                                 to=$1
                                 ;;
+        -dir )                  shift
+                                dir=$1
+                                ;;
         -indir )                shift
                                 indir=$1
                                 ;;
@@ -48,8 +51,11 @@ while [[ "$1" != "" ]]; do
     shift
 done
 
+if [[ ! -v indir ]]; then
+    indir=${dir}"matrices/"
+
 if [[ ! -v outdir ]]; then
-    outdir=${indir}
+    outdir=${dir}"matrices/"
 fi
 
 if [[ ${all} -eq 1 ]]; then

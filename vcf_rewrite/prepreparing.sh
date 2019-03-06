@@ -68,8 +68,8 @@ matrix=0
 base="dataset1"
 
 # directory to the input files
-indir="./"
-gatkdir="./"
+gatkdir="./gatk-4.0.11.0/"
+dir="./"
 
 while [[ "$1" != "" ]]; do
         case $1 in
@@ -102,6 +102,9 @@ while [[ "$1" != "" ]]; do
         -base )                 shift
                                 base=$1
                                 ;;
+        -dir )                  shift
+                                dir=$1
+                                ;;
         -indir )                shift
                                 indir=$1
                                 ;;
@@ -125,8 +128,20 @@ while [[ "$1" != "" ]]; do
     shift
 done
 
-if [[ ! -v outdir ]]; then
-    outdir=${indir}
+if [[ ! -v ${indir} ]]; then
+    indir=${dir}"files/"
+fi
+
+if [[ -d ${indir} ]]; then
+    mkdir ${indir}
+fi
+
+if [[ ! -v ${outdir} ]]; then
+    outdir=${dir}"matrices/"
+fi
+
+if [[ -d ${outdir} ]]; then
+    mkdir ${outdir}
 fi
 
 # prefix and sufix of name of vcf files containing WGS data, between them there should be only number of chromosome

@@ -48,7 +48,7 @@ def check_group(dataset, group):
 def give_rows(datadir, value):
 
     l = []
-    for line in open('%sY_chr.csv' % datadir, 'r'):
+    for line in open('%smatrices/Y_chr.csv' % datadir, 'r'):
         line = line.strip().split(',')
         v = int(line[1])
         if v == value:
@@ -170,7 +170,7 @@ for sets, name in [[seta, 'setA'], [setb, 'setB']]:
                     raise exceptions.WrongValueError('%s%d' % (name, i), el, 'There is no such data set as %s' % el[0])
 
 for d in dataset:
-    o = open('%sgenome_stats.txt' % d[1], 'r')
+    o = open('%smatrices/genome_stats.txt' % d[1], 'r')
     line = o.readline()
     pat = int(line.split()[3])
     d.append(pat)

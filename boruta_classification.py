@@ -80,7 +80,7 @@ def load_data(ch, dataset, snpsubset, snpruns, testpat, trainpat):
     snplist = {name: [] for name in dataset.keys()}
     if snpsubset is not None:
         for name in dataset.keys():
-            cc = open('%s%s_snps_chr%d_%d.txt' % (dataset[name], snpsubset, ch, snpruns[name]), 'r')
+            cc = open('%s%s/%s_snps_chr%d_%d.txt' % (dataset[name], snpsubset, snpsubset, ch, snpruns[name]), 'r')
             for line in cc:
                 snplist[name].append(int(line.split()[0]))
             cc.close()
@@ -90,7 +90,7 @@ def load_data(ch, dataset, snpsubset, snpruns, testpat, trainpat):
             raise exceptions.NoParameterError('subset', 'There is more than one given data set, but subset of SNPs ' +
                                                         'is not given.')
         else:
-            cc = open('%sgenome_stats.txt' % list(dataset.values())[0], 'r')
+            cc = open('%smatrices/genome_stats.txt' % list(dataset.values())[0], 'r')
             snp = None
             for line in cc:
                 if line.startswith('%d\t' % ch):
@@ -112,7 +112,7 @@ def load_data(ch, dataset, snpsubset, snpruns, testpat, trainpat):
 
     for name in dataset.keys():
 
-        o = open('%sX_chr%d_nodif.csv' % (dataset[name], ch), 'r')
+        o = open('%smatrices/X_chr%d_nodif.csv' % (dataset[name], ch), 'r')
         reader = csv.reader(o, delimiter=',')
         next(reader)  # header
 
@@ -191,7 +191,7 @@ def build_testdata(chrlist, selected_snps, testset):
         xx = np.zeros(shape=(pat[name], sum([len(x) for x in [selected_snps[ch] for ch in chrlist]])), dtype=np.int8)
         col = 0
         for ch in chrlist:
-            o = open('%sX_chr%d_nodif.csv' % (testset[name], ch), 'r')
+            o = open('%smatrices/X_chr%d_nodif.csv' % (testset[name], ch), 'r')
             reader = csv.reader(o, delimiter=',')
             next(reader)
 
@@ -229,7 +229,7 @@ def first_run(dataset, fixed, outdir, pat, patsubset, patruns, run, testsize, ):
     if patsubset is not None:
         done = 0
         for name in dataset.keys():
-            with open('%s%s_patients_%d.txt' % (dataset[name], patsubset, patruns[name])) as file:
+            with open('%s%s/%s_patients_%d.txt' % (dataset[name], patsubset, patsubset, patruns[name])) as file:
                 selected = [int(line.strip()) for line in file.readlines()]
             patients += [p+done for p in selected]
             done += pat[name]
@@ -319,7 +319,7 @@ def read_boruta_params(chrlist, continuation, dataset, fixed, outdir, pat, run):
     if patsubset is not None:
         done = 0
         for name in dataset.keys():
-            with open('%s%s_patients_%d.txt' % (dataset[name], patsubset, patruns[name])) as file:
+            with open('%s%s/%s_patients_%d.txt' % (dataset[name], patsubset, patsubset, patruns[name])) as file:
                 selected = [int(line.strip()) for line in file.readlines()]
             patients += [pp + done for pp in selected]
             done += pat[name]
@@ -363,7 +363,7 @@ def patients(dataset):
 
     pat = {name: 0 for name in dataset.keys()}
     for name in dataset.keys():
-        g = open('%sgenome_stats.txt' % dataset[name], 'r')
+        g = open('%smatrices/genome_stats.txt' % dataset[name], 'r')
         line = g.readline()
         p = int(line.split()[3])
         for line in g:
@@ -374,11 +374,11 @@ def patients(dataset):
     return pat
 
 
-def read_selected_snps(chrlist, directory, p, run):
+def read_selected_snps(chrlist, outdir, p, run):
 
     selected_snps = {ch: [] for ch in chrlist}
     for ch in chrlist:
-        o = open('%sbestsnps_chr%d_%d_%d.txt' % (directory, ch, p, run), 'r')
+        o = open('%sbestsnps_chr%d_%d_%d.txt' % (outdir, ch, p, run), 'r')
         for i in range(2):  # header
             o.readline()
         for line in o:
@@ -578,7 +578,7 @@ for q in range(len(sys.argv)):
 perc.sort()
 
 if 'outdir' not in globals():
-    outdir = next(iter(dataset.values()))
+    outdir = next(iter(dataset.values())) + 'boruta/'
 
 if 'classperc' not in globals():
     classperc = perc

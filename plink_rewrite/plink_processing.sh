@@ -14,8 +14,8 @@ step2=0
 sort=0
 overwrite=0
 
-indir="./"
-plinkdir="./"
+dir="./"
+plinkdir="./plink-1.9/"
 
 while [[ "$1" != "" ]]; do
         case $1 in
@@ -31,6 +31,9 @@ while [[ "$1" != "" ]]; do
         -step1 )                step1=1
                                 ;;
         -step2 )                step2=1
+                                ;;
+        -dir )                  shift
+                                dir=$1
                                 ;;
         -indir )                shift
                                 indir=$1
@@ -51,8 +54,12 @@ while [[ "$1" != "" ]]; do
     shift
 done
 
+if [[ ! -v indir ]]; then
+    indir=${dir}"files/"
+fi
+
 if [[ ! -v outdir ]]; then
-    outdir=${indir}
+    outdir=${dir}"matrices/"
 fi
 
 # convert binary to text format
@@ -79,7 +86,7 @@ if [[ ${step1} -eq 1 ]]; then
     echo "Step one has just began!"
     python3 plink_step_one.py -indir ${indir} -outdir ${outdir} -plink ${plink} -dbsnp ${dbsnp}
     echo "Step one done!"
-    ${plinkdir}plink-1.9/plink --file ${indir}${plink} --exclude ${outdir}"missing_snps_ref.txt" --recode --out ${indir}${plink}"_filtered"
+    ${plinkdir}plink --file ${indir}${plink} --exclude ${outdir}"missing_snps_ref.txt" --recode --out ${indir}${plink}"_filtered"
     echo "SNPs were excluded, filtered plink files have been made."
 fi
 

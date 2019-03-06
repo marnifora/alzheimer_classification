@@ -56,15 +56,20 @@ def update_genome_stats(indir, pat):
     return None
 
 
-indir = './'
+dir = './'
 for q in range(len(sys.argv)):
+    if sys.argv[q] == '-dir':
+        dir = sys.argv[q+1]
     if sys.argv[q] == '-indir':
         indir = sys.argv[q+1]
     if sys.argv[q] == '-outdir':
         outdir = sys.argv[q+1]
 
+if 'indir' not in globals():
+    indir = '%smatrices/' % dir
+
 if 'outdir' not in globals():
-    outdir = indir
+    outdir = '%smatrices/' % dir
 
 ad, nl = makeY(indir, outdir)
 update_genome_stats(indir, ad+nl)

@@ -37,7 +37,7 @@ for q in range(len(sys.argv)):
     if sys.argv[q] == '-dataset':
         if sys.argv[q + 2][0] in ['.', '~', '/']:
             name = sys.argv[q + 1]
-            indir = sys.argv[q + 2]
+            dir = sys.argv[q + 2]
         else:
             raise exceptions.NoParameterError('directory',
                                               'After name of data set should appear a directory to folder with it.')
@@ -64,8 +64,11 @@ for q in range(len(sys.argv)):
 if 'name' not in globals():
     raise exceptions.NoParameterError('dataset', 'Name and directory of the data set must be given!')
 
+if 'indir' not in globals():
+    indir = '%ssimilar/' % dir
+
 if 'outdir' not in globals():
-    outdir = indir
+    outdir = '%ssimilar/' % dir
 
 sims = np.load('%s%s_similarities.npy' % (indir, name))
 linkage = hc.linkage(sp.distance.squareform(sims), method='average')

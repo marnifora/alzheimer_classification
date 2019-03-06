@@ -186,9 +186,10 @@ def write_files(dataset, dd, indir, outdir):
     return 'Number of written diagnoses: %d (NN=%d)' % (i+n, n)
 
 
-indir = './'
-diagdir = './'
+dir = './'
 for q in range(len(sys.argv)):
+    if sys.argv[q] == '-dir':
+        dir = sys.argv[q+1]
     if sys.argv[q] == '-indir':
         indir = sys.argv[q+1]
     if sys.argv[q] == '-outdir':
@@ -201,8 +202,14 @@ for q in range(len(sys.argv)):
 if 'dataset' not in globals():
     raise exceptions.NoParameterError('dataset', 'e.g. adni or rosmap')
 
+if 'diagdir' not in globals():
+    diagdir = '%sfiles/' % dir
+
+if 'indir' not in globals():
+    indir = '%smatrices/' % dir
+
 if 'outdir' not in globals():
-    outdir = indir
+    outdir = '%smatrices/' % dir
 
 if dataset == 'adni':
     dfiles = ['dxsum.csv']
