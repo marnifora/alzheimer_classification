@@ -202,7 +202,7 @@ def build_testdata(chrlist, selected_snps, testset):
             col += len(snps)
             o.close()
 
-        yy = pd.read_csv('%sY_chr.csv' % testset[name], header=None, index_col=0).values
+        yy = pd.read_csv('%smatrices/Y_chr.csv' % testset[name], header=None, index_col=0).values
 
         if 'X_test' not in locals() or 'y_test' not in locals():
             X_test = xx
@@ -410,7 +410,7 @@ def build_y_matrices(dataset, run, outdir, pat, testpat, trainpat):
 
     for name, directory in dataset.items():
 
-        y = pd.read_csv('%sY_chr.csv' % directory, header=None, index_col=0).values
+        y = pd.read_csv('%smatrices/Y_chr.csv' % directory, header=None, index_col=0).values
         y = y.ravel()
 
         for i in range(pat[name]):
