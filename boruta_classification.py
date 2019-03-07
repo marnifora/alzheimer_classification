@@ -400,7 +400,7 @@ def build_y_matrices(dataset, run, outdir, pat, testpat, trainpat):
         except FileNotFoundError:
             pass
 
-    y_train = np.zeros(shape=(sum(pat.values()) - len(testpat),), dtype=np.int8)
+    y_train = np.zeros(shape=(len(trainpat),), dtype=np.int8)
     if testpat:
         y_test = np.zeros(shape=(len(testpat),), dtype=np.int8)
 
