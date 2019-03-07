@@ -221,7 +221,7 @@ def classify(X_train, y_train, X_test, y_test):
     return rf.score(X_train, y_train), rf.score(X_test, y_test)
 
 
-def first_run(dataset, fixed, outdir, pat, patsubset, patruns, run, testsize, ):
+def first_run(dataset, fixed, outdir, pat, patsubset, patruns, run, testsize):
 
     run = funcs.establish_run('boruta', fixed, outdir, run)
 
@@ -606,7 +606,7 @@ if not class_only:
 
     # determination of some parameters
     if not continuation:
-        borutarun, trainpat, testpat = first_run(fixed, outdir, pat, borutarun, testsize, patsubset, patruns)
+        borutarun, trainpat, testpat = first_run(dataset, fixed, outdir, pat, patsubset, patruns, borutarun, testsize)
     else:
         dataset, patruns, perc, r, snpsubset, snpruns, testpat, testsize, towrite, trainpat = \
             read_boruta_params(chrlist, continuation, dataset, fixed, outdir, pat, borutarun)
