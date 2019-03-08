@@ -276,6 +276,8 @@ def read_boruta_params(chrlist, continuation, dataset, fixed, outdir, pat, run):
                                                              % s)
             if line[3] == 'None':
                 patsubset = None
+            else:
+                patsubset = line[3].strip()
             if line[4] == '-':
                 patruns = None
             else:
@@ -284,6 +286,8 @@ def read_boruta_params(chrlist, continuation, dataset, fixed, outdir, pat, run):
 
             if line[5] == 'None':
                 snpsubset = None
+            else:
+                snpsubset = line[5].strip()
             if line[6] == '-':
                 snpruns = None
             else:
