@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="7e59d8fb-d331-40d5-a096-812f3a35a38f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/boruta_classification.py" beforeDir="false" afterPath="$PROJECT_DIR$/boruta_classification.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/patients_similarities/similar_patients.py" beforeDir="false" afterPath="$PROJECT_DIR$/patients_similarities/similar_patients.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -13,11 +13,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/boruta_classification.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="312">
-              <caret line="289" column="43" selection-start-line="289" selection-start-column="43" selection-end-line="289" selection-end-column="43" />
+            <state relative-caret-position="507">
+              <caret line="393" column="20" lean-forward="true" selection-start-line="393" selection-start-column="20" selection-end-line="393" selection-end-column="20" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -79,11 +79,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/patients_similarities/similar_patients.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1065">
-              <caret line="74" column="19" lean-forward="true" selection-start-line="74" selection-start-column="19" selection-end-line="74" selection-end-column="19" />
+            <state relative-caret-position="375">
+              <caret line="40" column="49" selection-start-line="40" selection-start-column="49" selection-end-line="40" selection-end-column="49" />
               <folding>
                 <element signature="e#0#36#0" expanded="true" />
               </folding>
@@ -225,11 +225,11 @@
         <option value="$PROJECT_DIR$/makeX_pooling.sh" />
         <option value="$PROJECT_DIR$/makeY.py" />
         <option value="$PROJECT_DIR$/plink_rewrite/plink_processing.sh" />
-        <option value="$PROJECT_DIR$/patients_similarities/similar_patients.py" />
         <option value="$PROJECT_DIR$/patients_similarities/similarity_matrix.py" />
         <option value="$PROJECT_DIR$/patients_similarities/similarity_plot.py" />
         <option value="$PROJECT_DIR$/documentation.md" />
         <option value="$PROJECT_DIR$/boruta_classification.py" />
+        <option value="$PROJECT_DIR$/patients_similarities/similar_patients.py" />
       </list>
     </option>
   </component>
@@ -765,7 +765,28 @@
       <option name="project" value="LOCAL" />
       <updated>1552037966779</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="Small corrections.">
+      <created>1552038249008</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1552038249008</updated>
+    </task>
+    <task id="LOCAL-00036" summary="Small corrections.">
+      <created>1552038401921</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1552038401921</updated>
+    </task>
+    <task id="LOCAL-00037" summary="Small corrections.">
+      <created>1552039979382</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1552039979382</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1014,16 +1035,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/patients_similarities/similar_patients.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1065">
-          <caret line="74" column="19" lean-forward="true" selection-start-line="74" selection-start-column="19" selection-end-line="74" selection-end-column="19" />
-          <folding>
-            <element signature="e#0#36#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/make_pid-diagnoses.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3105">
@@ -1067,10 +1078,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/boruta_classification.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="312">
-          <caret line="289" column="43" selection-start-line="289" selection-start-column="43" selection-end-line="289" selection-end-column="43" />
+        <state relative-caret-position="507">
+          <caret line="393" column="20" lean-forward="true" selection-start-line="393" selection-start-column="20" selection-end-line="393" selection-end-column="20" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/patients_similarities/similar_patients.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="40" column="49" selection-start-line="40" selection-start-column="49" selection-end-line="40" selection-end-column="49" />
+          <folding>
+            <element signature="e#0#36#0" expanded="true" />
           </folding>
         </state>
       </provider>
