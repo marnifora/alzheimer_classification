@@ -82,8 +82,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/patients_similarities/similar_patients.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
-              <caret line="40" column="49" selection-start-line="40" selection-start-column="49" selection-end-line="40" selection-end-column="49" />
+            <state relative-caret-position="405">
+              <caret line="111" column="84" selection-start-line="111" selection-start-column="84" selection-end-line="111" selection-end-column="84" />
               <folding>
                 <element signature="e#0#36#0" expanded="true" />
               </folding>
@@ -295,7 +295,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.boruta_classification">
+  <component name="RunManager" selected="Python.similar_patients">
     <configuration name="plink_processing.sh" type="BashConfigurationType" factoryName="Bash" temporary="true">
       <module name="alzheimer_classification" />
       <option name="INTERPRETER_OPTIONS" value="bash" />
@@ -508,8 +508,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.boruta_classification" />
         <item itemvalue="Python.similar_patients" />
+        <item itemvalue="Python.boruta_classification" />
         <item itemvalue="Python.plink_step_two" />
         <item itemvalue="Python.plink_step_one" />
         <item itemvalue="Bash.plink_processing.sh" />
@@ -786,7 +786,21 @@
       <option name="project" value="LOCAL" />
       <updated>1552039979382</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="Small corrections.">
+      <created>1552040114704</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1552040114704</updated>
+    </task>
+    <task id="LOCAL-00039" summary="Small corrections.">
+      <created>1552040760198</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1552040760198</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="TodoView">
@@ -807,7 +821,7 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32937366" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.30777538" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.30745015" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.30325288" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -815,7 +829,7 @@
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.27429804" />
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.3336933" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Python Console" order="10" visible="true" weight="0.16159496" />
+      <window_info anchor="bottom" id="Python Console" order="10" weight="0.16159496" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -1088,8 +1102,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/patients_similarities/similar_patients.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="40" column="49" selection-start-line="40" selection-start-column="49" selection-end-line="40" selection-end-column="49" />
+        <state relative-caret-position="405">
+          <caret line="111" column="84" selection-start-line="111" selection-start-column="84" selection-end-line="111" selection-end-column="84" />
           <folding>
             <element signature="e#0#36#0" expanded="true" />
           </folding>

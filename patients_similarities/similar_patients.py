@@ -102,14 +102,14 @@ else:
 
 if 'upper' in globals():
     selected = upper_threshold(upper, linkage)
-    print('Number of patients in the biggest cluster (the upper threshold %.4f): %d' % (upper, len(selected)))
+    print('Number of patients out of the biggest cluster (the upper threshold %.4f): %d' % (upper, pat-len(selected)))
 else:
     print('No upper threshold given')
     selected = [i for i in range(sims.shape[0])]
 
 final = [el for el in selected if el not in toremove]
 
-print('Number of selected patients: %d' % len(final))
+print('Number of selected patients: %d (%d removed)' % (len(final), pat-len(final)))
 diagnoses_dist(dir, final)
 
 run = funcs.establish_run('similar', fixed, outdir, run)
