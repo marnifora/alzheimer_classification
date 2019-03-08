@@ -33,13 +33,16 @@ def upper_threshold(thresh, linkage):
 def diagnoses_dist(dir, patients):
     patients.sort()
     patients = deque(patients)
-    pat = patients.pop()
+    pat = patients.popleft()
     diagnoses = {'0': 0, '1': 0}
     with open('%smatrices/Y_chr.csv' % dir, 'r') as file:
         for i, line in enumerate(file):
             if i == pat:
                 diagnoses[line.strip().split(',')[-1]] += 1
-                pat = patients.pop()
+                try:
+                    pat = patients.popleft()
+                except IndexError:
+                    break
     print('Healthy: %d' % diagnoses['0'])
     print('Ill: %d' % diagnoses['1'])
     return 0
