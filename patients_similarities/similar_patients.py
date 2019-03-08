@@ -2,6 +2,7 @@ import scipy.cluster.hierarchy as hc
 import scipy.spatial as sp
 import sys
 import numpy as np
+from collections import deque
 sys.path.insert(0, '../')
 import exceptions
 import corporate_funcs as funcs
@@ -27,6 +28,21 @@ def upper_threshold(thresh, linkage):
     best = np.argmax(np.bincount(clusters))
     selected = [i for i, el in enumerate(clusters) if el == best]
     return selected
+
+
+def diagnoses_dist(dir, patients):
+    patients.sort()
+    patients = deque(patients)
+    pat = patients.pop()
+    diagnoses = {'0':0, '1': 0}
+    with open('%smatrices/Y_chr.csv' % dir, 'r') as file:
+        for i, line in enumerate(file):
+            if i == pat:
+                diagnoses[line.split(',')[-1]] += 1
+                pat = patients.pop()
+    print('Healthy: %d' % diagnoses['0'])
+    print('Ill: %d' % diagnoses['1'])
+    return 0
 
 
 run = None
@@ -90,9 +106,10 @@ else:
 
 final = [el for el in selected if el not in toremove]
 
-run = funcs.establish_run('similar', fixed, outdir, run)
 print('Number of selected patients: %d' % len(final))
+diagnoses_dist(dir, final)
 
+run = funcs.establish_run('similar', fixed, outdir, run)
 file = open('%ssimilar_patients_%d.txt' % (outdir, run), 'w')
 file.write('\n'.join([str(p) for p in final]))
 file.close()
