@@ -279,9 +279,7 @@ def read_boruta_params(chrlist, continuation, dataset, fixed, outdir, pat, run):
             if line[4] == '-':
                 patruns = None
             else:
-                patruns = ast.literal_eval(line[4])
-                if isinstance(patruns, int):
-                    patruns = [patruns]
+                patruns = list(map(int, line[4].split(',')))
                 patruns = OrderedDict([(name, number) for name, number in zip(sets_order, patruns)])
 
             if line[5] == 'None':
@@ -472,15 +470,11 @@ for q in range(len(sys.argv)):
         continue
 
     if sys.argv[q] == '-perc':
-        perc = ast.literal_eval(sys.argv[q + 1])
-        if isinstance(perc, int):
-            perc = [perc]
+        perc = list(map(int, sys.argv[q+1].split(',')))
         continue
 
     if sys.argv[q] == '-classperc':
-        classperc = ast.literal_eval(sys.argv[q + 1])
-        if isinstance(classperc, int):
-            classperc = [classperc]
+        classperc = list(map(int, sys.argv[q+1].split(',')))
         continue
 
     if sys.argv[q] == '-snpsubset':
@@ -637,7 +631,6 @@ if not boruta_only:
         read_boruta_params(chrlist, False, dataset, False, outdir, pat, borutarun)
     scores_file = open('%sclass_scores_%d.txt' % (outdir, classrun), 'w', 1)
     scores_file.write('perc\tSNPs\ttrain_score\ttest_score\n')  # writing heading to class_scores file
-    num_snps = []
     if makey:
         build_y_matrices(dataset, borutarun, outdir, patients(dataset), testpat, trainpat)
 
@@ -656,18 +649,16 @@ if not boruta_only:
             selected_snps = read_selected_snps(chrlist, outdir, p, borutarun)
             X_test, y_test = build_testdata(chrlist, selected_snps, testset)
 
-        num_snps.append(X_train.shape[1])
-
         # running classification and saving scores to class_scores file
-        if num_snps[-1] > 0:
+        if X_train.shape[1] > 0:
             score_train, score_test = classify(X_train, y_train, X_test, y_test)
-            scores_file.write('%d\t%d\t%.3f\t%.3f\n' % (p, num_snps[-1], score_train, score_test))
+            scores_file.write('%d\t%d\t%.3f\t%.3f\n' % (p, X_train.shape[1], score_train, score_test))
             # saving matrices (on which was based the classification) to file
             for name in ['X_train', 'y_train', 'X_test', 'y_test']:
                 np.save('%s%s_genome_%d_%d.npy' % (outdir, name, p, classrun), eval(name))
         else:
             print('No SNPs were chosen for perc %d' % p)
-            scores_file.write('%d\t%d\t-\t-\n' % (p, num_snps[-1]))
+            scores_file.write('%d\t0\t-\t-\n' % p)
 
         print('Scores for perc %d saved to file' % p)
 
@@ -681,8 +672,7 @@ if not boruta_only:
     else:
         teststr = ' + '.join(testset.keys())
     run_file = open('%sclass_runs.txt' % outdir, 'a')
-    'run\ttest_set\ttest_pat\ttrain_run\ttrain_set\ttrain_pat\tperc\tSNPs\tchromosomes\n'
-    run_file.write('%d\t%s\t%d\t%d\t%s\t%d\t%s\t%s\t%s\n' % (classrun, teststr, len(testpat), borutarun, trainstr,
-                                                             len(trainpat), classperc, num_snps,
-                                                             funcs.make_chrstr(chrlist)))
+    'run\ttest_set\ttest_pat\ttrain_run\ttrain_set\ttrain_pat\tperc\tchromosomes\n'
+    run_file.write('%d\t%s\t%d\t%d\t%s\t%d\t%s\t%s\n' % (classrun, teststr, len(testpat), borutarun, trainstr,
+                                                         len(trainpat), ','.join(classperc), funcs.make_chrstr(chrlist)))
     run_file.close()

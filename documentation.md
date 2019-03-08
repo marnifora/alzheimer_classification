@@ -263,8 +263,8 @@ Make in first run (another runs write in addition):
 - -testset [NAME] [DIR] - set of data which should be used as test data for classification
 - -test [SIZE] - size of subset of elements which should be used as test set for classification, default = 0
 - -outdir [DIR] - directory for output files, if not given directory of first set in dataset is taken as outdir
-- -perc [VALUE] - value(s) of perc parameter of Boruta analysis, if more than one given it should be written as a list 
-(e.g. '-perc [80,90,100]'), default = 90
+- -perc [VALUE] - value(s) of perc parameter of Boruta analysis, if more than one given the values should be separated 
+by coma (e.g. '-perc 80,90,100'), default = 90
 - -classperc [VALUE] - value of perc parameter of Boruta analysis on which result the classification should be based, if 
 not given first value from perc list is set as class_perc
 - -r [SIZE] - size of the window of Boruta (how many of SNPs Boruta analyze in one round), default = 5000
