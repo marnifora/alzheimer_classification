@@ -261,7 +261,7 @@ def read_boruta_params(chrlist, continuation, dataset, fixed, outdir, pat, run):
     for line in lines:
         if line.startswith(str(run) + '\t'):
             line = line.strip().split('\t')
-            sets_order = line[1].strip().split(' + ')
+            sets_order = line[1].strip().split('+')
             if list(dataset.keys()) != sets_order:
                 if len(dataset.keys()) != len(sets_order):
                     raise exceptions.WrongValueError('dataset', dataset,
@@ -279,7 +279,7 @@ def read_boruta_params(chrlist, continuation, dataset, fixed, outdir, pat, run):
             if line[4] == '-':
                 patruns = None
             else:
-                patruns = list(map(int, line[4].split(',')))
+                patruns = list(map(int, line[4].split('+')))
                 patruns = OrderedDict([(name, number) for name, number in zip(sets_order, patruns)])
 
             if line[5] == 'None':
@@ -287,9 +287,7 @@ def read_boruta_params(chrlist, continuation, dataset, fixed, outdir, pat, run):
             if line[6] == '-':
                 snpruns = None
             else:
-                snpruns = ast.literal_eval(line[6])
-                if isinstance(snpruns, int):
-                    snpruns = [snpruns]
+                snpruns = list(map(int, line[6].split('+')))
                 snpruns = OrderedDict([(name, number) for name, number in zip(sets_order, snpruns)])
 
             testsize = float(line[7])
@@ -611,9 +609,11 @@ if not class_only:
     # saving information about done run to boruta_runs file
     if not continuation:
         run_file = open('%sboruta_runs.txt' % outdir, 'a')
-        run_file.write('%d\t%s\t%d\t%s\t%s\t%s\t%s\t%.1f\t%s\t%d\t%s\n' % (borutarun, ' + '.join(dataset.keys()),
+        run_file.write('%d\t%s\t%d\t%s\t%s\t%s\t%s\t%.1f\t%s\t%d\t%s\n' % (borutarun, '+'.join(dataset.keys()),
                                                                            len(trainpat) + len(testpat), patsubset,
-                                                                           str(patruns), snpsubset, str(snpruns),
+                                                                           '+'.join(list(map(str, patruns.values()))),
+                                                                           snpsubset,
+                                                                           '+'.join(list(map(str, snpruns.values()))),
                                                                            testsize, ','.join(list(map(str, perc))), r,
                                                                            funcs.make_chrstr(chrlist)))
     else:
