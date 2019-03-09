@@ -675,15 +675,16 @@ if not boruta_only:
         X_train, y_train = read_typedata(chrlist, outdir, p, borutarun, 'train')
 
         # establishing testing data based on given test set(s) or test subset of patients
-        if not testset:
-            if testsize == 0:
-                raise exceptions.NoParameterError(
-                    'testset', 'Test size was not given - define what set should be used as a testset.')
-            X_test, y_test = read_typedata(chrlist, outdir, p, borutarun, 'test')
-
-        elif not cv:
-            selected_snps = read_selected_snps(chrlist, outdir, p, borutarun)
-            X_test, y_test = build_testdata(chrlist, selected_snps, testset)
+        if not cv:
+            if not testset:
+                if testsize == 0:
+                    raise exceptions.NoParameterError(
+                        'testset', 'Test size was not given - define what set should be used as a testset.')
+                else:
+                    X_test, y_test = read_typedata(chrlist, outdir, p, borutarun, 'test')
+            else:
+                selected_snps = read_selected_snps(chrlist, outdir, p, borutarun)
+                X_test, y_test = build_testdata(chrlist, selected_snps, testset)
         else:
             X_test = y_test = None
 

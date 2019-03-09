@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="7e59d8fb-d331-40d5-a096-812f3a35a38f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/patients_similarities/similar_patients.py" beforeDir="false" afterPath="$PROJECT_DIR$/patients_similarities/similar_patients.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/boruta_classification.py" beforeDir="false" afterPath="$PROJECT_DIR$/boruta_classification.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -13,11 +13,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/boruta_classification.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="507">
-              <caret line="393" column="20" lean-forward="true" selection-start-line="393" selection-start-column="20" selection-end-line="393" selection-end-column="20" />
+            <state relative-caret-position="310">
+              <caret line="688" column="34" selection-start-line="688" selection-start-column="34" selection-end-line="688" selection-end-column="34" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -79,7 +79,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/patients_similarities/similar_patients.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="405">
@@ -129,8 +129,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>selected</find>
-      <find>names</find>
       <find>sets_order</find>
       <find>print</find>
       <find>counter</find>
@@ -140,7 +138,6 @@
       <find>test</find>
       <find>build_test</find>
       <find>pat</find>
-      <find>testpat</find>
       <find>trainstr</find>
       <find>i</find>
       <find>outdir</find>
@@ -159,6 +156,9 @@
       <find>np.load</find>
       <find>num_snps</find>
       <find>snprun</find>
+      <find>testsize</find>
+      <find>testpat</find>
+      <find>trainpat</find>
     </findStrings>
     <replaceStrings>
       <replace>arg</replace>
@@ -228,8 +228,8 @@
         <option value="$PROJECT_DIR$/patients_similarities/similarity_matrix.py" />
         <option value="$PROJECT_DIR$/patients_similarities/similarity_plot.py" />
         <option value="$PROJECT_DIR$/documentation.md" />
-        <option value="$PROJECT_DIR$/boruta_classification.py" />
         <option value="$PROJECT_DIR$/patients_similarities/similar_patients.py" />
+        <option value="$PROJECT_DIR$/boruta_classification.py" />
       </list>
     </option>
   </component>
@@ -295,7 +295,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.similar_patients">
+  <component name="RunManager" selected="Python.boruta_classification">
     <configuration name="plink_processing.sh" type="BashConfigurationType" factoryName="Bash" temporary="true">
       <module name="alzheimer_classification" />
       <option name="INTERPRETER_OPTIONS" value="bash" />
@@ -341,7 +341,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/boruta_classification.py" />
-      <option name="PARAMETERS" value="-dataset dataset1 $USER_HOME$/Dokumenty/dataset1/ -perc [90,100] -test 0.1 -outdir $USER_HOME$/Dokumenty/outdir/ -chr 1-2 -class -borutarun 10" />
+      <option name="PARAMETERS" value="-dataset dataset1 $USER_HOME$/Dokumenty/dataset1/ -perc 90 -chr 1-2 -cv 10 -test 0" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -508,8 +508,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.similar_patients" />
         <item itemvalue="Python.boruta_classification" />
+        <item itemvalue="Python.similar_patients" />
         <item itemvalue="Python.plink_step_two" />
         <item itemvalue="Python.plink_step_one" />
         <item itemvalue="Bash.plink_processing.sh" />
@@ -800,7 +800,21 @@
       <option name="project" value="LOCAL" />
       <updated>1552040760198</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="Small corrections.">
+      <created>1552041238191</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1552041238191</updated>
+    </task>
+    <task id="LOCAL-00041" summary="Adding option of CV classification in boruta_classification.">
+      <created>1552166194032</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1552166194032</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="TodoView">
@@ -813,15 +827,15 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="-2" width="1920" height="1082" extended-state="6" />
+    <frame x="67" y="25" width="1853" height="1055" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1412757" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14644809" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32937366" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.30745015" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.39200863" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.30325288" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -829,7 +843,7 @@
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.27429804" />
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.3336933" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info anchor="bottom" id="Python Console" order="10" weight="0.16159496" />
+      <window_info anchor="bottom" id="Python Console" order="10" weight="0.16630669" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -878,7 +892,8 @@
     <MESSAGE value="Changing structure of folders for output files." />
     <MESSAGE value="Correction of parsing perc values from command parameters." />
     <MESSAGE value="Small corrections." />
-    <option name="LAST_COMMIT_MESSAGE" value="Small corrections." />
+    <MESSAGE value="Adding option of CV classification in boruta_classification." />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding option of CV classification in boruta_classification." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1080,6 +1095,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/patients_similarities/similar_patients.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="111" column="84" selection-start-line="111" selection-start-column="84" selection-end-line="111" selection-end-column="84" />
+          <folding>
+            <element signature="e#0#36#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/documentation.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
@@ -1092,20 +1117,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/boruta_classification.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="507">
-          <caret line="393" column="20" lean-forward="true" selection-start-line="393" selection-start-column="20" selection-end-line="393" selection-end-column="20" />
+        <state relative-caret-position="310">
+          <caret line="688" column="34" selection-start-line="688" selection-start-column="34" selection-end-line="688" selection-end-column="34" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/patients_similarities/similar_patients.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="111" column="84" selection-start-line="111" selection-start-column="84" selection-end-line="111" selection-end-column="84" />
-          <folding>
-            <element signature="e#0#36#0" expanded="true" />
           </folding>
         </state>
       </provider>
