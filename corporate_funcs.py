@@ -79,7 +79,7 @@ def correct_boruta_runs_file(file):
         for line in o:
             line = line.split()
             if len(line[3].split('-run')) == 2:
-                subset, subsetrun = line[3].strip('-run')
+                subset, subsetrun = line[3].strip().split('-run')
             else:
                 subset, subsetrun = 'None', '-'
             towrite += '\t'.join(line[:3] + ['None', '-', subset, subsetrun] + line[4:]) + '\n'
