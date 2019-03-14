@@ -49,7 +49,7 @@ def one_process(ch, classperc, dataset, outdir, perc, r, run, snpsubset, snpruns
 
     print('Analysis for chromosome %d started\n' % ch)
 
-    Xtrain, Xtest, snp = load_data(ch, dataset, snpsubset, snpruns, testpat, trainpat)
+    Xtrain, Xtest, snp = funcs.load_data(ch, dataset, snpsubset, snpruns, testpat, trainpat)
 
     print('matrices X and y for chromosome %d have been loaded\n' % ch)
 
@@ -71,73 +71,6 @@ def one_process(ch, classperc, dataset, outdir, perc, r, run, snpsubset, snpruns
         lista.close()
 
     print('process for chr %d finished\n' % ch)
-
-
-def load_data(ch, dataset, snpsubset, snpruns, testpat, trainpat):
-    """
-    Loading data from files into X and y matrices.
-    Selection of patients not being in test set and SNPs present in subset-file.
-    """
-
-    snplist = {name: [] for name in dataset.keys()}
-    if snpsubset is not None:
-        for name in dataset.keys():
-            cc = open('%s%s/%s_snps_chr%d_%d.txt' % (dataset[name], snpsubset, snpsubset, ch, snpruns[name]), 'r')
-            for line in cc:
-                snplist[name].append(int(line.split()[0]))
-            cc.close()
-        snp = len(snplist[name])
-    else:
-        if len(dataset) > 1:
-            raise exceptions.NoParameterError('subset', 'There is more than one given data set, but subset of SNPs ' +
-                                                        'is not given.')
-        else:
-            cc = open('%smatrices/genome_stats.txt' % list(dataset.values())[0], 'r')
-            snp = None
-            for line in cc:
-                if line.startswith('%d\t' % ch):
-                    snp = int(line.split()[1])
-                    break
-            cc.close()
-            if 'snp' is None:
-                raise exceptions.OtherError('There is no information about chromosome %d in %sgenome_stats.txt file'
-                                            % (ch, list(dataset.values())[0]))
-            snplist[next(iter(dataset.keys()))] = list(range(snp))
-
-    train_row = 0
-    test_row = 0
-    done = 0
-
-    X_train = np.zeros(shape=(len(trainpat), snp), dtype=np.int8)
-
-    if testpat:
-        X_test = np.zeros(shape=(len(testpat), snp), dtype=np.int8)
-
-    for name in dataset.keys():
-
-        o = open('%smatrices/X_chr%d_nodif.csv' % (dataset[name], ch), 'r')
-        reader = csv.reader(o, delimiter=',')
-        next(reader)  # header
-
-        # writing values from file to matrix X
-
-        for i, line in enumerate(reader):
-            if (done + i) in trainpat:
-                for j, s in enumerate(snplist[name]):
-                    X_train[train_row][j] = line[s + 1]
-                train_row += 1
-            elif (done + i) in testpat:
-                for j, s in enumerate(snplist[name]):
-                    X_test[test_row][j] = line[s + 1]
-                test_row += 1
-
-        o.close()
-        done += i + 1
-
-    if testpat:
-        return X_train, X_test, snp
-    else:
-        return X_train, None, snp
 
 
 def best_snps(perc, r, snp, X, y):
@@ -188,7 +121,7 @@ def read_typedata(chrlist, outdir, p, run, type):
 
 def build_testdata(chrlist, selected_snps, testset):
 
-    pat = patients(testset)
+    pat = funcs.patients(testset)
 
     for name in testset.keys():
 
@@ -244,7 +177,7 @@ def first_run(dataset, fixed, outdir, pat, patsubset, patruns, run, testsize):
         for name in dataset.keys():
             with open('%s%s/%s_patients_%d.txt' % (dataset[name], patsubset, patsubset, patruns[name])) as file:
                 selected = [int(line.strip()) for line in file.readlines()]
-            patients.union([p+done for p in selected])
+            patients = patients.union([p+done for p in selected])
             done += pat[name]
     else:
         patients = set([i for i in range(sum(pat.values()))])
@@ -253,7 +186,7 @@ def first_run(dataset, fixed, outdir, pat, patsubset, patruns, run, testsize):
         testpat = set(random.sample(patients, int(len(patients)*testsize)))
         trainpat = set([p for p in patients if p not in testpat])
         with open('%stestpat_%d.txt' % (outdir, run), 'w') as ts:
-            ts.write('\n'.join(sorted(testpat)))
+            ts.write('\n'.join([str(s) for s in sorted(testpat)]))
     else:
         testpat = set()
         trainpat = patients
@@ -332,7 +265,7 @@ def read_boruta_params(chrlist, continuation, dataset, fixed, outdir, pat, run):
         for name in dataset.keys():
             with open('%s%s/%s_patients_%d.txt' % (dataset[name], patsubset, patsubset, patruns[name])) as file:
                 selected = [int(line.strip()) for line in file.readlines()]
-            patients.union([pp + done for pp in selected])
+            patients = patients.union([pp + done for pp in selected])
             done += pat[name]
     else:
         patients = set([i for i in range(sum(pat.values()))])
@@ -367,27 +300,12 @@ def update_chrlist(fixed, line, chrlist):
     return line
 
 
-def patients(dataset):
-
-    pat = {name: 0 for name in dataset.keys()}
-    for name in dataset.keys():
-        g = open('%smatrices/genome_stats.txt' % dataset[name], 'r')
-        line = g.readline()
-        p = int(line.split()[3])
-        for line in g:
-            if int(line.split()[3]) != p:
-                raise exceptions.OtherError('Error: there is different number of patients for different chromosomes!')
-        pat[name] = p
-        g.close()
-    return pat
-
-
 def read_selected_snps(chrlist, outdir, p, run):
 
     selected_snps = {ch: [] for ch in chrlist}
     for ch in chrlist:
         o = open('%sbestsnps_chr%d_%d_%d.txt' % (outdir, ch, p, run), 'r')
-        for i in range(2):  # header
+        for _ in range(2):  # header
             o.readline()
         for line in o:
             selected_snps[ch].append(int(line.strip()))
@@ -612,7 +530,7 @@ if 'pp' in globals():
             patruns[name] = pp
 
 # determination number of patient in given data set
-pat = patients(dataset)
+pat = funcs.patients(dataset)
 
 if not class_only:
 
@@ -668,7 +586,7 @@ if not boruta_only:
     scores_file = open('%sclass_scores_%d.txt' % (outdir, classrun), 'w', 1)
     scores_file.write('perc\tSNPs\ttrain_score\ttest_score\n')  # writing heading to class_scores file
     if makey:
-        build_y_matrices(dataset, borutarun, outdir, patients(dataset), testpat, trainpat)
+        build_y_matrices(dataset, borutarun, outdir, funcs.patients(dataset), testpat, trainpat)
 
     for p in classperc:
         # reading training data from given run of boruta analysis

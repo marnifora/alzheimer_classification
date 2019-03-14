@@ -1,4 +1,6 @@
 import exceptions
+import numpy as np
+import csv
 
 
 def establish_run(analysistype, fixed, outdir, run):
@@ -127,3 +129,85 @@ def read_chrstr(chrstr):
     chrlist.sort()
 
     return chrlist
+
+
+def load_data(ch, dataset, snpsubset, snpruns, testpat, trainpat):
+    """
+    Loading data from files into X and y matrices.
+    Selection of patients not being in test set and SNPs present in subset-file.
+    """
+
+    snplist = {name: [] for name in dataset.keys()}
+    if snpsubset is not None:
+        for name in dataset.keys():
+            cc = open('%s%s/%s_snps_chr%d_%d.txt' % (dataset[name], snpsubset, snpsubset, ch, snpruns[name]), 'r')
+            for line in cc:
+                snplist[name].append(int(line.split()[0]))
+            cc.close()
+        snp = len(snplist[name])
+    else:
+        if len(dataset) > 1:
+            raise exceptions.NoParameterError('subset', 'There is more than one given data set, but subset of SNPs ' +
+                                                        'is not given.')
+        else:
+            cc = open('%smatrices/genome_stats.txt' % list(dataset.values())[0], 'r')
+            snp = None
+            for line in cc:
+                if line.startswith('%d\t' % ch):
+                    snp = int(line.split()[1])
+                    break
+            cc.close()
+            if 'snp' is None:
+                raise exceptions.OtherError('There is no information about chromosome %d in %sgenome_stats.txt file'
+                                            % (ch, list(dataset.values())[0]))
+            snplist[next(iter(dataset.keys()))] = list(range(snp))
+
+    train_row = 0
+    test_row = 0
+    done = 0
+
+    X_train = np.zeros(shape=(len(trainpat), snp), dtype=np.int8)
+
+    if testpat:
+        X_test = np.zeros(shape=(len(testpat), snp), dtype=np.int8)
+
+    for name in dataset.keys():
+
+        o = open('%smatrices/X_chr%d_nodif.csv' % (dataset[name], ch), 'r')
+        reader = csv.reader(o, delimiter=',')
+        next(reader)  # header
+
+        # writing values from file to matrix X
+
+        for i, line in enumerate(reader):
+            if (done + i) in trainpat:
+                for j, s in enumerate(snplist[name]):
+                    X_train[train_row][j] = line[s + 1]
+                train_row += 1
+            elif (done + i) in testpat:
+                for j, s in enumerate(snplist[name]):
+                    X_test[test_row][j] = line[s + 1]
+                test_row += 1
+
+        o.close()
+        done += i + 1
+
+    if testpat:
+        return X_train, X_test, snp
+    else:
+        return X_train, None, snp
+
+
+def patients(dataset):
+
+    pat = {name: 0 for name in dataset.keys()}
+    for name in dataset.keys():
+        g = open('%smatrices/genome_stats.txt' % dataset[name], 'r')
+        line = g.readline()
+        p = int(line.split()[3])
+        for line in g:
+            if int(line.split()[3]) != p:
+                raise exceptions.OtherError('Error: there is different number of patients for different chromosomes!')
+        pat[name] = p
+        g.close()
+    return pat

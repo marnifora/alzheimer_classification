@@ -94,7 +94,7 @@ def add_to_set(args, sets, q):
         raise exceptions.WrongValueError(args[q], s,
                                          'First should be name of data set, second name of subset of patients')
     if len(sets) < num:
-        sets += [[] for i in range(num-len(sets))]
+        sets += [[] for _ in range(num-len(sets))]
     sets[num - 1].append(s)
     return sets
 

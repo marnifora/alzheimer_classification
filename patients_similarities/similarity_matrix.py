@@ -2,8 +2,10 @@ import numpy as np
 import multiprocessing as multi
 import sys
 from collections import OrderedDict
+import os
 sys.path.insert(0, '../')
 import exceptions
+import corporate_funcs as funcs
 
 
 def one_process(ec, er, i, matrix, outdir, pat, snp, sc, sr):
@@ -59,7 +61,11 @@ def make_matrix(dataset, outdir, pat, procs):
 
 
 dataset = OrderedDict()
-procs = 10
+procs = 1
+chrlist = [i for i in range(1, 24)]
+snpsubset = None
+snpsubset = None
+snpruns = None
 
 for q in range(len(sys.argv)):
 
@@ -69,6 +75,7 @@ for q in range(len(sys.argv)):
         else:
             raise exceptions.NoParameterError('directory',
                                               'After name of data set should appear a directory to folder with it.')
+        continue
 
     if sys.argv[q] == '-outdir':
         if sys.argv[q + 1][0] in ['.', '~', '/']:
@@ -76,9 +83,40 @@ for q in range(len(sys.argv)):
         else:
             raise exceptions.NoParameterError('outdir',
                                               'After -outdir should appear a directory to output folder.')
+        continue
 
     if sys.argv[q] == '-procs':
         procs = int(sys.argv[q+1])
+        continue
+
+    if sys.argv[q] == '-chr':
+        chrlist = funcs.read_chrstr(sys.argv[q + 1])
+        continue
+
+    if sys.argv[q] == '-snpsubset':
+        snpsubset = sys.argv[q + 1]
+        continue
+
+    if sys.argv[q] == '-snprun':
+        if sys.argv[q + 1] in dataset.keys():
+            if snpruns is None:
+                snpruns = OrderedDict()
+            try:
+                snpruns[sys.argv[q+1]] = int(sys.argv[q+2])
+            except ValueError:
+                raise exceptions.NoParameterError('snprun',
+                                                  'After name of data set should appear number of SNP subset run')
+        else:
+            try:
+                ss = int(sys.argv[q+1])
+            except ValueError:
+                raise exceptions.NoParameterError('snprun',
+                                                  'After -snprun should appear name of data set and its run number ' +
+                                                  'or one run number which is the same for every data set.')
+        continue
+
+    if sys.argv[q].startswith('-'):
+        raise exceptions.WrongParameterName(sys.argv[q])
 
 if not dataset:
     raise exceptions.NoParameterError('dataset', 'data set(s) for which similarities should be counted')
@@ -89,10 +127,22 @@ if 'outdir' not in globals():
     else:
         raise exceptions.NoParameterError('outdir', 'to what directory output matrix should be written')
 
-dirs = dataset.values().__iter__()
-matrix = np.load('%sX_genome_shared.npy' % next(dirs))
-for d in dirs:
-    matrix = np.concatenate((matrix, np.load('%sX_genome_shared.npy' % d)), axis=0)
+if not os.path.isdir(outdir):
+    os.mkdir(outdir)
+
+if 'ss' in globals():
+    if snpruns is None:
+        snpruns = OrderedDict([(n, num) for n, num in zip(dataset.keys(), [ss]*len(dataset))])
+    else:
+        for name in [nn for nn in dataset.keys() if nn not in snpruns.keys()]:
+            snpruns[name] = ss
+
+trainpat = set([i for i in range(sum(funcs.patients(dataset).values()))])
+testpat = set()
+matrix, *_ = funcs.load_data(chrlist[0], dataset, snpsubset, snpruns, testpat, trainpat)
+for ch in chrlist[1:]:
+    x, *_ = funcs.load_data(ch, dataset, snpsubset, snpruns, testpat, trainpat)
+    matrix = np.concatenate((matrix, x), axis=1)
 
 print('matrix loaded successfully')
 

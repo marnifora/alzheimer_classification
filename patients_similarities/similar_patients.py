@@ -118,4 +118,4 @@ file.write('\n'.join([str(p) for p in final]))
 file.close()
 
 run_file = open('%ssimilar_runs.txt' % outdir, 'a')
-run_file.write('%d\t%s\t%.4f\t%.4f\t%d\t%d\n' % (run, name, lower, upper, len(selected), pat))
+run_file.write('%d\t%s\t%.4f\t%.4f\t%d\t%d\n' % (run, name, lower, upper, len(final), pat))

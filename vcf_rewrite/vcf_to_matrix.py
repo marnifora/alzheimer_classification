@@ -33,7 +33,7 @@ def vcf_to_matrix(c, inp, outdir):
 
     o = open(inp, 'r')
     
-    for i in range(header):
+    for _ in range(header):
         o.readline()
 
     s = open('%ssnps_chr%s.txt' % (outdir, c), 'w')

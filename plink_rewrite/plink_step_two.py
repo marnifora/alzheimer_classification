@@ -36,7 +36,7 @@ def make_snps_ref(outdir):
 def make_snps_count(plink, indir):
 
     pedfile = open('%s%s.ped' % (indir, plink), 'r')
-    snps_count = [{'A': 0, 'C': 0, 'T': 0, 'G': 0} for i in range(len(pedfile.readline().split()[6:])//2)]
+    snps_count = [{'A': 0, 'C': 0, 'T': 0, 'G': 0} for _ in range(len(pedfile.readline().split()[6:])//2)]
     pedfile.seek(0, 0)
     for i, line in enumerate(pedfile):
         line = line.split()[6:]
