@@ -2,14 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7e59d8fb-d331-40d5-a096-812f3a35a38f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/SNPs_subsets/crossed_snps.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SNPs_subsets/subset_funcs.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SNPs_subsets/shared_snps.py" beforeDir="false" afterPath="$PROJECT_DIR$/SNPs_subsets/shared_snps.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/boruta_classification.py" beforeDir="false" afterPath="$PROJECT_DIR$/boruta_classification.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/corporate_funcs.py" beforeDir="false" afterPath="$PROJECT_DIR$/corporate_funcs.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/patients_similarities/similar_patients.py" beforeDir="false" afterPath="$PROJECT_DIR$/patients_similarities/similar_patients.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/patients_similarities/similarity_matrix.py" beforeDir="false" afterPath="$PROJECT_DIR$/patients_similarities/similarity_matrix.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/patients_similarities/similarity_plot.py" beforeDir="false" afterPath="$PROJECT_DIR$/patients_similarities/similarity_plot.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plink_rewrite/plink_step_two.py" beforeDir="false" afterPath="$PROJECT_DIR$/plink_rewrite/plink_step_two.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vcf_rewrite/vcf_to_matrix.py" beforeDir="false" afterPath="$PROJECT_DIR$/vcf_rewrite/vcf_to_matrix.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -20,22 +18,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/boruta_classification.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="212">
-              <caret line="268" column="29" lean-forward="true" selection-start-line="268" selection-start-column="29" selection-end-line="268" selection-end-column="29" />
-              <folding>
-                <element signature="e#0#10#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/corporate_funcs.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="810">
-              <caret line="213" selection-start-line="213" selection-end-line="213" />
+            <state relative-caret-position="180">
+              <caret line="10" selection-start-line="10" selection-end-line="10" />
               <folding>
                 <element signature="e#0#17#0" expanded="true" />
               </folding>
@@ -44,31 +30,13 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/plink_rewrite/plink_step_two.py">
+        <entry file="file://$PROJECT_DIR$/boruta_classification.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="855">
-              <caret line="59" column="22" selection-start-line="59" selection-start-column="22" selection-end-line="59" selection-end-column="22" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/patients_similarities/similarity_matrix.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="162">
-              <caret line="70" lean-forward="true" selection-start-line="70" selection-end-line="70" />
+            <state relative-caret-position="527">
+              <caret line="529" column="30" lean-forward="true" selection-start-line="529" selection-start-column="30" selection-end-line="529" selection-end-column="30" />
               <folding>
-                <element signature="e#0#18#0" expanded="true" />
+                <element signature="e#0#10#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/_pydev_imps/_pydev_execfile.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="17" selection-start-line="17" selection-end-line="17" />
             </state>
           </provider>
         </entry>
@@ -76,8 +44,32 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SNPs_subsets/shared_snps.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-472">
-              <caret line="38" column="32" selection-start-line="38" selection-start-column="32" selection-end-line="38" selection-end-column="32" />
+            <state relative-caret-position="510">
+              <caret line="35" selection-start-line="35" selection-end-line="35" />
+              <folding>
+                <element signature="e#0#10#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SNPs_subsets/subset_funcs.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-201">
+              <caret line="51" selection-start-line="51" selection-end-line="51" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/SNPs_subsets/crossed_snps.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="220">
+              <caret line="14" column="14" selection-start-line="14" selection-start-column="14" selection-end-line="14" selection-end-column="14" />
+              <folding>
+                <element signature="e#0#10#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -85,7 +77,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/patients_similarities/similar_patients.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1864">
+            <state relative-caret-position="1740">
               <caret line="120" column="91" selection-start-line="120" selection-start-column="91" selection-end-line="120" selection-end-column="91" />
               <folding>
                 <element signature="e#0#36#0" expanded="true" />
@@ -95,10 +87,22 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/patients_similarities/similarity_plot.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1605">
+              <caret line="112" selection-start-line="112" selection-end-line="112" />
+              <folding>
+                <element signature="e#0#10#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/make_pid-diagnoses.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="3105">
-              <caret line="211" column="18" lean-forward="true" selection-start-line="211" selection-start-column="18" selection-end-line="211" selection-end-column="18" />
+              <caret line="211" column="18" selection-start-line="211" selection-start-column="18" selection-end-line="211" selection-end-column="18" />
             </state>
           </provider>
         </entry>
@@ -107,7 +111,7 @@
         <entry file="file://$PROJECT_DIR$/makeX.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="255">
-              <caret line="20" column="48" lean-forward="true" selection-start-line="20" selection-start-column="48" selection-end-line="20" selection-end-column="48" />
+              <caret line="20" column="48" selection-start-line="20" selection-start-column="48" selection-end-line="20" selection-end-column="48" />
             </state>
           </provider>
         </entry>
@@ -132,9 +136,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>build_test</find>
-      <find>pat</find>
-      <find>trainstr</find>
       <find>i</find>
       <find>outdir</find>
       <find>dataset</find>
@@ -162,6 +163,9 @@
       <find>chrlist</find>
       <find>genome_shared</find>
       <find>union</find>
+      <find>next</find>
+      <find>order</find>
+      <find>borutarun</find>
     </findStrings>
     <replaceStrings>
       <replace>arg</replace>
@@ -182,9 +186,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/../advent_of_code/day3.py" />
-        <option value="$PROJECT_DIR$/../advent_of_code/day4.py" />
-        <option value="$PROJECT_DIR$/chrstring.py" />
         <option value="$PROJECT_DIR$/classification.py" />
         <option value="$PROJECT_DIR$/classify_this.py" />
         <option value="$PROJECT_DIR$/similarity.py" />
@@ -220,7 +221,6 @@
         <option value="$PROJECT_DIR$/similarity_structure/similarity_plot.py" />
         <option value="$PROJECT_DIR$/readme.md" />
         <option value="$PROJECT_DIR$/vcf_rewrite/prepreparing.sh" />
-        <option value="$PROJECT_DIR$/SNPs_subsets/shared_snps.py" />
         <option value="$PROJECT_DIR$/make_pid-diagnoses.py" />
         <option value="$PROJECT_DIR$/makeX_pooling.sh" />
         <option value="$PROJECT_DIR$/makeY.py" />
@@ -230,9 +230,13 @@
         <option value="$PROJECT_DIR$/plink_rewrite/plink_step_two.py" />
         <option value="$PROJECT_DIR$/patients_similarities/similarity_plot.py" />
         <option value="$PROJECT_DIR$/patients_similarities/similar_patients.py" />
-        <option value="$PROJECT_DIR$/corporate_funcs.py" />
         <option value="$PROJECT_DIR$/patients_similarities/similarity_matrix.py" />
         <option value="$PROJECT_DIR$/boruta_classification.py" />
+        <option value="$PROJECT_DIR$/genomika.py" />
+        <option value="$PROJECT_DIR$/SNPs_subsets/shared_snps.py" />
+        <option value="$PROJECT_DIR$/corporate_funcs.py" />
+        <option value="$PROJECT_DIR$/SNPs_subsets/crossed_snps.py" />
+        <option value="$PROJECT_DIR$/SNPs_subsets/subset_funcs.py" />
       </list>
     </option>
   </component>
@@ -298,7 +302,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.boruta_classification">
+  <component name="RunManager" selected="Python.crossed_snps">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="advent_of_code" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -333,7 +337,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/boruta_classification.py" />
-      <option name="PARAMETERS" value="-dataset dataset1 $USER_HOME$/Dokumenty/dataset1/ -perc 90 -chr 1-2 -test 0.1 -patsubset similar -patrun 1 -run 2 -fixed" />
+      <option name="PARAMETERS" value="-dataset dataset1 $USER_HOME$/Dokumenty/dataset1/ -perc 50 -chr 1-2 -test 0.1 -run 2 -fixed" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -341,7 +345,28 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="plink_step_one" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="crossed_snps" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="alzheimer_classification" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/SNPs_subsets" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/SNPs_subsets/crossed_snps.py" />
+      <option name="PARAMETERS" value="-dataset dataset1 $USER_HOME$/Dokumenty/dataset1/ -dataset dataset2 $USER_HOME$/Dokumenty/dataset2/ -borutarun 2 -perc 50 -chr 1-2" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="genomika" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="alzheimer_classification" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -353,8 +378,8 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/plink_step_one.py" />
-      <option name="PARAMETERS" value="-indir $USER_HOME$/Dokumenty/ADNI-GWAS/test_input/ -outdir $USER_HOME$/Dokumenty/ADNI-GWAS/test_output/ -plink test -dbsnp dbsnp.txt" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/lab3.py" />
+      <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -362,7 +387,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="plink_step_two" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="shared_snps" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="alzheimer_classification" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -370,12 +395,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/SNPs_subsets" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/plink_step_two.py" />
-      <option name="PARAMETERS" value="-plink ADNI_GO_2_Forward_Bin_filtered -indir $USER_HOME$/Dokumenty/ADNI-GWAS/input1/ -outdir $USER_HOME$/Dokumenty/ADNI-GWAS/output1/" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/SNPs_subsets/shared_snps.py" />
+      <option name="PARAMETERS" value="-dataset dataset2 $USER_HOME$/Dokumenty/dataset2/ -chr 1-2 -perc 90" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -397,27 +422,6 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/patients_similarities/similar_patients.py" />
       <option name="PARAMETERS" value="-dataset dataset1 $USER_HOME$/Dokumenty/dataset1/ -lower 0.0001 -upper 0.99 -run 1 -fixed" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="similarity_matrix" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="alzheimer_classification" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/patients_similarities" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/patients_similarities/similarity_matrix.py" />
-      <option name="PARAMETERS" value="-dataset dataset1 $USER_HOME$/Dokumenty/dataset1/ -chr 1-2 -snpsubset shared -snprun 1" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -513,19 +517,19 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.plink_step_one" />
-      <item itemvalue="Python.plink_step_two" />
       <item itemvalue="Python.boruta_classification" />
       <item itemvalue="Python.similar_patients" />
-      <item itemvalue="Python.similarity_matrix" />
+      <item itemvalue="Python.genomika" />
+      <item itemvalue="Python.shared_snps" />
+      <item itemvalue="Python.crossed_snps" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.crossed_snps" />
         <item itemvalue="Python.boruta_classification" />
+        <item itemvalue="Python.shared_snps" />
+        <item itemvalue="Python.genomika" />
         <item itemvalue="Python.similar_patients" />
-        <item itemvalue="Python.similarity_matrix" />
-        <item itemvalue="Python.plink_step_two" />
-        <item itemvalue="Python.plink_step_one" />
       </list>
     </recent_temporary>
   </component>
@@ -834,7 +838,21 @@
       <option name="project" value="LOCAL" />
       <updated>1552166869042</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="Error corrections and other improvements.">
+      <created>1552564954937</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1552564954937</updated>
+    </task>
+    <task id="LOCAL-00044" summary="Small corrections.">
+      <created>1552585244219</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1552585244219</updated>
+    </task>
+    <option name="localTasksCounter" value="45" />
     <servers />
   </component>
   <component name="TodoView">
@@ -847,22 +865,23 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="-2" width="1920" height="1082" extended-state="6" />
+    <frame x="67" y="25" width="1853" height="1055" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1412757" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1568306" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32937366" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.2759706" />
-      <window_info anchor="bottom" id="Debug" order="3" visible="true" weight="0.30325288" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.28077754" />
+      <window_info anchor="bottom" id="Debug" order="3" visible="true" weight="0.2537797" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3286638" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.27429804" />
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.3336933" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info anchor="bottom" id="Python Console" order="10" weight="0.16579224" />
+      <window_info anchor="bottom" id="Python Console" order="10" weight="0.18034557" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -911,9 +930,9 @@
     <MESSAGE value="Changing structure of folders for output files." />
     <MESSAGE value="Correction of parsing perc values from command parameters." />
     <MESSAGE value="Adding option of CV classification in boruta_classification." />
-    <MESSAGE value="Small corrections." />
     <MESSAGE value="Error corrections and other improvements." />
-    <option name="LAST_COMMIT_MESSAGE" value="Error corrections and other improvements." />
+    <MESSAGE value="Small corrections." />
+    <option name="LAST_COMMIT_MESSAGE" value="Small corrections." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -928,6 +947,11 @@
           <line>193</line>
           <option name="timeStamp" value="12" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/SNPs_subsets/subset_funcs.py</url>
+          <line>51</line>
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
@@ -939,21 +963,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/anaconda3/envs/alzheimer_classification/lib/python3.6/site-packages/numpy/lib/npyio.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="206">
-          <caret line="383" selection-start-line="383" selection-end-line="383" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/pydevd.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="771">
-          <caret line="1740" selection-start-line="1740" selection-end-line="1740" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/classification.py" />
     <entry file="file://$PROJECT_DIR$/classify_this.py" />
     <entry file="file://$USER_HOME$/anaconda3/envs/alzheimer_classification/lib/python3.6/multiprocessing/process.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -1068,16 +1077,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/patients_similarities/similarity_plot.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1605">
-          <caret line="112" selection-start-line="112" selection-end-line="112" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/plink_rewrite/plink_step_two.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="855">
@@ -1085,31 +1084,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/make_pid-diagnoses.py">
+    <entry file="file://$PROJECT_DIR$/lab3.py" />
+    <entry file="file://$PROJECT_DIR$/patients_similarities/similarity_matrix.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3105">
-          <caret line="211" column="18" lean-forward="true" selection-start-line="211" selection-start-column="18" selection-end-line="211" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/makeX.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="20" column="48" lean-forward="true" selection-start-line="20" selection-start-column="48" selection-end-line="20" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/makeX_pooling.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="810">
-          <caret line="54" column="18" selection-start-line="54" selection-start-column="18" selection-end-line="54" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SNPs_subsets/shared_snps.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-472">
-          <caret line="38" column="32" selection-start-line="38" selection-start-column="32" selection-end-line="38" selection-end-column="32" />
+        <state relative-caret-position="990">
+          <caret line="70" selection-start-line="70" selection-end-line="70" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1120,19 +1102,19 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/corporate_funcs.py">
+    <entry file="file://$PROJECT_DIR$/SNPs_subsets/shared_snps.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="810">
-          <caret line="213" selection-start-line="213" selection-end-line="213" />
+        <state relative-caret-position="510">
+          <caret line="35" selection-start-line="35" selection-end-line="35" />
           <folding>
-            <element signature="e#0#17#0" expanded="true" />
+            <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/patients_similarities/similar_patients.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1864">
+        <state relative-caret-position="1740">
           <caret line="120" column="91" selection-start-line="120" selection-start-column="91" selection-end-line="120" selection-end-column="91" />
           <folding>
             <element signature="e#0#36#0" expanded="true" />
@@ -1140,22 +1122,70 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/boruta_classification.py">
+    <entry file="file://$PROJECT_DIR$/patients_similarities/similarity_plot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="212">
-          <caret line="268" column="29" lean-forward="true" selection-start-line="268" selection-start-column="29" selection-end-line="268" selection-end-column="29" />
+        <state relative-caret-position="1605">
+          <caret line="112" selection-start-line="112" selection-end-line="112" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/patients_similarities/similarity_matrix.py">
+    <entry file="file://$PROJECT_DIR$/make_pid-diagnoses.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="70" lean-forward="true" selection-start-line="70" selection-end-line="70" />
+        <state relative-caret-position="3105">
+          <caret line="211" column="18" selection-start-line="211" selection-start-column="18" selection-end-line="211" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/makeX.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="20" column="48" selection-start-line="20" selection-start-column="48" selection-end-line="20" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/makeX_pooling.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="810">
+          <caret line="54" column="18" selection-start-line="54" selection-start-column="18" selection-end-line="54" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/boruta_classification.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="527">
+          <caret line="529" column="30" lean-forward="true" selection-start-line="529" selection-start-column="30" selection-end-line="529" selection-end-column="30" />
           <folding>
-            <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/corporate_funcs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="10" selection-start-line="10" selection-end-line="10" />
+          <folding>
+            <element signature="e#0#17#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SNPs_subsets/subset_funcs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-201">
+          <caret line="51" selection-start-line="51" selection-end-line="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SNPs_subsets/crossed_snps.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="14" column="14" selection-start-line="14" selection-start-column="14" selection-end-line="14" selection-end-column="14" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -624,13 +624,19 @@ if not boruta_only:
 
     # writing information about class run to class_run file
     trainstr = '+'.join(dataset.keys())
-    if not testset:
+    testpat_val = len(testpat)
+    trainpat_val = len(trainpat)
+    if cv:
+        teststr = 'CV: %.2f*(%s)' % (1.0/cv, trainstr)
+        testpat_val = sum(pat.values())//cv
+        trainpat_val = sum(pat.values()) - testpat_val
+    elif not testset:
         teststr = '%.2f*(%s)' % (testsize, trainstr)
     else:
         teststr = '+'.join(testset.keys())
     run_file = open('%sclass_runs.txt' % outdir, 'a')
     'run\ttest_set\ttest_pat\ttrain_run\ttrain_set\ttrain_pat\tperc\tchromosomes\n'
-    run_file.write('%d\t%s\t%d\t%d\t%s\t%d\t%s\t%s\n' % (classrun, teststr, len(testpat), borutarun, trainstr,
-                                                         len(trainpat), ','.join(list(map(str, classperc))),
+    run_file.write('%d\t%s\t%d\t%d\t%s\t%d\t%s\t%s\n' % (classrun, teststr, testpat_val, borutarun, trainstr,
+                                                         trainpat_val, ','.join(list(map(str, classperc))),
                                                          funcs.make_chrstr(chrlist)))
     run_file.close()

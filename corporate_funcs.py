@@ -1,10 +1,13 @@
 import exceptions
 import numpy as np
 import csv
+import os
 
 
 def establish_run(analysistype, fixed, outdir, run):
 
+    if not os.path.isdir(outdir):
+        os.mkdir(outdir)
     try:
         file = '%s%s_runs.txt' % (outdir, analysistype)
         if analysistype == 'boruta':
@@ -60,6 +63,8 @@ def establish_run(analysistype, fixed, outdir, run):
             run_file.write('run\ttest_set\ttest_pat\ttrain_run\ttrain_set\ttrain_pat\tperc\tSNPs\tchromosomes\n')
         elif analysistype == 'shared':
             run_file.write('run\thome_set\tcompared_set(s)\tchromosomes\tnumber_of_shared_SNPs\n')
+        elif analysistype == 'crossed':
+            run_file.write('run\thome_set\tcompared_set(s)\tchromosomes\tnumber_of_shared_SNPs\tboruta_runs\tperc\n')
         elif analysistype == 'similar':
             run_file.write('run\tdata_set(s)\tlower_thresh\tupper_thresh\tsimilar_pat\tall_pat\n')
         else:
