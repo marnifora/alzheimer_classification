@@ -8,15 +8,15 @@ import corporate_funcs as funcs
 
 def find_crossed(dataset, chrlist, fixed, run, borutaruns, perc):
     """
-    Searching for shared SNPs among given data sets, writing them into files.
+    Searching for crossed SNPs among given data sets, writing them into files.
     :param dataset: (dict) the keys are name of data sets, values are directories to folders with them
     :param chrlist: (list) chromosomes for analysis
     :param fixed: (boolean) if number of run can be overwritten
     :param run: (int or None) number of run given as a parameter - None if not given
-    :return: number of shared SNPs for the given data sets
+    :return: number of crossed SNPs for the given data sets
     """
 
-    shared_snps = 0
+    crossed_snps = 0
     runs = {}
     for setname in dataset.keys():
         runs[setname] = funcs.establish_run('crossed', fixed, dataset[setname] + 'crossed/', run)
@@ -24,34 +24,33 @@ def find_crossed(dataset, chrlist, fixed, run, borutaruns, perc):
     for ch in chrlist:
 
         print('Analysis for chromosome %d has started!' % ch)
-        shared, ref = subset_funcs.first_intersection(dataset, ch, borutaruns, perc)
+        crossed, ref = subset_funcs.first_intersection(dataset, ch, borutaruns, perc)
 
         '''
         for setname in list(dataset.keys())[2:]:
             set = open('%smatrices/snps_chr%d.txt' % (dataset[setname], ch), 'r')
-            shared = subset_funcs.next_intersection(set, shared, ref, ch)
+            crossed = subset_funcs.next_intersection(set, crossed, ref, ch)
         '''
 
-        print('Writing found shared SNPs from chr %d to the file.' % ch)
+        print('Writing found crossed SNPs from chr %d to the file.' % ch)
 
         for n, setname in enumerate(dataset.keys()):
-            file = open('%scrossed/shared_snps_chr%d_%d.txt' % (dataset[setname], ch, runs[setname]), 'w')
-            for snp in sorted(shared.keys()):
-                file.write('%d\n' % shared[snp][n])
+            file = open('%scrossed/crossed_snps_chr%d_%d.txt' % (dataset[setname], ch, runs[setname]), 'w')
+            for snp in sorted(crossed.keys()):
+                file.write('%d\n' % crossed[snp][n])
             file.close()
 
-        shared_snps += len(shared)
+        crossed_snps += len(crossed)
 
     print('Run information for every dataset is writing to the file.')
 
     for setname in dataset.keys():
-        run_file = open('%scrossed/shared_runs.txt' % dataset[setname], 'a')
-        run_file.write('%d\t%s\t%s\t%s\t%d\t%s\t%d\n' %
-                       (runs[setname], setname, ', '.join([k for k in dataset.keys() if k != setname]),
-                        funcs.make_chrstr(chrlist), shared_snps, ','.join(list(map(str, borutaruns.values()))), perc))
-        run_file.close()
+        funcs.runs_file_add('crossed', dataset[setname] + 'crossed/', runs[setname], '%d\t%s\t%s\t%s\t%d\t%s\t%d\n' %
+                            (runs[setname], setname, ', '.join([k for k in dataset.keys() if k != setname]),
+                             funcs.make_chrstr(chrlist), crossed_snps, ','.join(list(map(str, borutaruns.values()))),
+                             perc))
 
-    return shared_snps
+    return crossed_snps
 
 
 dataset = {}
@@ -101,4 +100,4 @@ if 'pp' in globals():
             borutaruns[name] = pp
 
 found = find_crossed(dataset, chrlist, fixed, run, borutaruns, perc)
-print('%d shared SNPs found!' % found)
+print('%d crossed SNPs found!' % found)

@@ -29,13 +29,13 @@ def wind_to_best(iterator, snp, best):
 
 def first_intersection(dataset, ch, borutarun=None, perc=None):
 
-    print('Analysis for chromosome %d has started!' % ch)
     shared = {}
     ref = {}
     names = list(dataset.keys())[:2]
     iter_snps = [snp_list(dataset[names[0]], ch), snp_list(dataset[names[1]], ch)]
     if borutarun:
-        iter_best = [best_snp(dataset[names[0]], ch, borutarun[names[0]], perc), best_snp(dataset[names[1]], ch, borutarun[names[1]], perc)]
+        iter_best = [best_snp(dataset[names[0]], ch, borutarun[names[0]], perc), best_snp(dataset[names[1]], ch,
+                                                                                          borutarun[names[1]], perc)]
 
     order = [0, 0]
 
@@ -65,8 +65,8 @@ def first_intersection(dataset, ch, borutarun=None, perc=None):
                     snps = list(map(next, iter_snps))
                     if borutarun:
                         bests = list(map(next, iter_best))
-                        snps, iter_snps = list(map(list, zip(*[wind_to_best(iterator, snp, best) for iterator, snp, best in
-                                                                   zip(iter_snps, snps, bests)])))
+                        snps, iter_snps = list(map(list, zip(*[wind_to_best(iterator, snp, best) for iterator, snp, best
+                                                               in zip(iter_snps, snps, bests)])))
                     order = [x + 1 for x in order]
                 else:
                     raise exceptions.SNPReferenceError(ch, int(snps[0][0]), snps[0][1], snps[1][1])

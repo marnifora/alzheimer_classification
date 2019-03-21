@@ -198,7 +198,7 @@ def read_boruta_params(chrlist, continuation, dataset, fixed, outdir, pat, run):
 
     file = '%sboruta_runs.txt' % outdir
     funcs.correct_boruta_runs_file(file)
-    run_file = open(file, 'r+')
+    run_file = open(file, 'r')
     lines = run_file.readlines()
     towrite = ''
     occur = False
@@ -239,9 +239,7 @@ def read_boruta_params(chrlist, continuation, dataset, fixed, outdir, pat, run):
                 snpruns = OrderedDict([(name, number) for name, number in zip(sets_order, snpruns)])
 
             testsize = float(line[7])
-            perc = ast.literal_eval(line[8])
-            if isinstance(perc, int):
-                perc = [perc]
+            perc = list(map(int, sys.argv[q+1].split(',')))
             r = int(line[-2])
             if continuation:
                 line = update_chrlist(fixed, line, chrlist)
@@ -546,7 +544,6 @@ if not class_only:
 
     # saving information about done run to boruta_runs file
     if not continuation:
-        run_file = open('%sboruta_runs.txt' % outdir, 'a')
         if patruns is None:
             patruns_string = '-'
         else:
@@ -555,17 +552,13 @@ if not class_only:
             snpruns_string = '-'
         else:
             snpruns_string = '+'.join(list(map(str, snpruns.values())))
-        run_file.write('%d\t%s\t%d\t%s\t%s\t%s\t%s\t%.1f\t%s\t%d\t%s\n' % (borutarun, '+'.join(dataset.keys()),
-                                                                           len(trainpat) + len(testpat), patsubset,
-                                                                           patruns_string, snpsubset, snpruns_string,
-                                                                           testsize, ','.join(list(map(str, perc))), r,
-                                                                           funcs.make_chrstr(chrlist)))
+
+        funcs.runs_file_add('boruta', outdir, borutarun, '%d\t%s\t%d\t%s\t%s\t%s\t%s\t%.2f\t%s\t%d\t%s\n' %
+                            (borutarun, '+'.join(dataset.keys()), len(trainpat) + len(testpat), patsubset,
+                             patruns_string, snpsubset, snpruns_string, testsize, ','.join(list(map(str, perc))), r,
+                             funcs.make_chrstr(chrlist)))
     else:
-        run_file = open('%sboruta_runs.txt' % outdir, 'w')
-        run_file.write(towrite)
-
-    run_file.close()
-
+        funcs.runs_file_rewrite('boruta', outdir, towrite)
 
 if not boruta_only:
 
@@ -634,9 +627,7 @@ if not boruta_only:
         teststr = '%.2f*(%s)' % (testsize, trainstr)
     else:
         teststr = '+'.join(testset.keys())
-    run_file = open('%sclass_runs.txt' % outdir, 'a')
-    'run\ttest_set\ttest_pat\ttrain_run\ttrain_set\ttrain_pat\tperc\tchromosomes\n'
-    run_file.write('%d\t%s\t%d\t%d\t%s\t%d\t%s\t%s\n' % (classrun, teststr, testpat_val, borutarun, trainstr,
-                                                         trainpat_val, ','.join(list(map(str, classperc))),
-                                                         funcs.make_chrstr(chrlist)))
-    run_file.close()
+
+    funcs.runs_file_add('class', outdir, classrun, '%d\t%s\t%d\t%d\t%s\t%d\t%s\t%s\n' %
+                        (classrun, teststr, testpat_val, borutarun, trainstr, trainpat_val,
+                         ','.join(list(map(str, classperc))), funcs.make_chrstr(chrlist)))

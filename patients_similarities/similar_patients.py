@@ -117,5 +117,4 @@ file = open('%ssimilar_patients_%d.txt' % (outdir, run), 'w')
 file.write('\n'.join([str(p) for p in final]))
 file.close()
 
-run_file = open('%ssimilar_runs.txt' % outdir, 'a')
-run_file.write('%d\t%s\t%.4f\t%.4f\t%d\t%d\n' % (run, name, lower, upper, len(final), pat))
+funcs.runs_file_add('similar', outdir, run, '%d\t%s\t%.4f\t%.4f\t%d\t%d\n' % (run, name, lower, upper, len(final), pat))

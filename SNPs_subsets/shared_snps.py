@@ -54,11 +54,9 @@ def find_shared(dataset, chrlist, fixed, run):
     print('Run information for every dataset is writing to the file.')
 
     for setname in dataset.keys():
-        run_file = open('%sshared/shared_runs.txt' % dataset[setname], 'a')
-        run_file.write(
-            '%d\t%s\t%s\t%s\t%d\n' % (runs[setname], setname, ', '.join([k for k in dataset.keys() if k != setname]),
-                                      funcs.make_chrstr(chrlist), shared_snps))
-        run_file.close()
+        funcs.runs_file_add('shared', dataset[setname] + 'shared/', runs[setname], '%d\t%s\t%s\t%s\t%d\n' %
+                            (runs[setname], setname, ', '.join([k for k in dataset.keys() if k != setname]),
+                             funcs.make_chrstr(chrlist), shared_snps))
 
     return shared_snps
 

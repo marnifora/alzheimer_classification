@@ -71,6 +71,7 @@ def establish_run(analysistype, fixed, outdir, run):
             raise exceptions.OtherError('First line for %s run file is not defined!' % analysistype)
         print('%s run file has been made! Run number has been established! Run = %d' % (analysistype, run))
 
+    run_file.write('%d\tin progress\n' % run)
     run_file.close()
 
     return run
@@ -92,6 +93,27 @@ def correct_boruta_runs_file(file):
         o.write(towrite)
         o.truncate()
     o.close()
+
+
+def runs_file_add(analysistype, directory, run, toadd):
+    run_file = open('%s%s_runs.txt' % (directory, analysistype), 'r+')
+    lines = run_file.readlines()
+    towrite = ''
+    for line in lines:
+        if not line.startswith('%d\tin progress' % run):
+            towrite += line
+        else:
+            towrite += toadd
+    run_file.seek(0)
+    run_file.write(towrite)
+    run_file.truncate()
+    run_file.close()
+
+
+def runs_file_rewrite(analysistype, directory, towrite):
+    run_file = open('%s%s_runs.txt' % (directory, analysistype), 'w')
+    run_file.write(towrite)
+    run_file.close()
 
 
 def make_chrstr(chrlist):
