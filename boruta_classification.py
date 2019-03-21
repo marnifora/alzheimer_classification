@@ -239,7 +239,7 @@ def read_boruta_params(chrlist, continuation, dataset, fixed, outdir, pat, run):
                 snpruns = OrderedDict([(name, number) for name, number in zip(sets_order, snpruns)])
 
             testsize = float(line[7])
-            perc = list(map(int, sys.argv[q+1].split(',')))
+            perc = list(map(int, line[8].split(',')))
             r = int(line[-2])
             if continuation:
                 line = update_chrlist(fixed, line, chrlist)
