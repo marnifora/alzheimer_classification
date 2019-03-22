@@ -1,5 +1,6 @@
 import sys
 import subset_funcs
+from collections import OrderedDict
 sys.path.insert(0, '../')
 import exceptions
 import corporate_funcs as funcs
@@ -61,7 +62,7 @@ def find_shared(dataset, chrlist, fixed, run):
     return shared_snps
 
 
-dataset = {}
+dataset = OrderedDict()
 chrlist = [i for i in range(1, 24)]
 fixed = False
 run = None
