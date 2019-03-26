@@ -10,6 +10,7 @@ import pandas as pd
 import random
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import KFold
+from sklearn.metrics import roc_auc_score
 import sys
 import corporate_funcs as funcs
 
@@ -151,7 +152,7 @@ def build_testdata(chrlist, selected_snps, testset):
     return X_test, y_test
 
 
-def classify(X, y, X_test, y_test, cv):
+def classify_acc(X, y, X_test, y_test, cv):
 
     rf = RandomForestClassifier(n_estimators=500)
 
@@ -165,6 +166,29 @@ def classify(X, y, X_test, y_test, cv):
             rf.fit(X[train_index], y[train_index])
             scores.append([rf.score(X[train_index], y[train_index]), rf.score(X[test_index], y[test_index])])
         return np.mean([s[0] for s in scores]), np.mean([s[1] for s in scores])
+
+
+def classify_auc(X, y, X_test, y_test, cv):
+
+    rf = RandomForestClassifier(n_estimators=500)
+
+    if not cv:
+        rf.fit(X, y)
+        prob = rf.predict_proba(X_test)
+        order = [i for i, c in enumerate(rf.classes_) if c == 1]
+        y_score = prob[:, order]
+        return roc_auc_score(y_test, y_score)
+    else:
+        kf = KFold(n_splits=cv)
+        scores = []
+        for train_index, test_index in kf.split(X):
+            rf.fit(X[train_index], y[train_index])
+            prob = rf.predict_proba(X[test_index])
+            order = [i for i, c in enumerate(rf.classes_) if c == 1]
+            y_score = prob[:, order]
+            scores.append(roc_auc_score(y[test_index], y_score))
+        return np.mean(scores)
+
 
 
 def first_run(dataset, fixed, outdir, pat, patsubset, patruns, run, testsize):
@@ -248,6 +272,8 @@ def read_boruta_params(chrlist, continuation, dataset, fixed, outdir, pat, run):
                     strin += str(el) + '\t'
                 strin += '\n'
                 line = strin
+            else:
+                chrlist = funcs.read_chrstr(line[-1])
             occur = True
         if continuation:
             towrite += line
@@ -276,7 +302,7 @@ def read_boruta_params(chrlist, continuation, dataset, fixed, outdir, pat, run):
         testpat = set()
         trainpat = patients
 
-    return dataset, patruns, perc, r, snpsubset, snpruns, testpat, testsize, towrite, trainpat
+    return chrlist, dataset, patruns, perc, r, snpsubset, snpruns, testpat, testsize, towrite, trainpat
 
 
 def update_chrlist(fixed, line, chrlist):
@@ -370,6 +396,7 @@ snpruns = None
 continuation = False
 makey = False
 cv = None
+auc = False
 
 for q in range(len(sys.argv)):
 
@@ -494,6 +521,10 @@ for q in range(len(sys.argv)):
         cv = int(sys.argv[q+1])
         continue
 
+    if sys.argv[q] == '-auc':
+        auc = True
+        continue
+
     if sys.argv[q].startswith('-'):
         raise exceptions.WrongParameterName(sys.argv[q])
 
@@ -565,10 +596,10 @@ if not boruta_only:
     # determination of number of class run
     classrun = funcs.establish_run('class', fixed, outdir, classrun)
     if dataset:
-        dataset, patruns, perc, r, snpsubset, snpruns, testpat, testsizeboruta, towrite, trainpat = \
+        chrlist, dataset, patruns, perc, r, snpsubset, snpruns, testpat, testsizeboruta, towrite, trainpat = \
             read_boruta_params(chrlist, False, dataset, False, outdir, pat, borutarun)
     elif testset:
-        testset, patruns, perc, r, snpsubset, snpruns, testpat, testsizeboruta, towrite, trainpat = \
+        chrlist, testset, patruns, perc, r, snpsubset, snpruns, testpat, testsizeboruta, towrite, trainpat = \
             read_boruta_params(chrlist, False, testset, False, outdir, pat, borutarun)
     if testsize:
         if testsize != testsizeboruta and not cv:
@@ -601,8 +632,12 @@ if not boruta_only:
 
         # running classification and saving scores to class_scores file
         if X_train.shape[1] > 0:
-            score_train, score_test = classify(X_train, y_train, X_test, y_test, cv)
-            scores_file.write('%d\t%d\t%.3f\t%.3f\n' % (p, X_train.shape[1], score_train, score_test))
+            if not auc:
+                score_train, score_test = classify_acc(X_train, y_train, X_test, y_test, cv)
+                scores_file.write('%d\t%d\t%.3f\t%.3f\n' % (p, X_train.shape[1], score_train, score_test))
+            else:
+                score = classify_auc(X_train, y_train, X_test, y_test, cv)
+                scores_file.write('%d\t%d\t-\tAUC=%.3f\n' % (p, X_train.shape[1], score))
             # saving matrices (on which was based the classification) to file
             for name in ['X_train', 'y_train', 'X_test', 'y_test']:
                 np.save('%s%s_genome_%d_%d.npy' % (outdir, name, p, classrun), eval(name))
@@ -620,7 +655,10 @@ if not boruta_only:
     testpat_val = len(testpat)
     trainpat_val = len(trainpat)
     if cv:
-        teststr = 'CV: %.2f*(%s)' % (1.0/cv, trainstr)
+        if auc:
+            teststr = 'AUC-CV: %.2f*(%s)' % (1.0/cv, trainstr)
+        else:
+            teststr = 'CV: %.2f*(%s)' % (1.0/cv, trainstr)
         testpat_val = sum(pat.values())//cv
         trainpat_val = sum(pat.values()) - testpat_val
     elif not testset:
