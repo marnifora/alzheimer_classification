@@ -109,12 +109,12 @@ for name, directory in dataset.items():
         file.close()
 
     if 'outdir' not in globals():
-        funcs.runs_file_add('deficient', output, run, '%d\t%s\t%s\t%.2f\t%d\t%s\n' %
-                            (run, name, borutaruns[name], thresh, l, '%.1f' % (l/all*100) + '%'))
+        funcs.runs_file_add('deficient', output, run, '%d\t%s\t%s\t%d\t%.2f\t%d\t%s\n' %
+                            (run, name, borutaruns[name], perc, thresh, l, '%.1f' % (l/all*100) + '%'))
 
 if 'outdir' in globals():
-    funcs.runs_file_add('deficient', output, run, '%d\t%s\t%s\t%.2f\t%d\t%s\n' %
-                        (run, '+'.join(dataset.keys()), ','.join(list(map(str, borutaruns.values()))), thresh, l,
+    funcs.runs_file_add('deficient', output, run, '%d\t%s\t%s\t%d\t%.2f\t%d\t%s\n' %
+                        (run, '+'.join(dataset.keys()), ','.join(list(map(str, borutaruns.values()))), perc, thresh, l,
                          '%.1f' % (l / all * 100) + '%'))
 
 print('Number of deficient SNPs: %d (%s)' % (l, '%.1f' % (l/all*100) + '%'))

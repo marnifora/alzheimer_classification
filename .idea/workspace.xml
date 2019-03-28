@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7e59d8fb-d331-40d5-a096-812f3a35a38f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/SNPs_subsets/deficient_snps.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SNPs_subsets/crossed_snps.py" beforeDir="false" afterPath="$PROJECT_DIR$/SNPs_subsets/crossed_snps.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/boruta_classification.py" beforeDir="false" afterPath="$PROJECT_DIR$/boruta_classification.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SNPs_subsets/deficient_snps.py" beforeDir="false" afterPath="$PROJECT_DIR$/SNPs_subsets/deficient_snps.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/corporate_funcs.py" beforeDir="false" afterPath="$PROJECT_DIR$/corporate_funcs.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -16,11 +14,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/corporate_funcs.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="423">
-              <caret line="70" column="116" lean-forward="true" selection-start-line="70" selection-start-column="12" selection-end-line="70" selection-end-column="116" />
+            <state relative-caret-position="442">
+              <caret line="71" column="16" selection-start-line="71" selection-start-column="16" selection-end-line="71" selection-end-column="16" />
               <folding>
                 <element signature="e#0#17#0" expanded="true" />
               </folding>
@@ -31,7 +29,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/boruta_classification.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="432">
+            <state relative-caret-position="466">
               <caret line="636" column="40" selection-start-line="636" selection-start-column="40" selection-end-line="636" selection-end-column="40" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
@@ -40,11 +38,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SNPs_subsets/deficient_snps.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="595">
-              <caret line="117" column="48" selection-start-line="117" selection-start-column="48" selection-end-line="117" selection-end-column="48" />
+            <state relative-caret-position="1081">
+              <caret line="116" column="109" lean-forward="true" selection-start-line="116" selection-start-column="109" selection-end-line="116" selection-end-column="109" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -162,9 +160,9 @@
       <find>X_train</find>
       <find>chrlist</find>
       <find>classify</find>
-      <find>auc</find>
       <find>data</find>
       <find>nolack</find>
+      <find>auc</find>
     </findStrings>
     <replaceStrings>
       <replace>arg</replace>
@@ -543,20 +541,6 @@
       <option name="presentableId" value="Default" />
       <updated>1544007477880</updated>
     </task>
-    <task id="LOCAL-00001" summary="Basic functions and description of the project.">
-      <created>1549731464013</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1549731464013</updated>
-    </task>
-    <task id="LOCAL-00002" summary="Improving readme file.">
-      <created>1549828063816</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1549828063816</updated>
-    </task>
     <task id="LOCAL-00003" summary="Add scripts for plink files.">
       <created>1550257209885</created>
       <option name="number" value="00003" />
@@ -886,7 +870,21 @@
       <option name="project" value="LOCAL" />
       <updated>1553617325831</updated>
     </task>
-    <option name="localTasksCounter" value="50" />
+    <task id="LOCAL-00050" summary="Adding deficient SNPs subset.">
+      <created>1553805426268</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1553805426270</updated>
+    </task>
+    <task id="LOCAL-00051" summary="Small corrections.">
+      <created>1553807285619</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1553807285619</updated>
+    </task>
+    <option name="localTasksCounter" value="52" />
     <servers />
   </component>
   <component name="TodoView">
@@ -902,12 +900,12 @@
     <frame x="67" y="25" width="1853" height="1055" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16448088" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16448088" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32937366" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.16522679" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.16522679" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.2526998" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -941,7 +939,6 @@
     </layout-to-restore>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Corrections in writing data into matrices." />
     <MESSAGE value="Little corrections in plink_processing.sh." />
     <MESSAGE value="Change folders' structure, add scripts for similarity structure analysis, small corrections in make_pit-diagnoses." />
     <MESSAGE value="Set outdir the same as indir if it is not given as the parameter." />
@@ -963,10 +960,11 @@
     <MESSAGE value="Error corrections and other improvements." />
     <MESSAGE value="Adding method for finding crossed SNPs." />
     <MESSAGE value="Adding 'in progress' prompt in runs files." />
-    <MESSAGE value="Small corrections." />
     <MESSAGE value="Adding get_snps_locations script which rewrites selected SNPs to bed file." />
     <MESSAGE value="Adding AUC score option in boruta_classification." />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding AUC score option in boruta_classification." />
+    <MESSAGE value="Adding deficient SNPs subset." />
+    <MESSAGE value="Small corrections." />
+    <option name="LAST_COMMIT_MESSAGE" value="Small corrections." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1186,26 +1184,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/boruta_classification.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="636" column="40" selection-start-line="636" selection-start-column="40" selection-end-line="636" selection-end-column="40" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/corporate_funcs.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="423">
-          <caret line="70" column="116" lean-forward="true" selection-start-line="70" selection-start-column="12" selection-end-line="70" selection-end-column="116" />
-          <folding>
-            <element signature="e#0#17#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/SNPs_subsets/shared_snps.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-603">
@@ -1226,12 +1204,32 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SNPs_subsets/deficient_snps.py">
+    <entry file="file://$PROJECT_DIR$/boruta_classification.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="595">
-          <caret line="117" column="48" selection-start-line="117" selection-start-column="48" selection-end-line="117" selection-end-column="48" />
+        <state relative-caret-position="466">
+          <caret line="636" column="40" selection-start-line="636" selection-start-column="40" selection-end-line="636" selection-end-column="40" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SNPs_subsets/deficient_snps.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1081">
+          <caret line="116" column="109" lean-forward="true" selection-start-line="116" selection-start-column="109" selection-end-line="116" selection-end-column="109" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/corporate_funcs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="71" column="16" selection-start-line="71" selection-start-column="16" selection-end-line="71" selection-end-column="16" />
+          <folding>
+            <element signature="e#0#17#0" expanded="true" />
           </folding>
         </state>
       </provider>
