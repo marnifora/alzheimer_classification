@@ -152,23 +152,7 @@ def build_testdata(chrlist, selected_snps, testset):
     return X_test, y_test
 
 
-def classify_acc(X, y, X_test, y_test, cv):
-
-    rf = RandomForestClassifier(n_estimators=500)
-
-    if not cv:
-        rf.fit(X, y)
-        return rf.score(X, y), rf.score(X_test, y_test)
-    else:
-        kf = KFold(n_splits=cv)
-        scores = []
-        for train_index, test_index in kf.split(X):
-            rf.fit(X[train_index], y[train_index])
-            scores.append([rf.score(X[train_index], y[train_index]), rf.score(X[test_index], y[test_index])])
-        return np.mean([s[0] for s in scores]), np.mean([s[1] for s in scores])
-
-
-def classify_auc(X, y, X_test, y_test, cv):
+def classify(X, y, X_test, y_test, cv):
 
     rf = RandomForestClassifier(n_estimators=500)
 
@@ -177,17 +161,19 @@ def classify_auc(X, y, X_test, y_test, cv):
         prob = rf.predict_proba(X_test)
         order = [i for i, c in enumerate(rf.classes_) if c == 1]
         y_score = prob[:, order]
-        return roc_auc_score(y_test, y_score)
+        return rf.score(X, y), rf.score(X_test, y_test), roc_auc_score(y_test, y_score)
     else:
         kf = KFold(n_splits=cv)
-        scores = []
+        scores = [[],[],[]]
         for train_index, test_index in kf.split(X):
             rf.fit(X[train_index], y[train_index])
             prob = rf.predict_proba(X[test_index])
             order = [i for i, c in enumerate(rf.classes_) if c == 1]
             y_score = prob[:, order]
-            scores.append(roc_auc_score(y[test_index], y_score))
-        return np.mean(scores)
+            [s.append(el) for s, el in
+             zip(scores, [rf.score(X[train_index], y[train_index]), rf.score(X[test_index], y[test_index]),
+                          roc_auc_score(y[test_index], y_score)])]
+        return list(map(np.mean, scores))
 
 
 
@@ -396,7 +382,6 @@ snpruns = None
 continuation = False
 makey = False
 cv = None
-auc = False
 
 for q in range(len(sys.argv)):
 
@@ -521,10 +506,6 @@ for q in range(len(sys.argv)):
         cv = int(sys.argv[q+1])
         continue
 
-    if sys.argv[q] == '-auc':
-        auc = True
-        continue
-
     if sys.argv[q].startswith('-'):
         raise exceptions.WrongParameterName(sys.argv[q])
 
@@ -608,7 +589,7 @@ if not boruta_only:
     else:
         testsize = testsizeboruta
     scores_file = open('%sclass_scores_%d.txt' % (outdir, classrun), 'w', 1)
-    scores_file.write('perc\tSNPs\ttrain_score\ttest_score\n')  # writing heading to class_scores file
+    scores_file.write('perc\tSNPs\ttrain_score\ttest_score\tAUC\n')  # writing heading to class_scores file
     if makey:
         build_y_matrices(dataset, borutarun, outdir, funcs.patients(dataset), testpat, trainpat)
 
@@ -632,12 +613,8 @@ if not boruta_only:
 
         # running classification and saving scores to class_scores file
         if X_train.shape[1] > 0:
-            if not auc:
-                score_train, score_test = classify_acc(X_train, y_train, X_test, y_test, cv)
-                scores_file.write('%d\t%d\t%.3f\t%.3f\n' % (p, X_train.shape[1], score_train, score_test))
-            else:
-                score = classify_auc(X_train, y_train, X_test, y_test, cv)
-                scores_file.write('%d\t%d\t-\tAUC=%.3f\n' % (p, X_train.shape[1], score))
+            score_train, score_test, score_auc = classify(X_train, y_train, X_test, y_test, cv)
+            scores_file.write('%d\t%d\t%.3f\t%.3f\t%.3f\n' % (p, X_train.shape[1], score_train, score_test, score_auc))
             # saving matrices (on which was based the classification) to file
             for name in ['X_train', 'y_train', 'X_test', 'y_test']:
                 np.save('%s%s_genome_%d_%d.npy' % (outdir, name, p, classrun), eval(name))
@@ -655,12 +632,9 @@ if not boruta_only:
     testpat_val = len(testpat)
     trainpat_val = len(trainpat)
     if cv:
-        if auc:
-            teststr = 'AUC-CV: %.2f*(%s)' % (1.0/cv, trainstr)
-        else:
-            teststr = 'CV: %.2f*(%s)' % (1.0/cv, trainstr)
-        testpat_val = sum(pat.values())//cv
-        trainpat_val = sum(pat.values()) - testpat_val
+        teststr = 'CV-%d: %s' % (cv, trainstr)
+        testpat_val = 0
+        trainpat_val = sum(pat.values())
     elif not testset:
         teststr = '%.2f*(%s)' % (testsize, trainstr)
     else:

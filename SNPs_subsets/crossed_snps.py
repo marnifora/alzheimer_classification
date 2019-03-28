@@ -53,7 +53,7 @@ def find_crossed(dataset, chrlist, fixed, run, borutaruns, perc):
     return crossed_snps
 
 
-dataset = {}
+dataset = OrderedDict()
 chrlist = [i for i in range(1, 24)]
 fixed = False
 run = None
