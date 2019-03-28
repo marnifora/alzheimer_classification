@@ -95,10 +95,12 @@ if 'outdir' in globals():
 l = 0
 all = 0
 for name, directory in dataset.items():
+    print('Analysis for %s dataset' % name)
     if 'outdir' not in globals():
         output = '%sdeficient/' % directory
         run = funcs.establish_run('deficient', fixed, output, run)
     for ch in chrlist:
+        print('Checking SNPs for chromosome %d has just started!' % ch)
         locs, al = find_weak(ch, directory, perc, borutaruns[name], thresh)
         l += len(locs)
         all += al
