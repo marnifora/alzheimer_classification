@@ -106,17 +106,16 @@ def next_intersection(set, shared, ref, ch):
 def map_rows_to_locs(dataset, ch, perc, borutarun, outfile):
 
     directory = next(iter(dataset.values()))
-    snps_loc = snp_list(directory, ch)
-    snp = next(snps_loc)
+    bests = best_snp(directory, ch, borutarun, perc)
+    best = next(bests)
     print('Mapping rows to locations for chromosome %d' % ch)
-    with open('%sboruta/bestsnps_chr%d_%d_%d.txt' % (directory, ch, perc, borutarun), 'r') as file:
-        for _ in range(2):
-            file.readline()
-        for i, line in enumerate(file):
-            if snp[-1] == int(line.strip()):
-                outfile.write('chr%d\t%d\t%d\n' % (ch, int(snp[0]), int(snp[0])+1))
-            try:
-                snp = next(snps_loc)
-            except IndexError:
-                break
+    with open('%smatrices/snps_chr%d.txt' % (directory, ch), 'r') as snpsfile:
+        for i, line in enumerate(snpsfile):
+            if i == best:
+                snp = line.split()
+                outfile.write('chr%d\t%d\t%d\n' % (ch, int(snp[0]), int(snp[0]) + 1))
+                try:
+                    best = next(bests)
+                except IndexError:
+                    break
     return 0
