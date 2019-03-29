@@ -119,6 +119,4 @@ def map_rows_to_locs(dataset, ch, perc, borutarun, outfile):
                 snp = next(snps_loc)
             except IndexError:
                 break
-    if any(True for _ in snps_loc):
-        raise exceptions.OtherError('No all SNPs were found - there is no enough SNPs in bestsnps file.')
     return 0

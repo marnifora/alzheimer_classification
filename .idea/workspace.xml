@@ -64,8 +64,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/SNPs_subsets/subset_funcs.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="751">
-              <caret line="117" column="21" lean-forward="true" selection-start-line="117" selection-start-column="21" selection-end-line="117" selection-end-column="21" />
+            <state relative-caret-position="796">
+              <caret line="121" column="12" lean-forward="true" selection-start-line="121" selection-start-column="12" selection-end-line="121" selection-end-column="12" />
             </state>
           </provider>
         </entry>
@@ -540,20 +540,6 @@
       <option name="presentableId" value="Default" />
       <updated>1544007477880</updated>
     </task>
-    <task id="LOCAL-00005" summary="Corrections in writing data into matrices.">
-      <created>1550272951503</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1550272951503</updated>
-    </task>
-    <task id="LOCAL-00006" summary="Little corrections in plink_processing.sh.">
-      <created>1550313341092</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1550313341092</updated>
-    </task>
     <task id="LOCAL-00007" summary="Change folders' structure, add scripts for similarity structure analysis, small corrections in make_pit-diagnoses.">
       <created>1550486322362</created>
       <option name="number" value="00007" />
@@ -883,7 +869,21 @@
       <option name="project" value="LOCAL" />
       <updated>1553851554187</updated>
     </task>
-    <option name="localTasksCounter" value="54" />
+    <task id="LOCAL-00054" summary="Small corrections.">
+      <created>1553856487033</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1553856487033</updated>
+    </task>
+    <task id="LOCAL-00055" summary="Small corrections.">
+      <created>1553856967079</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1553856967079</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="TodoView">
@@ -961,9 +961,9 @@
     <MESSAGE value="Adding get_snps_locations script which rewrites selected SNPs to bed file." />
     <MESSAGE value="Adding AUC score option in boruta_classification." />
     <MESSAGE value="Adding deficient SNPs subset." />
-    <MESSAGE value="Small corrections." />
     <MESSAGE value="Adding mapping rows to locations." />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding mapping rows to locations." />
+    <MESSAGE value="Small corrections." />
+    <option name="LAST_COMMIT_MESSAGE" value="Small corrections." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1228,8 +1228,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/SNPs_subsets/subset_funcs.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="751">
-          <caret line="117" column="21" lean-forward="true" selection-start-line="117" selection-start-column="21" selection-end-line="117" selection-end-column="21" />
+        <state relative-caret-position="796">
+          <caret line="121" column="12" lean-forward="true" selection-start-line="121" selection-start-column="12" selection-end-line="121" selection-end-column="12" />
         </state>
       </provider>
     </entry>
