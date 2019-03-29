@@ -102,3 +102,22 @@ def next_intersection(set, shared, ref, ch):
 
     return shared
 
+
+def map_rows_to_locs(dataset, ch, rowsfile, outfile):
+
+    outf = open(outfile, 'w')
+    snps_loc = snp_list(next(iter(dataset.values())), ch)
+    snp = next(snps_loc)
+    print('Mapping rows to locations for chromosome %d' % ch)
+    with open(rowsfile, 'r') as file:
+        for i, line in enumerate(file):
+            if snp[-1] == int(line.strip()):
+                outf.write('chr%d\t%d\t%d\n' % (ch, int(snp[0]), int(snp[0])+1))
+            try:
+                snp = next(snps_loc)
+            except IndexError:
+                break
+    if any(True for _ in snps_loc):
+        raise exceptions.OtherError('No all SNPs were found - there is no enough SNPs in bestsnps file.')
+    outf.close()
+    return 0
