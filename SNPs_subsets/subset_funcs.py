@@ -116,6 +116,6 @@ def map_rows_to_locs(dataset, ch, perc, borutarun, outfile):
                 outfile.write('chr%d\t%d\t%d\n' % (ch, int(snp[0]), int(snp[0]) + 1))
                 try:
                     best = next(bests)
-                except IndexError:
+                except StopIteration:
                     break
     return 0

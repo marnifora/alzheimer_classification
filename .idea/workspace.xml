@@ -28,8 +28,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/boruta_classification.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="9330">
-              <caret line="636" column="40" selection-start-line="636" selection-start-column="40" selection-end-line="636" selection-end-column="40" />
+            <state relative-caret-position="483">
+              <caret line="616" column="31" lean-forward="true" selection-start-line="616" selection-start-column="31" selection-end-line="616" selection-end-column="31" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -64,8 +64,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/SNPs_subsets/subset_funcs.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="796">
-              <caret line="121" column="12" lean-forward="true" selection-start-line="121" selection-start-column="12" selection-end-line="121" selection-end-column="12" />
+            <state relative-caret-position="749">
+              <caret line="119" column="25" lean-forward="true" selection-start-line="119" selection-start-column="25" selection-end-line="119" selection-end-column="25" />
             </state>
           </provider>
         </entry>
@@ -540,20 +540,6 @@
       <option name="presentableId" value="Default" />
       <updated>1544007477880</updated>
     </task>
-    <task id="LOCAL-00007" summary="Change folders' structure, add scripts for similarity structure analysis, small corrections in make_pit-diagnoses.">
-      <created>1550486322362</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1550486322362</updated>
-    </task>
-    <task id="LOCAL-00008" summary="Set outdir the same as indir if it is not given as the parameter.">
-      <created>1550487660127</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1550487660127</updated>
-    </task>
     <task id="LOCAL-00009" summary="Correct error in sh files: adding 'fi'">
       <created>1550489547657</created>
       <option name="number" value="00009" />
@@ -883,7 +869,21 @@
       <option name="project" value="LOCAL" />
       <updated>1553856967079</updated>
     </task>
-    <option name="localTasksCounter" value="56" />
+    <task id="LOCAL-00056" summary="Small corrections.">
+      <created>1553857314806</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1553857314806</updated>
+    </task>
+    <task id="LOCAL-00057" summary="Small corrections.">
+      <created>1553871340560</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1553871340561</updated>
+    </task>
+    <option name="localTasksCounter" value="58" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1155,16 +1155,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/boruta_classification.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="9330">
-          <caret line="636" column="40" selection-start-line="636" selection-start-column="40" selection-end-line="636" selection-end-column="40" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/SNPs_subsets/shared_snps.py">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -1226,10 +1216,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/boruta_classification.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="483">
+          <caret line="616" column="31" lean-forward="true" selection-start-line="616" selection-start-column="31" selection-end-line="616" selection-end-column="31" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/SNPs_subsets/subset_funcs.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="796">
-          <caret line="121" column="12" lean-forward="true" selection-start-line="121" selection-start-column="12" selection-end-line="121" selection-end-column="12" />
+        <state relative-caret-position="749">
+          <caret line="119" column="25" lean-forward="true" selection-start-line="119" selection-start-column="25" selection-end-line="119" selection-end-column="25" />
         </state>
       </provider>
     </entry>
