@@ -103,12 +103,15 @@ def next_intersection(set, shared, ref, ch):
     return shared
 
 
-def map_rows_to_locs(dataset, ch, rowsfile, outfile):
+def map_rows_to_locs(dataset, ch, perc, borutarun, outfile):
 
-    snps_loc = snp_list(next(iter(dataset.values())), ch)
+    directory = next(iter(dataset.values()))
+    snps_loc = snp_list(directory, ch)
     snp = next(snps_loc)
     print('Mapping rows to locations for chromosome %d' % ch)
-    with open(rowsfile, 'r') as file:
+    with open('%sboruta/bestsnps_chr%d_%d_%d.txt' % (directory, ch, perc, borutarun), 'r') as file:
+        for _ in range(2):
+            file.readline()
         for i, line in enumerate(file):
             if snp[-1] == int(line.strip()):
                 outfile.write('chr%d\t%d\t%d\n' % (ch, int(snp[0]), int(snp[0])+1))
