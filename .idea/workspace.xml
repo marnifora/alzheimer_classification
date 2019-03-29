@@ -64,8 +64,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/SNPs_subsets/subset_funcs.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="811">
-              <caret line="122" column="12" lean-forward="true" selection-start-line="122" selection-start-column="12" selection-end-line="122" selection-end-column="12" />
+            <state relative-caret-position="751">
+              <caret line="117" column="21" lean-forward="true" selection-start-line="117" selection-start-column="21" selection-end-line="117" selection-end-column="21" />
             </state>
           </provider>
         </entry>
@@ -514,10 +514,10 @@
     </configuration>
     <list>
       <item itemvalue="Python.boruta_classification" />
-      <item itemvalue="Python.crossed_snps" />
-      <item itemvalue="Python.deficient_snps" />
-      <item itemvalue="Python.get_snps_locations" />
       <item itemvalue="Python.shared_snps" />
+      <item itemvalue="Python.crossed_snps" />
+      <item itemvalue="Python.get_snps_locations" />
+      <item itemvalue="Python.deficient_snps" />
     </list>
     <recent_temporary>
       <list>
@@ -539,13 +539,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1544007477880</updated>
-    </task>
-    <task id="LOCAL-00004" summary="Little corrections in plink scripts (dbsnp directory).">
-      <created>1550258394695</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1550258394695</updated>
     </task>
     <task id="LOCAL-00005" summary="Corrections in writing data into matrices.">
       <created>1550272951503</created>
@@ -883,7 +876,14 @@
       <option name="project" value="LOCAL" />
       <updated>1553807556199</updated>
     </task>
-    <option name="localTasksCounter" value="53" />
+    <task id="LOCAL-00053" summary="Adding mapping rows to locations.">
+      <created>1553851554186</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1553851554187</updated>
+    </task>
+    <option name="localTasksCounter" value="54" />
     <servers />
   </component>
   <component name="TodoView">
@@ -938,7 +938,6 @@
     </layout-to-restore>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Little corrections in plink_processing.sh." />
     <MESSAGE value="Change folders' structure, add scripts for similarity structure analysis, small corrections in make_pit-diagnoses." />
     <MESSAGE value="Set outdir the same as indir if it is not given as the parameter." />
     <MESSAGE value="Correct error in sh files: adding 'fi'" />
@@ -963,7 +962,8 @@
     <MESSAGE value="Adding AUC score option in boruta_classification." />
     <MESSAGE value="Adding deficient SNPs subset." />
     <MESSAGE value="Small corrections." />
-    <option name="LAST_COMMIT_MESSAGE" value="Small corrections." />
+    <MESSAGE value="Adding mapping rows to locations." />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding mapping rows to locations." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1228,8 +1228,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/SNPs_subsets/subset_funcs.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="811">
-          <caret line="122" column="12" lean-forward="true" selection-start-line="122" selection-start-column="12" selection-end-line="122" selection-end-column="12" />
+        <state relative-caret-position="751">
+          <caret line="117" column="21" lean-forward="true" selection-start-line="117" selection-start-column="21" selection-end-line="117" selection-end-column="21" />
         </state>
       </provider>
     </entry>
