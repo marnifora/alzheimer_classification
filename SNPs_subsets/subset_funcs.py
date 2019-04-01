@@ -18,6 +18,12 @@ def shared_snp(directory, ch, sharedrun):
             yield int(line.strip())
 
 
+def crossed_snp(directory, ch, crossedrun):
+    with open('%scrossed/crossed_snps_chr%d_%d.txt' % (directory, ch, crossedrun), 'r') as file:
+        for line in file:
+            yield int(line.strip())
+
+
 def snp_list(directory, ch):
     with open('%smatrices/snps_chr%d.txt' % (directory, ch), 'r') as file:
         for i, line in enumerate(file):
@@ -123,6 +129,8 @@ def map_rows_to_locs(dataset, ch, run, outfile, subsettype, perc=None):
         subset = best_snp(directory, ch, run, perc)
     elif subsettype == 'shared':
         subset = shared_snp(directory, ch, run)
+    elif subsettype == 'crossed':
+        subset = crossed_snp(directory, ch, run)
     s = next(subset)
     print('Mapping rows to locations for chromosome %d' % ch)
     with open('%smatrices/snps_chr%d.txt' % (directory, ch), 'r') as snpsfile:
