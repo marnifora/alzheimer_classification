@@ -134,6 +134,7 @@ def map_rows_to_locs(dataset, ch, run, outfile, subsettype, perc=None):
     s = next(subset)
     print('Mapping rows to locations for chromosome %d' % ch)
     with open('%smatrices/snps_chr%d.txt' % (directory, ch), 'r') as snpsfile:
+        stopped = False
         for i, line in enumerate(snpsfile):
             if i == s:
                 snp = line.split()
@@ -141,7 +142,11 @@ def map_rows_to_locs(dataset, ch, run, outfile, subsettype, perc=None):
                 try:
                     s = next(subset)
                 except StopIteration:
+                    stopped = True
                     break
+        if not stopped:
+            print(next(subset))
+            raise exceptions.OtherError('Not all selected SNPs for chr %d were found in the SNP file!' % ch)
     return 0
 
 
