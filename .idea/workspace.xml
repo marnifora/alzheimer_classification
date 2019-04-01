@@ -14,22 +14,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/corporate_funcs.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="575">
-              <caret line="69" column="25" selection-start-line="69" selection-start-column="25" selection-end-line="69" selection-end-column="25" />
-              <folding>
-                <element signature="e#0#17#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/boruta_classification.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="483">
-              <caret line="616" column="31" lean-forward="true" selection-start-line="616" selection-start-column="31" selection-end-line="616" selection-end-column="31" />
+            <state relative-caret-position="2834">
+              <caret line="616" column="31" selection-start-line="616" selection-start-column="31" selection-end-line="616" selection-end-column="31" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -40,8 +28,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SNPs_subsets/deficient_snps.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="331">
-              <caret line="34" column="105" lean-forward="true" selection-start-line="34" selection-start-column="14" selection-end-line="34" selection-end-column="105" />
+            <state relative-caret-position="480">
+              <caret line="34" column="105" selection-start-line="34" selection-start-column="14" selection-end-line="34" selection-end-column="105" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -52,8 +40,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SNPs_subsets/shared_snps.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret selection-end-line="5" selection-end-column="31" />
+            <state relative-caret-position="375">
+              <caret line="27" selection-start-line="27" selection-end-line="27" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -64,8 +52,17 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/SNPs_subsets/subset_funcs.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="749">
-              <caret line="119" column="25" lean-forward="true" selection-start-line="119" selection-start-column="25" selection-end-line="119" selection-end-column="25" />
+            <state relative-caret-position="179">
+              <caret line="128" column="32" lean-forward="true" selection-start-line="128" selection-start-column="32" selection-end-line="128" selection-end-column="32" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/vcf_rewrite/prepreparing.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="465">
+              <caret line="31" column="85" selection-start-line="31" selection-start-column="21" selection-end-line="31" selection-end-column="86" />
             </state>
           </provider>
         </entry>
@@ -73,7 +70,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SNPs_subsets/crossed_snps.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1485">
+            <state relative-caret-position="1455">
               <caret line="99" column="33" selection-start-line="99" selection-start-column="33" selection-end-line="99" selection-end-column="33" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
@@ -251,6 +248,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -273,11 +271,15 @@
               <item name="alzheimer_classification" type="462c0819:PsiDirectoryNode" />
               <item name="SNPs_subsets" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="alzheimer_classification" type="b2602c69:ProjectViewProjectNode" />
+              <item name="alzheimer_classification" type="462c0819:PsiDirectoryNode" />
+              <item name="vcf_rewrite" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -539,13 +541,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1544007477880</updated>
-    </task>
-    <task id="LOCAL-00009" summary="Correct error in sh files: adding 'fi'">
-      <created>1550489547657</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1550489547657</updated>
     </task>
     <task id="LOCAL-00010" summary="Making shared_snps.py, moving some functions from boruta_classification to a new file corporate_funcs.py.">
       <created>1550528240117</created>
@@ -883,7 +878,14 @@
       <option name="project" value="LOCAL" />
       <updated>1553871340561</updated>
     </task>
-    <option name="localTasksCounter" value="58" />
+    <task id="LOCAL-00058" summary="Small corrections.">
+      <created>1553871497825</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1553871497825</updated>
+    </task>
+    <option name="localTasksCounter" value="59" />
     <servers />
   </component>
   <component name="TodoView">
@@ -899,7 +901,7 @@
     <frame x="0" y="-2" width="1920" height="1082" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16447021" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17026885" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -912,7 +914,7 @@
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.27429804" />
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.3336933" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info anchor="bottom" id="Python Console" order="10" weight="0.24730022" />
+      <window_info anchor="bottom" id="Python Console" order="10" visible="true" weight="0.25393495" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -970,7 +972,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/SNPs_subsets/subset_funcs.py</url>
-          <line>51</line>
+          <line>57</line>
           <option name="timeStamp" value="16" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -1039,13 +1041,6 @@
             <caret line="19" selection-start-line="19" selection-end-line="19" selection-end-column="9" />
           </first_editor>
           <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vcf_rewrite/prepreparing.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="768">
-          <caret line="144" column="2" lean-forward="true" selection-start-line="144" selection-start-column="2" selection-end-line="144" selection-end-column="2" />
         </state>
       </provider>
     </entry>
@@ -1155,10 +1150,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/SNPs_subsets/deficient_snps.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="480">
+          <caret line="34" column="105" selection-start-line="34" selection-start-column="14" selection-end-line="34" selection-end-column="105" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/SNPs_subsets/shared_snps.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="5" selection-end-column="31" />
+        <state relative-caret-position="375">
+          <caret line="27" selection-start-line="27" selection-end-line="27" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SNPs_subsets/crossed_snps.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1455">
+          <caret line="99" column="33" selection-start-line="99" selection-start-column="33" selection-end-line="99" selection-end-column="33" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
@@ -1196,40 +1211,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SNPs_subsets/crossed_snps.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1485">
-          <caret line="99" column="33" selection-start-line="99" selection-start-column="33" selection-end-line="99" selection-end-column="33" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SNPs_subsets/deficient_snps.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="331">
-          <caret line="34" column="105" lean-forward="true" selection-start-line="34" selection-start-column="14" selection-end-line="34" selection-end-column="105" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/boruta_classification.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="483">
-          <caret line="616" column="31" lean-forward="true" selection-start-line="616" selection-start-column="31" selection-end-line="616" selection-end-column="31" />
+        <state relative-caret-position="2834">
+          <caret line="616" column="31" selection-start-line="616" selection-start-column="31" selection-end-line="616" selection-end-column="31" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vcf_rewrite/prepreparing.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="465">
+          <caret line="31" column="85" selection-start-line="31" selection-start-column="21" selection-end-line="31" selection-end-column="86" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/SNPs_subsets/subset_funcs.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="749">
-          <caret line="119" column="25" lean-forward="true" selection-start-line="119" selection-start-column="25" selection-end-line="119" selection-end-column="25" />
+        <state relative-caret-position="179">
+          <caret line="128" column="32" lean-forward="true" selection-start-line="128" selection-start-column="32" selection-end-line="128" selection-end-column="32" />
         </state>
       </provider>
     </entry>

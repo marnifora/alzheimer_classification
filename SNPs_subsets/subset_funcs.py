@@ -12,6 +12,12 @@ def best_snp(directory, ch, borutarun, perc):
             yield int(line.strip())
 
 
+def shared_snp(directory, ch, sharedrun):
+    with open('%sshared/shared_snps_chr%d_%d.txt' % (directory, ch, sharedrun), 'r') as file:
+        for line in file:
+            yield int(line.strip())
+
+
 def snp_list(directory, ch):
     with open('%smatrices/snps_chr%d.txt' % (directory, ch), 'r') as file:
         for i, line in enumerate(file):
@@ -103,19 +109,46 @@ def next_intersection(set, shared, ref, ch):
     return shared
 
 
-def map_rows_to_locs(dataset, ch, perc, borutarun, outfile):
+def map_rows_to_locs(dataset, ch, run, outfile, subsettype, perc=None):
 
     directory = next(iter(dataset.values()))
-    bests = best_snp(directory, ch, borutarun, perc)
-    best = next(bests)
+    if subsettype == 'best':
+        if perc is None:
+            with open('%sboruta/boruta_runs.txt', 'r') as file:
+                for line in file:
+                    if line.startswith(str(run) + '\t'):
+                        perc = line.split()[8].split(',')
+                        if len(perc) > 1:
+                            raise exceptions.NoParameterError('perc',
+                                                              'There is more than one perc value for given boruta run.')
+                        else:
+                            perc = int(perc[0])
+                        break
+                raise exceptions.WrongValueError('run', run, 'There is no boruta run with this number.')
+        subset = best_snp(directory, ch, run, perc)
+    elif subsettype == 'shared':
+        subset = shared_snp(directory, ch, run)
+    s = next(subset)
     print('Mapping rows to locations for chromosome %d' % ch)
     with open('%smatrices/snps_chr%d.txt' % (directory, ch), 'r') as snpsfile:
         for i, line in enumerate(snpsfile):
-            if i == best:
+            if i == s:
                 snp = line.split()
                 outfile.write('chr%d\t%d\t%d\n' % (ch, int(snp[0]), int(snp[0]) + 1))
                 try:
-                    best = next(bests)
+                    s = next(subset)
                 except StopIteration:
                     break
     return 0
+
+
+'''
+import subset_funcs as funcs
+perc = 90
+borutarun = 1
+dataset = {'rosmap': '/mnt/chr11/Data/rosmap/'}
+outfile = open('/mnt/chr11/Data/rosmap/boruta/locs_bestsnps_%d_%d.bed' % (perc, borutarun), 'w')
+for ch in range(1,24):
+     funcs.map_rows_to_locs(dataset, ch, perc, borutarun, outfile)
+
+'''
