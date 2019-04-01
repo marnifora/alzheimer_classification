@@ -115,7 +115,7 @@ def map_rows_to_locs(dataset, ch, run, outfile, subsettype, perc=None):
     directory = next(iter(dataset.values()))
     if subsettype == 'best':
         if perc is None:
-            with open('%sboruta/boruta_runs.txt', 'r') as file:
+            with open('%sboruta/boruta_runs.txt' % directory, 'r') as file:
                 for line in file:
                     if line.startswith(str(run) + '\t'):
                         perc = line.split()[8].split(',')
@@ -159,5 +159,5 @@ dataset = {'rosmap': '/mnt/chr11/Data/rosmap/'}
 outfile = open('/mnt/chr11/Data/rosmap/boruta/locs_bestsnps_%d_%d.bed' % (perc, borutarun), 'w')
 for ch in range(1,24):
      funcs.map_rows_to_locs(dataset, ch, run, outfile, subsettype, perc=perc)
-
+outfile.close()
 '''
