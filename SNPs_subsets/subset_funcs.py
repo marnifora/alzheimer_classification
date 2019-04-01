@@ -30,7 +30,7 @@ def wind_to_best(iterator, snp, best):
         snp = next(iterator)
     if snp[-1] > best:
         raise exceptions.OtherError('There is no SNP with number %d' % best)
-    return snp, iterator
+    return iterator, snp
 
 
 def first_intersection(dataset, ch, borutarun=None, perc=None):
@@ -42,16 +42,13 @@ def first_intersection(dataset, ch, borutarun=None, perc=None):
     if borutarun:
         iter_best = [best_snp(dataset[names[0]], ch, borutarun[names[0]], perc), best_snp(dataset[names[1]], ch,
                                                                                           borutarun[names[1]], perc)]
-
-    order = [0, 0]
-
     try:
         snps = list(map(next, iter_snps))
 
         if borutarun:
              bests = list(map(next, iter_best))
-             snps, iter_snps = list(map(list, zip(*[wind_to_best(iterator, snp, best) for iterator, snp, best in
-                                                       zip(iter_snps, snps, bests)])))
+             iter_snps, snps = list(map(list, zip(*[wind_to_best(iterator, snp, best) for iterator, snp, best in
+                                                    zip(iter_snps, snps, bests)])))
 
         while len(snps) == 2:
 
@@ -60,28 +57,26 @@ def first_intersection(dataset, ch, borutarun=None, perc=None):
                 snps[0] = next(iter_snps[0])
                 if borutarun:
                     bests[0] = next(iter_best[0])
-                    snps[0], iter_snps[0] = wind_to_best(iter_snps[0], snps[0], bests[0])
-                order[0] += 1
+                    iter_snps[0], snps[0] = wind_to_best(iter_snps[0], snps[0], bests[0])
 
             elif int(snps[0][0]) == int(snps[1][0]):
 
                 if snps[0][1] == snps[1][1]:
-                    shared[int(snps[0][0])] = order
+                    shared[int(snps[0][0])] = [s[-1] for s in snps]
                     ref[int(snps[0][0])] = snps[0][1]
                     snps = list(map(next, iter_snps))
                     if borutarun:
                         bests = list(map(next, iter_best))
-                        snps, iter_snps = list(map(list, zip(*[wind_to_best(iterator, snp, best) for iterator, snp, best
-                                                               in zip(iter_snps, snps, bests)])))
-                    order = [x + 1 for x in order]
+                        iter_snps, snps = list(map(list, zip(*[wind_to_best(iterator, snp, best)
+                                                               for iterator, snp, best in
+                                                               zip(iter_snps, snps, bests)])))
                 else:
                     raise exceptions.SNPReferenceError(ch, int(snps[0][0]), snps[0][1], snps[1][1])
             else:
                 snps[1] = next(iter_snps[1])
                 if borutarun:
                     bests[1] = next(iter_best[1])
-                    snps[1], iter_snps[1] = wind_to_best(iter_snps[1], snps[1], bests[1])
-                order[1] += 1
+                    iter_snps[1], snps[1] = wind_to_best(iter_snps[1], snps[1], bests[1])
     except StopIteration:
         pass
 
@@ -145,10 +140,11 @@ def map_rows_to_locs(dataset, ch, run, outfile, subsettype, perc=None):
 '''
 import subset_funcs as funcs
 perc = 90
-borutarun = 1
+run = 1
+subsettype='best'
 dataset = {'rosmap': '/mnt/chr11/Data/rosmap/'}
 outfile = open('/mnt/chr11/Data/rosmap/boruta/locs_bestsnps_%d_%d.bed' % (perc, borutarun), 'w')
 for ch in range(1,24):
-     funcs.map_rows_to_locs(dataset, ch, perc, borutarun, outfile)
+     funcs.map_rows_to_locs(dataset, ch, run, outfile, subsettype, perc=perc)
 
 '''
