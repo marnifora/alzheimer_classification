@@ -48,44 +48,49 @@ def first_intersection(dataset, ch, borutarun=None, perc=None):
     if borutarun:
         iter_best = [best_snp(dataset[names[0]], ch, borutarun[names[0]], perc), best_snp(dataset[names[1]], ch,
                                                                                           borutarun[names[1]], perc)]
-    try:
-        snps = list(map(next, iter_snps))
+    snps = list(map(next, iter_snps))
 
-        if borutarun:
-             bests = list(map(next, iter_best))
-             iter_snps, snps = list(map(list, zip(*[wind_to_best(iterator, snp, best) for iterator, snp, best in
-                                                    zip(iter_snps, snps, bests)])))
+    if borutarun:
+        bests = list(map(next, iter_best))
+        iter_snps, snps = list(map(list, zip(*[wind_to_best(iterator, snp, best) for iterator, snp, best in
+                                               zip(iter_snps, snps, bests)])))
 
-        while len(snps) == 2:
+    while len(snps) == 2:
 
-            if int(snps[0][0]) < int(snps[1][0]):
+        if int(snps[0][0]) < int(snps[1][0]):
 
+            try:
                 snps[0] = next(iter_snps[0])
                 if borutarun:
                     bests[0] = next(iter_best[0])
                     iter_snps[0], snps[0] = wind_to_best(iter_snps[0], snps[0], bests[0])
+            except StopIteration:
+                break
 
-            elif int(snps[0][0]) == int(snps[1][0]):
+        elif int(snps[0][0]) == int(snps[1][0]):
 
-                if snps[0][1] == snps[1][1]:
-                    shared[int(snps[0][0])] = [s[-1] for s in snps]
-                    ref[int(snps[0][0])] = snps[0][1]
-                    snps = list(map(next, iter_snps))
-                    if borutarun:
-                        bests = list(map(next, iter_best))
-                        iter_snps, snps = list(map(list, zip(*[wind_to_best(iterator, snp, best)
-                                                               for iterator, snp, best in
-                                                               zip(iter_snps, snps, bests)])))
-                else:
-                    raise exceptions.SNPReferenceError(ch, int(snps[0][0]), snps[0][1], snps[1][1])
+            if snps[0][1] == snps[1][1]:
+                shared[int(snps[0][0])] = [s[-1] for s in snps]
+                ref[int(snps[0][0])] = snps[0][1]
+                snps = list(map(next, iter_snps))
+                if not snps:
+                    raise exceptions.OtherError('There is more SNPs in the subset than all of them on the list!')
+                if borutarun:
+                    bests = list(map(next, iter_best))
+                    if not bests:
+                        break
+                    iter_snps, snps = list(map(list, zip(*[wind_to_best(iterator, snp, best)
+                                                           for iterator, snp, best in zip(iter_snps, snps, bests)])))
             else:
+                raise exceptions.SNPReferenceError(ch, int(snps[0][0]), snps[0][1], snps[1][1])
+        else:
+            try:
                 snps[1] = next(iter_snps[1])
                 if borutarun:
                     bests[1] = next(iter_best[1])
                     iter_snps[1], snps[1] = wind_to_best(iter_snps[1], snps[1], bests[1])
-    except StopIteration:
-        pass
-
+            except StopIteration:
+                break
     return shared, ref
 
 
