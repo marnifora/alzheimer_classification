@@ -125,7 +125,6 @@ def map_rows_to_locs(dataset, ch, run, outfile, subsettype, perc=None):
                         else:
                             perc = int(perc[0])
                         break
-                raise exceptions.WrongValueError('run', run, 'There is no boruta run with this number.')
         subset = best_snp(directory, ch, run, perc)
     elif subsettype == 'shared':
         subset = shared_snp(directory, ch, run)
