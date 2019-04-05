@@ -12,9 +12,9 @@ def vcf_to_matrix(ch, inp, outdir):
 
     o = open(inp, 'r')
 
-    for line in o:
-        while line.startswith('##'):
-            pass
+    line = o.readline()
+    while line.startswith('##'):
+        line = o.readline()
 
     p = open('%spid_chr%s.txt' % (outdir, ch), 'w')
     line = line.split()
@@ -57,12 +57,12 @@ def vcf_to_matrix(ch, inp, outdir):
         s.write('%s\t%s\t%s\n' % (line[1], line[3], line[4]))
         for j, e in enumerate(line[9:]):
             try:
-                v = int(e.split(':')[0].split("/|")[1])
+                v = int(e.split(':')[0].replace('|', '/').split('/')[1])
             except ValueError:
                 v = -1
             X[j, i] = v
 
-    np.savetxt('X_chr%d.csv' % ch, X, fmt='%d', delimiter=',')
+    np.savetxt('%sX_chr%s.csv' % (outdir, ch), X, fmt='%d', delimiter=',')
     o.close()
     s.close()
 
