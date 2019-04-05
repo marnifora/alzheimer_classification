@@ -8,35 +8,30 @@ See readme.txt for input, output and possible options.
 '''
 
 
-def vcf_to_matrix(c, inp, outdir):
+def vcf_to_matrix(ch, inp, outdir):
 
     o = open(inp, 'r')
-    
-    header = 0
+
     for line in o:
-        if not line.startswith('##'):
-            break
-        header += 1
-     
-    pat = 0
-    p = open('%spid_chr%s.txt' % (outdir, c), 'w')
+        while line.startswith('##'):
+            pass
+
+    p = open('%spid_chr%s.txt' % (outdir, ch), 'w')
     line = line.split()
-    for el in line[9:]:
+    for pat, el in enumerate(line[9:]):
         p.write(el.strip() + '\n')
-        pat += 1
-    header += 1
+    pat += 1
+    header = o.tell()
     p.close()
 
-    snp = len(o.readlines())
+    for snp, _ in enumerate(o):
+        pass
+    snp += 1
         
-    o.close()
+    o.seek(header)
 
-    o = open(inp, 'r')
-    
-    for _ in range(header):
-        o.readline()
-
-    s = open('%ssnps_chr%s.txt' % (outdir, c), 'w')
+    s = open('%ssnps_chr%s.txt' % (outdir, ch), 'w')
+    '''
     matrix = np.zeros(shape=(pat, snp, 2), dtype=np.int8)
     for i, line in enumerate(o):
     
@@ -53,11 +48,25 @@ def vcf_to_matrix(c, inp, outdir):
                 except ValueError:
                     v1, v2 = -1, -1
             matrix[j, i] = [v1, v2]
-    s.close()   
-    np.save('%smatrix_chr%s.npy' % (outdir, c), matrix)
-    
+    np.save('%smatrix_chr%s.npy' % (outdir, ch), matrix)     
+    '''
+
+    X = np.zeros(shape=(pat, snp), dtype=np.int8)
+    for i, line in enumerate(o):
+        line = line.split()
+        s.write('%s\t%s\t%s\n' % (line[1], line[3], line[4]))
+        for j, e in enumerate(line[9:]):
+            try:
+                v = int(e.split(':')[0].split("/|")[1])
+            except ValueError:
+                v = -1
+            X[j, i] = v
+
+    np.savetxt('X_chr%d.csv' % ch, X, fmt='%d', delimiter=',')
     o.close()
-    return "%s\t%d\t%d" % (c, snp, pat)
+    s.close()
+
+    return "%s\t%d\t%d" % (ch, snp, pat)
 
 
 ch = '1'

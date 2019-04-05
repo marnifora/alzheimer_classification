@@ -176,7 +176,6 @@ def classify(X, y, X_test, y_test, cv):
         return list(map(np.mean, scores))
 
 
-
 def first_run(dataset, fixed, outdir, pat, patsubset, patruns, run, testsize):
 
     run = funcs.establish_run('boruta', fixed, outdir, run)

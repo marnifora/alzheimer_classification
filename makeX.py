@@ -60,5 +60,5 @@ for q in range(len(sys.argv)):
 if 'outdir' not in globals():
     outdir = indir
 
-makeX(ch, indir, outdir)
+# makeX(ch, indir, outdir)
 print(makeX_nodif(ch, indir, outdir))
