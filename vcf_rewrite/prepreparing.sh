@@ -191,8 +191,7 @@ if [[ $all -eq 1 ]]; then
                         vcfname=${vcfstart}${ch}${vcfend}
                 fi
 
-                job_pool_run pooling ${tar} ${gz} ${snp} ${stats} ${matrix} ${ch} ${vcfname} ${base} ${files_dir}
-                ${matrices_dir} ${gatk_dir} ${ref}
+                job_pool_run pooling ${tar} ${gz} ${snp} ${stats} ${matrix} ${ch} ${vcfname} ${base} ${files_dir} ${matrices_dir} ${gatk_dir} ${ref}
 
         done
 
