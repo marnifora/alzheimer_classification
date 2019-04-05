@@ -93,7 +93,7 @@ while [[ "$1" != "" ]]; do
         case $1 in
 
         -chr | -c )             shift
-                                chr=$1
+                                ch=$1
                                 ;;
         -all | -a )             all=1
                                 ;;
@@ -204,6 +204,6 @@ fi
 
 if [[ $matrix -eq 1 ]]; then
 
-        sort -k1 -n -o ${outdir}'genome_stats.txt' ${outdir}'genome_stats.txt'
+        sort -k1 -n -o ${matrices_dir}'genome_stats.txt' ${matrices_dir}'genome_stats.txt'
 
 fi
