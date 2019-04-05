@@ -6,42 +6,56 @@
 See readme.txt for input, output and possible options.
 '
 
+function pooling {
 
-function vcf {
+# tar 1
+# gz 2
+# filtered_snp 3
+# do stats 4
+# do matrix 5
+# chromosome number 6
+# vcf file name 7
+# filtered vcf file name 8
+# directory of files (indir) 9
+# directory of matrices (outdir) 10
+# dir to gatk 11
+# genome reference 12
 
-        if [[ $5 -eq 1 ]]; then
+        vcf=${9}${7}
+        vcfsnps=${9}${8}"_chr"${6}"_SNPs.vcf"
+
+        if [[ $1 -eq 1 ]]; then
 
                 tend=".tar"
-                tarfile=$1${tend}
-                tar -xvf ${tarfile} -C ${13}
-                echo "tar file for chr=$4 decompressed!"
+                tarfile=${vcf}${tend}
+                tar -xvf ${tarfile} -C $9
+                echo "tar file for chr=$6 decompressed!"
         fi
 
-        if [[ $6 -eq 1 ]]; then
+        if [[ $2 -eq 1 ]]; then
 
                 gend=".gz"
-                gzfile=$1${gend}
-                gunzip -f ${gzfile} > $1
-                echo "gz file for chr=$4 decompressed!"
+                gzfile=${vcf}${gend}
+                gunzip -f ${gzfile} > ${vcf}
+                echo "gz file for chr=$6 decompressed!"
         fi
         
 
-        if [[ $7 -eq 1 ]]; then
-                echo $8           
+        if [[ $3 -eq 1 ]]; then
                 echo "running SelectVariants for chr=$4"
-                ${12}gatk SelectVariants -R $3 -V $1 -O $2 -select-type-to-include SNP
-                echo "$4 SNPs.vcf done!"
+                ${11}gatk SelectVariants -R ${12} -V ${vcf} -O ${vcfsnps} -select-type-to-include SNP
+                echo "$6 SNPs.vcf done!"
         fi
 
-        if [[ $8 -eq 1 ]]; then
-                python3 vcf_stats.py -input $2
-                echo "stats file for chr=$4 done!"
+        if [[ $4 -eq 1 ]]; then
+                echo "stats for chr=$6 started!"
+                python3 vcf_stats.py -input ${vcfsnps}
+                echo "stats file for chr=$6 done!"
         fi
 
-        if [[ $9 -eq 1 ]]; then
-                echo "running vcf_to_matrix for chr $4"
-                python3 vcf_to_matrix.py -chr $4 -input $2 -outdir ${11} >> ${10}
-                sort -k1 -n -o ${10} ${10}
+        if [[ $5 -eq 1 ]]; then
+                echo "running vcf_to_matrix for chr $6"
+                python3 vcf_to_matrix.py -chr $6 -input ${vcfsnps} -outdir ${10} >> ${10}'genome_stats.txt'
                 echo "matrices for chr $4 done!"
         fi
         # after this, run only once each function:
@@ -64,15 +78,15 @@ snp=0
 stats=0
 matrix=0
 
-#name of input and output files
-istart='default_chr'
-iend='.vcf'
+#name of input vcf files
+vcfstart='default_chr'
+vcfend='.vcf'
 
 # name of database
 base="dataset1"
 
 # directory to the input files
-gatkdir="./gatk-4.0.11.0/"
+gatk_dir="./gatk-4.0.11.0/"
 dir="./"
 
 while [[ "$1" != "" ]]; do
@@ -109,44 +123,46 @@ while [[ "$1" != "" ]]; do
         -dir )                  shift
                                 dir=$1
                                 ;;
-        -indir )                shift
-                                indir=$1
+        -indir | -files_dir)    shift
+                                files_dir=$1
                                 ;;
-        -outdir )               shift
-                                outdir=$1
+        -outdir | -matrices_dir) shift
+                                matrices_dir=$1
                                 ;;
-        -gatkdir )              shift
-                                gatkdir=$1
+        -gatk_dir )             shift
+                                gatk_dir=$1
                                 ;;
         -reference )            shift
                                 reference=$1
                                 ;;
-        -name )                 shift
+        -vcf | -vcffile )       shift
                                 s=(${1//\{chr\}/ })
-                                istart=${s[0]}
-                                iend=${s[1]}
+                                vcfstart=${s[0]}
+                                vcfend=${s[1]}
                                 ;;
         *)                      usage
                                 exit 1
-    esac
-    shift
+        esac
+        shift
 done
 
-if [[ ! -v ${indir} ]]; then
-    indir=${dir}"files/"
+if [[ ! -v ${files_dir} ]]; then
+    files_dir=${dir}"files/"
 fi
 
-if [[ ! -d ${indir} ]]; then
-    mkdir ${indir}
+if [[ ! -d ${files_dir} ]]; then
+    mkdir ${files_dir}
 fi
 
-if [[ ! -v ${outdir} ]]; then
-    outdir=${dir}"matrices/"
+if [[ ! -v ${matrices_dir} ]]; then
+    matrices_dir=${dir}"matrices/"
 fi
 
-if [[ ! -d ${outdir} ]]; then
-    mkdir ${outdir}
+if [[ ! -d ${matrices_dir} ]]; then
+    mkdir ${matrices_dir}
 fi
+
+echo "Parameters are established!"
 
 # prefix and sufix of name of vcf files containing WGS data, between them there should be only number of chromosome
 # (it will be added automatically)
@@ -158,41 +174,37 @@ fi
 # reference for rosmap: human_g1k_v37.fasta
 # reference for adni: Homo_sapiens_assembly19.fasta
 
-# name of output file with stats for whole genome
-genomestats=${outdir}"genome_stats.txt"
-
-# prefix and sufix of output vcf files
-ostart=${base}"_chr"
-oend="_SNPs.vcf"
-
-
 if [[ $all -eq 1 ]]; then
         job_pool_init $((to-from+1)) 0
 
-        for (( i = $from; i <= $to; i++ )); do                
+        for (( ch = $from; ch <= $to; ch++ )); do
 
-                if [[ $i -eq 23 ]] && [[ $x -eq 1 ]]; then
+                if [[ $ch -eq 23 ]] && [[ $x -eq 1 ]]; then
 
-                        input=${indir}${istart}X${iend}
+                        vcfname=${vcfstart}X${vcfend}
 
-                elif [[ $i -eq 24 ]]; then
+                elif [[ $ch -eq 24 ]]; then
 
-                        input=${indir}${istart}Y${iend}
+                        vcfname=${vcfstart}Y${vcfend}
 
                 else
-                        input=${indir}${istart}${i}${iend}
+                        vcfname=${vcfstart}${ch}${vcfend}
                 fi
-                        
-                output=${indir}${ostart}${i}${oend}
 
-                job_pool_run vcf ${input} ${output} ${reference} ${i} ${tar} ${gz} ${snp} ${stats} ${matrix} ${genomestats} ${outdir} ${gatkdir} ${indir}
+                job_pool_run pooling ${tar} ${gz} ${snp} ${stats} ${matrix} ${ch} ${vcfname} ${base} ${files_dir}
+                ${matrices_dir} ${gatk_dir} ${ref}
 
         done
 
         job_pool_shutdown
         echo "job_pool_nerrors: ${job_pool_nerrors}"
 else
-        input=${indir}${istart}${chr}${iend}
-        output=${indir}${ostart}${chr}${oend}
-        vcf ${input} ${output} ${reference} ${chr} ${tar} ${gz} ${snp} ${stats} ${matrix} ${genomestats} ${outdir} ${gatkdir} ${indir}
+        vcfname=${vcfstart}${ch}${vcfend}
+        pooling ${tar} ${gz} ${snp} ${stats} ${matrix} ${ch} ${vcfname} ${base} ${files_dir} ${matrices_dir} ${gatk_dir} ${ref}
+fi
+
+if [[ $matrix -eq 1 ]]; then
+
+        sort -k1 -n -o ${outdir}'genome_stats.txt' ${outdir}'genome_stats.txt'
+
 fi
