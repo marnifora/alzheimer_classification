@@ -374,6 +374,7 @@ class_only = False
 boruta_only = False
 borutarun = None
 classrun = None
+run = None
 fixed = False
 patsubset = None
 patruns = None
@@ -474,8 +475,7 @@ for q in range(len(sys.argv)):
         continue
 
     if sys.argv[q] == '-run':
-        borutarun = int(sys.argv[q + 1])
-        classrun = int(sys.argv[q + 1])
+        run = int(sys.argv[q + 1])
         continue
 
     if sys.argv[q] == '-borutarun':
@@ -544,6 +544,9 @@ pat = funcs.patients(dataset)
 
 if not class_only:
 
+    if borutarun is None and run is not None:
+        borutarun = run
+
     # determination of some parameters
     if not continuation:
         borutarun, testpat, trainpat = first_run(dataset, fixed, outdir, pat, patsubset, patruns, borutarun, testsize)
@@ -573,6 +576,9 @@ if not class_only:
         funcs.runs_file_rewrite('boruta', outdir, towrite)
 
 if not boruta_only:
+
+    if classrun is None and run is not None:
+        classrun = run
 
     # determination of number of class run
     classrun = funcs.establish_run('class', fixed, outdir, classrun)

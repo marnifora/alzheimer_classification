@@ -64,6 +64,10 @@ snp=0
 stats=0
 matrix=0
 
+#name of input and output files
+input=''
+output=''
+
 # name of database
 base="dataset1"
 
@@ -132,7 +136,7 @@ if [[ ! -v ${indir} ]]; then
     indir=${dir}"files/"
 fi
 
-if [[ -d ${indir} ]]; then
+if [[ ! -d ${indir} ]]; then
     mkdir ${indir}
 fi
 
@@ -140,7 +144,7 @@ if [[ ! -v ${outdir} ]]; then
     outdir=${dir}"matrices/"
 fi
 
-if [[ -d ${outdir} ]]; then
+if [[ ! -d ${outdir} ]]; then
     mkdir ${outdir}
 fi
 
