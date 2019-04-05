@@ -65,8 +65,8 @@ stats=0
 matrix=0
 
 #name of input and output files
-input=''
-output=''
+istart='default_chr'
+iend='.vcf'
 
 # name of database
 base="dataset1"
