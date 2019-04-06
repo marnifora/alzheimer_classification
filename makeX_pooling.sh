@@ -14,7 +14,7 @@ function make(){
 
 }
 
-chr=0
+ch=0
 all=0
 from=1
 to=24
@@ -24,7 +24,7 @@ while [[ "$1" != "" ]]; do
         case $1 in
 
         -chr | -c )             shift
-                                chr=$1
+                                ch=$1
                                 ;;
         -all | -a )             all=1
                                 ;;
@@ -47,12 +47,13 @@ while [[ "$1" != "" ]]; do
                                 ;;
         *)                      usage
                                 exit 1
-    esac
+        esac
     shift
 done
 
 if [[ ! -v indir ]]; then
     indir=${dir}"matrices/"
+fi
 
 if [[ ! -v outdir ]]; then
     outdir=${dir}"matrices/"
@@ -70,5 +71,5 @@ if [[ ${all} -eq 1 ]]; then
         job_pool_shutdown
         echo "job_pool_nerrors: ${job_pool_nerrors}"
 else
-        make ${chr} ${indir} ${outdir}
+        make ${ch} ${indir} ${outdir}
 fi
