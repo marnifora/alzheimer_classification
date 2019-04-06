@@ -51,18 +51,20 @@ def vcf_to_matrix(ch, inp, outdir):
     np.save('%smatrix_chr%s.npy' % (outdir, ch), matrix)     
     '''
 
-    X = np.zeros(shape=(pat, snp), dtype=np.int8)
+    X = np.zeros(shape=(pat, snp+1), dtype=np.int8)
     for i, line in enumerate(o):
         line = line.split()
         s.write('%s\t%s\t%s\n' % (line[1], line[3], line[4]))
         for j, e in enumerate(line[9:]):
+            X[j][0] = j
             try:
                 v = int(e.split(':')[0].replace('|', '/').split('/')[1])
             except ValueError:
                 v = -1
-            X[j, i] = v
+            X[j, i+1] = v
 
-    np.savetxt('%sX_chr%s.csv' % (outdir, ch), X, fmt='%d', delimiter=',')
+    np.savetxt('%sX_chr%s.csv' % (outdir, ch), X, fmt='%d', delimiter=',',
+               header=','+','.join(list(map(str, range(snp)))), comments='')
     o.close()
     s.close()
 
