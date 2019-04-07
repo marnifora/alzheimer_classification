@@ -73,8 +73,6 @@ def first_intersection(dataset, ch, borutarun=None, perc=None):
                 shared[int(snps[0][0])] = [s[-1] for s in snps]
                 ref[int(snps[0][0])] = snps[0][1]
                 snps = list(map(next, iter_snps))
-                if not snps:
-                    raise exceptions.OtherError('There is more SNPs in the subset than all of them on the list!')
                 if borutarun:
                     bests = list(map(next, iter_best))
                     if not bests:

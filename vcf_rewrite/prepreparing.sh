@@ -56,7 +56,7 @@ function pooling {
         if [[ $5 -eq 1 ]]; then
                 echo "running vcf_to_matrix for chr $6"
                 python3 vcf_to_matrix.py -chr $6 -input ${vcfsnps} -outdir ${10} >> ${10}'genome_stats.txt'
-                echo "matrices for chr $4 done!"
+                echo "matrices for chr $6 done!"
         fi
         # after this, run only once each function:
         # > make_pid-diagnoses.py (change rules for establishing diagnoses)
