@@ -5,10 +5,9 @@ import exceptions
 import corporate_funcs as funcs
 
 
-def map_rows_to_locs(directory, ch, run, outfile, subsettype, perc):
+def map_rows_to_locs(directory, ch, run, outfile, subsettype, perc, snpsubset, snprun):
 
     if subsettype == 'best':
-        perc, snpsubset, snprun = sfuncs.check_borutarun(directory, run, perc)
         subset = sfuncs.best_snp(directory, ch, run, perc, snpsubset, snprun)
     elif subsettype == 'shared':
         subset = sfuncs.shared_snp(directory, ch, run)
@@ -35,13 +34,14 @@ def map_rows_to_locs(directory, ch, run, outfile, subsettype, perc):
 
 def make_bedfile(name, directory, chrlist, subsettype, run, perc):
 
+    snpsubset, snprun = None, None
     if subsettype == 'best':
-        perc, subsettype, subrun = sfuncs.check_borutarun(directory, run, perc)
+        perc, snpsubset, snprun = sfuncs.check_borutarun(directory, run, perc)
         outfile = open('%sboruta/locs_%s_bestsnps_%d_%d.bed' % (directory, name, perc, run), 'w')
     else:
         outfile = open('%s%s/locs_%s_%s_snps_%d.bed' % (directory, subsettype, name, subsettype, run), 'w')
     for ch in chrlist:
-        map_rows_to_locs(directory, ch, run, outfile, subsettype, perc)
+        map_rows_to_locs(directory, ch, run, outfile, subsettype, perc, snpsubset, snprun)
     outfile.close()
 
 
