@@ -55,13 +55,13 @@ def first_intersection(dataset, ch, borutarun=None, perc=None):
 
     shared = {}
     ref = {}
-    names = list(dataset.keys())[:2]
-    iter_snps = [snp_list(dataset[names[0]], ch), snp_list(dataset[names[1]], ch)]
+    dirs = iter(dataset.values())
+    iter_snps = [snp_list(next(dirs), ch), snp_list(next(dirs), ch)]
     if borutarun:
         iter_best = []
         for name, directory in dataset.items():
             perc, snpsubset, snprun = check_borutarun(directory, borutarun[name], perc)
-            iter_best.append(best_snp(dataset[names[0]], ch, borutarun[names[0]], perc, snpsubset, snprun))
+            iter_best.append(best_snp(directory, ch, borutarun[name], perc, snpsubset, snprun))
     snps = list(map(next, iter_snps))
 
     if borutarun:
