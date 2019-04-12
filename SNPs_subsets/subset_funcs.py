@@ -156,9 +156,9 @@ def map_rows_to_locs(dataset, ch, run, outfile, subsettype, perc=None):
 import subset_funcs as funcs
 perc = 90
 run = 1
-subsettype='best'
+subsettype='shared'
 dataset = {'rosmap': '/mnt/chr11/Data/rosmap/'}
-outfile = open('/mnt/chr11/Data/rosmap/boruta/locs_bestsnps_%d_%d.bed' % (perc, borutarun), 'w')
+outfile = open('/mnt/chr11/Data/rosmap/shared/locs_shared_snps_%d_%d.bed' % (perc, borutarun), 'w')
 for ch in range(1,24):
      funcs.map_rows_to_locs(dataset, ch, run, outfile, subsettype, perc=perc)
 outfile.close()

@@ -32,8 +32,6 @@ def find_crossed(dataset, chrlist, fixed, run, borutaruns, perc):
             crossed = subset_funcs.next_intersection(set, crossed, ref, ch)
         '''
 
-        print('Writing found crossed SNPs from chr %d to the file.' % ch)
-
         for n, setname in enumerate(dataset.keys()):
             file = open('%scrossed/crossed_snps_chr%d_%d.txt' % (dataset[setname], ch, runs[setname]), 'w')
             for snp in sorted(crossed.keys()):
@@ -41,6 +39,7 @@ def find_crossed(dataset, chrlist, fixed, run, borutaruns, perc):
             file.close()
 
         crossed_snps += len(crossed)
+        print('For chr %d found %d crossed SNPs.' % (ch, len(crossed)))
 
     print('Run information for every dataset is writing to the file.')
 
