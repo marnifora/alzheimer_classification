@@ -4,12 +4,24 @@ import exceptions
 import corporate_funcs as funcs
 
 
-def best_snp(directory, ch, borutarun, perc):
+def best_snp(directory, ch, borutarun, perc, snpsubset, snprun):
+
+    if snpsubset is not None:
+        subfile = open('%s%s/%s_snps_chr%d_%d.txt' % (directory, snpsubset, snpsubset, ch, snprun), 'r')
+
     with open('%sboruta/bestsnps_chr%d_%d_%d.txt' % (directory, ch, perc, borutarun), 'r') as file:
         for _ in range(2):
             file.readline()
-        for line in file:
-            yield int(line.strip())
+        if snpsubset is not None:
+            done = 0
+            for line in file:
+                for _ in range(int(line.strip())-1-done):
+                    subfile.readline()
+                done = int(line.strip())
+                yield int(subfile.readline().strip())
+        else:
+            for line in file:
+                yield int(line.strip())
 
 
 def shared_snp(directory, ch, sharedrun):
@@ -46,8 +58,10 @@ def first_intersection(dataset, ch, borutarun=None, perc=None):
     names = list(dataset.keys())[:2]
     iter_snps = [snp_list(dataset[names[0]], ch), snp_list(dataset[names[1]], ch)]
     if borutarun:
-        iter_best = [best_snp(dataset[names[0]], ch, borutarun[names[0]], perc), best_snp(dataset[names[1]], ch,
-                                                                                          borutarun[names[1]], perc)]
+        iter_best = []
+        for name, directory in dataset.keys():
+            perc, snpsubset, snprun = check_borutarun(directory, borutarun[name], perc)
+            iter_best.append(best_snp(dataset[names[0]], ch, borutarun[names[0]], perc, snpsubset, snprun))
     snps = list(map(next, iter_snps))
 
     if borutarun:
@@ -113,53 +127,24 @@ def next_intersection(set, shared, ref, ch):
     return shared
 
 
-def map_rows_to_locs(dataset, ch, run, outfile, subsettype, perc=None):
-
-    directory = next(iter(dataset.values()))
-    if subsettype == 'best':
-        if perc is None:
-            with open('%sboruta/boruta_runs.txt' % directory, 'r') as file:
-                for line in file:
-                    if line.startswith(str(run) + '\t'):
-                        perc = line.split()[8].split(',')
-                        if len(perc) > 1:
-                            raise exceptions.NoParameterError('perc',
-                                                              'There is more than one perc value for given boruta run.')
-                        else:
-                            perc = int(perc[0])
-                        break
-        subset = best_snp(directory, ch, run, perc)
-    elif subsettype == 'shared':
-        subset = shared_snp(directory, ch, run)
-    elif subsettype == 'crossed':
-        subset = crossed_snp(directory, ch, run)
-    s = next(subset)
-    print('Mapping rows to locations for chromosome %d' % ch)
-    with open('%smatrices/snps_chr%d.txt' % (directory, ch), 'r') as snpsfile:
-        stopped = False
-        for i, line in enumerate(snpsfile):
-            if i == s:
-                snp = line.split()
-                outfile.write('chr%d\t%d\t%d\n' % (ch, int(snp[0]), int(snp[0]) + 1))
-                try:
-                    s = next(subset)
-                except StopIteration:
-                    stopped = True
-                    break
-        if not stopped:
-            print(next(subset))
-            raise exceptions.OtherError('Not all selected SNPs for chr %d were found in the SNP file!' % ch)
-    return 0
-
-
-'''
-import subset_funcs as funcs
-perc = 90
-run = 1
-subsettype='shared'
-dataset = {'rosmap': '/mnt/chr11/Data/rosmap/'}
-outfile = open('/mnt/chr11/Data/rosmap/shared/locs_shared_snps_%d_%d.bed' % (perc, borutarun), 'w')
-for ch in range(1,24):
-     funcs.map_rows_to_locs(dataset, ch, run, outfile, subsettype, perc=perc)
-outfile.close()
-'''
+def check_borutarun(directory, run, perc):
+    with open('%sboruta/boruta_runs.txt' % directory, 'r') as file:
+        for line in file:
+            if line.startswith(str(run) + '\t'):
+                line = line.split()
+                snpsubset = line[5]
+                if snpsubset == 'None':
+                    snpsubset = None
+                    snprun = None
+                else:
+                    snprun = int(line[6])
+                perc_list = line[8].split(',')
+                if len(perc_list) > 1 and perc is None:
+                    raise exceptions.NoParameterError('perc',
+                                                      'There is more than one perc value for given boruta run.')
+                elif perc is None:
+                    perc = int(perc[0])
+                break
+    if 'snpsubset' not in locals():
+        raise exceptions.WrongValueError('run', run, 'Run number %d was not conducted' % run)
+    return perc, snpsubset, snprun
