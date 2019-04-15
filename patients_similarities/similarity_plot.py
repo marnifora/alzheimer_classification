@@ -159,7 +159,7 @@ if 'sims' not in globals():
     if len(dataset) > 1:
         raise exceptions.NoParameterError('matrix', 'There must be matrix with similarities given')
     else:
-        name, directory = next(iter(dataset.items()))
+        name, directory = dataset[0]
         sims = np.load('%ssimilar/%s_similarities.npy' % (directory, name))
 
 if 'outdir' not in globals():
