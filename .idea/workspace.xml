@@ -28,8 +28,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/patients_similarities/similarity_plot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="309">
-              <caret line="162" column="75" selection-start-line="162" selection-start-column="75" selection-end-line="162" selection-end-column="75" />
+            <state relative-caret-position="173">
+              <caret line="157" column="26" selection-start-line="157" selection-start-column="26" selection-end-line="157" selection-end-column="26" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -539,11 +539,11 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Python.make_bedfile" />
       <item itemvalue="Python.boruta_classification" />
       <item itemvalue="Python.crossed_snps" />
       <item itemvalue="Python.deficient_snps" />
       <item itemvalue="Python.get_snps_locations" />
-      <item itemvalue="Python.make_bedfile" />
       <item itemvalue="Python.vcf_to_matrix" />
     </list>
     <recent_temporary>
@@ -566,13 +566,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1544007477880</updated>
-    </task>
-    <task id="LOCAL-00032" summary="Small corrections.">
-      <created>1551959188074</created>
-      <option name="number" value="00032" />
-      <option name="presentableId" value="LOCAL-00032" />
-      <option name="project" value="LOCAL" />
-      <updated>1551959188074</updated>
     </task>
     <task id="LOCAL-00033" summary="Correction of parsing perc values from command parameters.">
       <created>1552037401158</created>
@@ -910,7 +903,14 @@
       <option name="project" value="LOCAL" />
       <updated>1555094096749</updated>
     </task>
-    <option name="localTasksCounter" value="81" />
+    <task id="LOCAL-00081" summary="Small corrections.">
+      <created>1555327437199</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1555327437199</updated>
+    </task>
+    <option name="localTasksCounter" value="82" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1273,8 +1273,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/patients_similarities/similarity_plot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="309">
-          <caret line="162" column="75" selection-start-line="162" selection-start-column="75" selection-end-line="162" selection-end-column="75" />
+        <state relative-caret-position="173">
+          <caret line="157" column="26" selection-start-line="157" selection-start-column="26" selection-end-line="157" selection-end-column="26" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>

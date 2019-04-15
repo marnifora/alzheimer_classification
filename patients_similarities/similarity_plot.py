@@ -155,7 +155,7 @@ for q in range(len(sys.argv)):
 if not dataset:
     raise exceptions.NoParameterError('dataset', 'There must be at least one data set given')
 
-if 'sims' not in globals() and len(dataset) > 1:
+if 'sims' not in globals():
     if len(dataset) > 1:
         raise exceptions.NoParameterError('matrix', 'There must be matrix with similarities given')
     else:
