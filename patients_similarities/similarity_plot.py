@@ -155,8 +155,12 @@ for q in range(len(sys.argv)):
 if not dataset:
     raise exceptions.NoParameterError('dataset', 'There must be at least one data set given')
 
-if 'sims' not in globals():
-    raise exceptions.NoParameterError('matrix', 'There must be matrix with similarities given')
+if 'sims' not in globals() and len(dataset) > 1:
+    if len(dataset) > 1:
+        raise exceptions.NoParameterError('matrix', 'There must be matrix with similarities given')
+    else:
+        name, directory = next(iter(dataset.items()))
+        sims = np.load('%ssimilar/%s_similarities.npy' % (directory, name))
 
 if 'outdir' not in globals():
     outdir = dataset[0][1]
