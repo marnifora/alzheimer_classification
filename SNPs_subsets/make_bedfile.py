@@ -20,7 +20,7 @@ def map_rows_to_locs(directory, ch, run, outfile, subsettype, perc, snpsubset, s
         for i, line in enumerate(snpsfile):
             if i == s:
                 snp = line.split()
-                outfile.write('chr%d\t%d\t%d\n' % (ch, int(snp[0]), int(snp[0]) + 1))
+                outfile.write('chr%d\t%d\t%d\n' % (ch, int(snp[0]) - 1, int(snp[0])))
                 try:
                     s = next(subset)
                 except StopIteration:

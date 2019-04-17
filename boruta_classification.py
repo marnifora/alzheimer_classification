@@ -1,7 +1,7 @@
 import ast
 import os
 import boruta
-from collections import Counter, OrderedDict
+from collections import Counter, OrderedDict, deque
 import csv
 import exceptions
 import multiprocessing
@@ -25,7 +25,7 @@ def pooling(chrlist, classperc, dataset, outdir, pat, perc, r, run, snpsubset, s
     """
     procs = []
 
-    ytrain = build_y_matrices(dataset, run, outdir, pat, testpat, trainpat)
+    ytrain, _ = build_y_matrices(dataset, run, outdir, pat, testpat, trainpat)
 
     for ch in chrlist:
 
@@ -120,36 +120,39 @@ def read_typedata(chrlist, outdir, p, run, type):
     return X, y
 
 
-def build_testdata(chrlist, selected_snps, testset):
+def build_data(borutarun, chrlist, classrun, dataset, newforest_notcv, outdir, p, snpsubset, snpruns, testset, testsize):
+
+    if snpsubset:
+        snprun = next(iter(snpruns.values()))
 
     pat = funcs.patients(testset)
+    patients = sum(pat.values())
+    if newforest_notcv:
+        testpat = set(random.sample(range(patients), int(patients*testsize)))
+        with open('%stestpat_class_%d.txt' % (outdir, classrun), 'w') as ts:
+            ts.write('\n'.join([str(s) for s in sorted(testpat)]))
+        trainpat = [i for i in range(patients) if i not in testpat]
+    else:
+        testpat = None
+        trainpat = list(range(patients))
 
-    for name in testset.keys():
+    X, X_test = None, None
+    for ch in chrlist:
+        selected_snps = read_selected_snps(ch, dataset, outdir, p, borutarun, snpsubset, snprun, testset)
 
-        xx = np.zeros(shape=(pat[name], sum([len(x) for x in [selected_snps[ch] for ch in chrlist]])), dtype=np.int8)
-        col = 0
-        for ch in chrlist:
-            o = open('%smatrices/X_chr%d_nodif.csv' % (testset[name], ch), 'r')
-            reader = csv.reader(o, delimiter=',')
-            next(reader)
+        xx, xx_test, snp = funcs.read_Xs(ch, testset, len(next(iter(selected_snps.values()))), selected_snps, testpat, trainpat)
 
-            snps = selected_snps[ch]
-            for i, line in enumerate(reader):
-                xx[i][col:col+len(snps)] = [line[1:][ii] for ii in snps]
-
-            col += len(snps)
-            o.close()
-
-        yy = pd.read_csv('%smatrices/Y_chr.csv' % testset[name], header=None, index_col=0).values[testpat]
-
-        if 'X_test' not in locals() or 'y_test' not in locals():
-            X_test = xx
-            y_test = yy
+        if X is None:
+            X = xx.copy()
+            if xx_test is not None:
+                X_test = xx_test.copy()
         else:
-            X_test = np.concatenate((X_test, xx), axis=0)
-            y_test = np.concatenate((y_test, yy), axis=0)
+            X = np.concatenate((X, xx), axis=1)
+            if xx_test is not None:
+                X_test = np.concatenate((X_test, xx_test), axis=1)
 
-    return X_test, y_test
+    y, y_test = build_y_matrices(testset, None, outdir, pat, testpat, trainpat, testing=True)
+    return X, y, X_test, y_test, patients
 
 
 def classify(X, y, X_test, y_test, cv):
@@ -309,28 +312,67 @@ def update_chrlist(fixed, line, chrlist):
     return line
 
 
-def read_selected_snps(chrlist, outdir, p, run):
+def read_selected_snps(ch, dataset, outdir, p, run, snpsubset, snprun, testset):
 
-    selected_snps = {ch: [] for ch in chrlist}
-    for ch in chrlist:
-        o = open('%sbestsnps_chr%d_%d_%d.txt' % (outdir, ch, p, run), 'r')
-        for _ in range(2):  # header
-            o.readline()
-        for line in o:
-            selected_snps[ch].append(int(line.strip()))
-        o.close()
+    selected_snps = deque()
 
-    return selected_snps
+    bestfile = open('%sbestsnps_chr%d_%d_%d.txt' % (outdir, ch, p, run), 'r')
+    if snpsubset is not None:
+        subsetfile = open('%s%s/%s_snps_chr%d_%d.txt' % (next(iter(dataset.values())), snpsubset, snpsubset, ch, snprun), 'r')
+    for _ in range(2):  # header
+        bestfile.readline()
+    if snpsubset is not None:
+        best, last = best_from_subset(bestfile, subsetfile, -1)
+    else:
+        best = int(bestfile.readline())
+    done = 0
+    for directory in dataset.values():
+        snpfile = open('%smatrices/snps_chr%d.txt' % (directory, ch))
+        for i, line in enumerate(snpfile):
+            if i == (best - done):
+                selected_snps.append(int(line.split()[0]))
+                try:
+                    if snpsubset is not None:
+                        best, last = best_from_subset(bestfile, subsetfile, last)
+                    else:
+                        best = int(bestfile.readline())
+                except ValueError:
+                    best = 0
+        snpfile.close()
+        done += i
+    ssnp = selected_snps.popleft()
+    snps_test = {s: [] for s in testset.keys()}
+    for name, directory in testset.items():
+        snpfile = open('%smatrices/snps_chr%d.txt' % (directory, ch))
+        for i, line in enumerate(snpfile):
+            if int(line.split()[0]) == ssnp:
+                snps_test[name].append(i)
+                try:
+                    ssnp = selected_snps.popleft()
+                except IndexError:
+                    break
+        snpfile.close()
+
+    return snps_test
 
 
-def build_y_matrices(dataset, run, outdir, pat, testpat, trainpat):
+def best_from_subset(bestfile, subsetfile, last):
 
-    if not testpat:
-        try:
-            with open('%stestpat_%d.txt' % (outdir, run), 'r') as ts:
-                testpat = set([int(el.strip()) for el in ts.readlines()])
-        except FileNotFoundError:
-            pass
+    b = int(bestfile.readline())
+    for _ in range(b-last-1):
+        subsetfile.readline()
+    return int(subsetfile.readline()), b
+
+
+def build_y_matrices(dataset, run, outdir, pat, testpat, trainpat, testing=False):
+
+    if not testing:
+        if not testpat:
+            try:
+                with open('%stestpat_%d.txt' % (outdir, run), 'r') as ts:
+                    testpat = set([int(el.strip()) for el in ts.readlines()])
+            except FileNotFoundError:
+                pass
 
     y_train = np.zeros(shape=(len(trainpat),), dtype=np.int8)
     if testpat:
@@ -355,20 +397,26 @@ def build_y_matrices(dataset, run, outdir, pat, testpat, trainpat):
 
         done += i + 1
 
-    np.save('%sy_train_%d.npy' % (outdir, run), y_train)
-    if testpat:
-        np.save('%sy_test_%d.npy' % (outdir, run), y_test)
+    if not testing:
+        np.save('%sy_train_%d.npy' % (outdir, run), y_train)
+        if testpat:
+            np.save('%sy_test_%d.npy' % (outdir, run), y_test)
 
-    return y_train
+    if testpat:
+        return y_train, y_test
+    else:
+        return y_train, None
 
 
 perc = [90]
+perc_given = False
 r = 5000
 chrlist = [i for i in range(1, 24)]
 
 dataset = OrderedDict()
 testset = OrderedDict()
-testsize = 0
+testsize = 0.1
+testsize_given = False
 class_only = False
 boruta_only = False
 borutarun = None
@@ -382,6 +430,7 @@ snpruns = None
 continuation = False
 makey = False
 cv = None
+newforest = False
 
 for q in range(len(sys.argv)):
 
@@ -403,10 +452,12 @@ for q in range(len(sys.argv)):
 
     if sys.argv[q] == '-test':
         testsize = float(sys.argv[q + 1])
+        testsize_given = True
         continue
 
     if sys.argv[q] == '-perc':
         perc = list(map(int, sys.argv[q+1].split(',')))
+        perc_given = True
         continue
 
     if sys.argv[q] == '-classperc':
@@ -505,10 +556,13 @@ for q in range(len(sys.argv)):
         cv = int(sys.argv[q+1])
         continue
 
+    if sys.argv[q] == '-newforest':
+        newforest = True
+        continue
+
     if sys.argv[q].startswith('-'):
         raise exceptions.WrongParameterName(sys.argv[q])
 
-perc.sort()
 
 if 'outdir' not in globals():
     if dataset:
@@ -519,10 +573,14 @@ if 'outdir' not in globals():
         raise exceptions.NoParameterError('outdir', 'No dataset, testset or outdir was given!')
     if not os.path.isdir(outdir):
         os.mkdir(outdir)
-if 'classperc' not in globals():
-    classperc = perc
-else:
+
+
+if 'classperc' in globals():
     classperc.sort()
+if perc_given:
+    perc.sort()
+    if 'classperc' not in globals():
+        classperc = perc
 
 if 'ss' in globals():
     if snpruns is None:
@@ -553,6 +611,8 @@ if not class_only:
         dataset, patruns, perc, r, snpsubset, snpruns, testpat, testsize, towrite, trainpat = \
             read_boruta_params(chrlist, continuation, dataset, fixed, outdir, pat, borutarun)
 
+    if 'classperc' not in globals():
+        classperc = perc
     # running Boruta analysis
     pooling(chrlist, classperc, dataset, outdir, pat, perc, r, borutarun, snpsubset, snpruns, testpat, trainpat)
 
@@ -587,23 +647,24 @@ if not boruta_only:
     elif testset:
         chrlist, testset, patruns, perc, r, snpsubset, snpruns, testpat, testsizeboruta, towrite, trainpat = \
             read_boruta_params(chrlist, False, testset, False, outdir, pat, borutarun)
-    if testsize:
+    if testsize_given:
         if testsize != testsizeboruta and not cv:
             raise exceptions.NoParameterError('cv', 'Different testsize than in the boruta was given, but number of CV ' +
                                                     'iterations was not established.')
-    else:
+    elif not newforest:
         testsize = testsizeboruta
     scores_file = open('%sclass_scores_%d.txt' % (outdir, classrun), 'w', 1)
     scores_file.write('perc\tSNPs\ttrain_score\ttest_score\tAUC\n')  # writing heading to class_scores file
     if makey:
         build_y_matrices(dataset, borutarun, outdir, funcs.patients(dataset), testpat, trainpat)
 
-    for p in classperc:
-        # reading training data from given run of boruta analysis
-        X_train, y_train = read_typedata(chrlist, outdir, p, borutarun, 'train')
+    if 'classperc' not in globals():
+        classperc = perc
 
-        # establishing testing data based on given test set(s) or test subset of patients
-        if not cv:
+    for p in classperc:
+
+        # establishing testing and training data based on given test set(s) or test subset of patients
+        if not cv and not newforest:
             if not testset:
                 if testsize == 0:
                     raise exceptions.NoParameterError(
@@ -611,10 +672,19 @@ if not boruta_only:
                 else:
                     X_test, y_test = read_typedata(chrlist, outdir, p, borutarun, 'test')
             else:
-                selected_snps = read_selected_snps(chrlist, outdir, p, borutarun)
-                X_test, y_test = build_testdata(chrlist, selected_snps, testset)
-        else:
+                X_test, y_test, _, _, testpat_val = build_data(borutarun, chrlist, classrun, dataset, newforest, outdir,
+                                                               p, snpsubset, snpruns, testset, testsize)
+        elif cv:
+            if newforest:
+                X_train, y_train, _, _, _ = build_data(borutarun, chrlist, classrun, dataset, False, outdir, p,
+                                                       snpsubset, snpruns, testset, 0)
             X_test = y_test = None
+        elif newforest:
+            X_train, y_train, X_test, y_test, testpat_val = build_data(borutarun, chrlist, classrun, dataset, True,
+                                                                       outdir, p, snpsubset, snpruns, testset, testsize)
+
+        if not newforest:
+            X_train, y_train = read_typedata(chrlist, outdir, p, borutarun, 'train')
 
         # running classification and saving scores to class_scores file
         if X_train.shape[1] > 0:
@@ -633,8 +703,12 @@ if not boruta_only:
     print('Classification done!')
 
     # writing information about class run to class_run file
-    trainstr = '+'.join(dataset.keys())
-    testpat_val = len(testpat)
+    if newforest:
+        trainstr = 'only-SNPs: %s' % '+'.join(dataset.keys())
+    else:
+        trainstr = '+'.join(dataset.keys())
+    if 'testpat_val' not in globals():
+        testpat_val = len(testpat)
     trainpat_val = len(trainpat)
     if cv:
         teststr = 'CV-%d: %s' % (cv, trainstr)

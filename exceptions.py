@@ -101,7 +101,7 @@ class SNPReferenceError(Exception):
 
     def __init__(self, ch, position, ref1, ref2):
 
-        self.pro = 'Different reference value for SNP on position %d from chromosome %d\nset1: %s\nset2: %s\n' % \
+        self.pro = 'Different reference value for SNP on position %d from chromosome %d. Set 1: %s, set 2: %s\n' % \
                    (position, ch, ref1, ref2)
 
     def __str__(self):

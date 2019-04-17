@@ -3,7 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="7e59d8fb-d331-40d5-a096-812f3a35a38f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/patients_similarities/similarity_plot.py" beforeDir="false" afterPath="$PROJECT_DIR$/patients_similarities/similarity_plot.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SNPs_subsets/make_bedfile.py" beforeDir="false" afterPath="$PROJECT_DIR$/SNPs_subsets/make_bedfile.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/boruta_classification.py" beforeDir="false" afterPath="$PROJECT_DIR$/boruta_classification.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corporate_funcs.py" beforeDir="false" afterPath="$PROJECT_DIR$/corporate_funcs.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exceptions.py" beforeDir="false" afterPath="$PROJECT_DIR$/exceptions.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -13,23 +16,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/patients_similarities/similarity_matrix.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2336">
-              <caret line="156" column="7" selection-start-line="156" selection-start-column="7" selection-end-line="156" selection-end-column="7" />
-              <folding>
-                <element signature="e#0#18#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/patients_similarities/similarity_plot.py">
+        <entry file="file://$PROJECT_DIR$/boruta_classification.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="173">
-              <caret line="157" column="26" selection-start-line="157" selection-start-column="26" selection-end-line="157" selection-end-column="26" />
+            <state relative-caret-position="-367">
+              <caret line="679" column="38" selection-start-line="679" selection-start-column="38" selection-end-line="679" selection-end-column="38" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -38,10 +29,43 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SNPs_subsets/crossed_snps.py">
+        <entry file="file://$PROJECT_DIR$/documentation.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="496">
+                <caret line="266" column="31" selection-start-line="266" selection-start-column="31" selection-end-line="266" selection-end-column="31" />
+              </first_editor>
+              <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/anaconda3/envs/alzheimer_classification/lib/python3.6/site-packages/sklearn/utils/validation.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="5" selection-start-line="5" selection-end-line="5" selection-end-column="31" />
+            <state relative-caret-position="200">
+              <caret line="589" selection-start-line="589" selection-end-line="589" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SNPs_subsets/shared_snps.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="346">
+              <caret line="68" selection-start-line="68" selection-end-line="68" />
+              <folding>
+                <element signature="e#0#10#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/patients_similarities/similarity_plot.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="493">
+              <caret line="179" column="17" lean-forward="true" selection-start-line="179" selection-start-column="17" selection-end-line="179" selection-end-column="17" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -52,8 +76,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SNPs_subsets/subset_funcs.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="945">
-              <caret line="63" column="39" selection-start-line="63" selection-start-column="39" selection-end-line="63" selection-end-column="39" />
+            <state relative-caret-position="238">
+              <caret line="96" selection-start-line="96" selection-end-line="96" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/exceptions.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="281">
+              <caret line="105" lean-forward="true" selection-start-line="105" selection-end-line="105" />
             </state>
           </provider>
         </entry>
@@ -61,8 +94,20 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SNPs_subsets/make_bedfile.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="630">
-              <caret line="43" column="87" selection-start-line="43" selection-start-column="87" selection-end-line="43" selection-end-column="87" />
+            <state relative-caret-position="237">
+              <caret line="22" column="83" selection-start-line="22" selection-start-column="83" selection-end-line="22" selection-end-column="83" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/vcf_rewrite/vcf_to_matrix.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="814">
+              <caret line="77" column="11" selection-start-line="77" selection-start-column="11" selection-end-line="77" selection-end-column="11" />
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -70,53 +115,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/corporate_funcs.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="25" selection-start-line="25" selection-end-line="25" />
+            <state>
+              <caret line="195" lean-forward="true" selection-start-line="195" selection-end-line="195" />
               <folding>
                 <element signature="e#0#17#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SNPs_subsets/deficient_snps.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="14" column="26" lean-forward="true" selection-start-line="14" selection-start-column="26" selection-end-line="14" selection-end-column="26" />
-              <folding>
-                <element signature="e#0#10#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/patients_similarities/similar_patients.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="869">
-              <caret line="118" selection-start-line="118" selection-end-line="118" />
-              <folding>
-                <element signature="e#0#36#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/makeX_pooling.sh">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="14" column="1" selection-start-line="14" selection-start-column="1" selection-end-line="14" selection-end-column="1" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/makeY.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1080">
-              <caret line="72" selection-start-line="72" selection-end-line="72" />
             </state>
           </provider>
         </entry>
@@ -132,22 +135,8 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>testpat</find>
-      <find>genome</find>
-      <find>def pat</find>
-      <find>genome_shared</find>
-      <find>union</find>
-      <find>next</find>
-      <find>borutarun</find>
-      <find>bestsnp</find>
-      <find>run_file</find>
-      <find>trun</find>
-      <find>ch</find>
-      <find>shared</find>
-      <find>X_%s</find>
       <find>X_train</find>
       <find>chrlist</find>
-      <find>classify</find>
       <find>data</find>
       <find>nolack</find>
       <find>auc</find>
@@ -162,6 +151,20 @@
       <find>best_snp</find>
       <find>snplist</find>
       <find>dataset</find>
+      <find>read_selected_snps</find>
+      <find>build_test</find>
+      <find>pat</find>
+      <find>build</find>
+      <find>build_y</find>
+      <find>classify</find>
+      <find>read_boruta_params</find>
+      <find>classperc</find>
+      <find>y_test</find>
+      <find>snprun</find>
+      <find>testpat</find>
+      <find>build_da</find>
+      <find>random.sample</find>
+      <find>testsize</find>
     </findStrings>
     <replaceStrings>
       <replace>arg</replace>
@@ -211,7 +214,6 @@
         <option value="$PROJECT_DIR$/similarity_structure/similarity_matrix.py" />
         <option value="$PROJECT_DIR$/plink_rewrite/plink_step_one.py" />
         <option value="$USER_HOME$/anaconda3/envs/alzheimer_classification/lib/python3.6/site-packages/boruta/boruta_py.py" />
-        <option value="$PROJECT_DIR$/exceptions.py" />
         <option value="$PROJECT_DIR$/similarity_structure/similarity_plot.py" />
         <option value="$PROJECT_DIR$/readme.md" />
         <option value="$PROJECT_DIR$/make_pid-diagnoses.py" />
@@ -232,17 +234,18 @@
         <option value="$PROJECT_DIR$/vcf_rewrite/vcf_to_matrix.py" />
         <option value="$PROJECT_DIR$/vcf_rewrite/prepreparing.sh" />
         <option value="$PROJECT_DIR$/SNPs_subsets/crossed_snps.py" />
-        <option value="$PROJECT_DIR$/corporate_funcs.py" />
-        <option value="$PROJECT_DIR$/boruta_classification.py" />
-        <option value="$PROJECT_DIR$/SNPs_subsets/make_bedfile.py" />
         <option value="$PROJECT_DIR$/SNPs_subsets/subset_funcs.py" />
         <option value="$PROJECT_DIR$/patients_similarities/similarity_plot.py" />
+        <option value="$PROJECT_DIR$/SNPs_subsets/make_bedfile.py" />
+        <option value="$PROJECT_DIR$/corporate_funcs.py" />
+        <option value="$PROJECT_DIR$/exceptions.py" />
+        <option value="$PROJECT_DIR$/boruta_classification.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="y" value="-2" />
-    <option name="width" value="877" />
+    <option name="width" value="867" />
     <option name="height" value="789" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -287,7 +290,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/SNPs_subsets/make_bedfile.py" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/boruta_classification.py" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
@@ -303,7 +306,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.make_bedfile">
+  <component name="RunManager" selected="Python.boruta_classification">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="advent_of_code" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -338,7 +341,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/boruta_classification.py" />
-      <option name="PARAMETERS" value="-dataset dataset2 $USER_HOME$/Dokumenty/dataset2/ -test 0.1 -snpsubset shared -snprun 1 -chr 1-2 -perc 50 -run 1 -fixed" />
+      <option name="PARAMETERS" value="-dataset dataset1 $USER_HOME$/Dokumenty/dataset1/ -testset dataset2 $USER_HOME$/Dokumenty/dataset2/ -class -borutarun 1 -chr 1-2 -run 1 -fixed -newforest -cv 10" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -388,27 +391,6 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="get_snps_locations" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="alzheimer_classification" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/get_snps_locations.py" />
-      <option name="PARAMETERS" value="-dataset dataset1 $USER_HOME$/Dokumenty/dataset1/ -analysistype shared -analysisrun 1 -chr 1-2" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <configuration name="make_bedfile" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="alzheimer_classification" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -422,7 +404,28 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/SNPs_subsets/make_bedfile.py" />
-      <option name="PARAMETERS" value="-dataset dataset2 $USER_HOME$/Dokumenty/dataset2/ -chr 1-2 -type best -perc 50 -run 1" />
+      <option name="PARAMETERS" value="-dataset dataset1 $USER_HOME$/Dokumenty/datas-testset dataset2 $USER_HOME$/Dokumenty/dataset2/ -chr 1-2 -type best -perc 50 -run 1" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="shared_snps" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="alzheimer_classification" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/SNPs_subsets" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/SNPs_subsets/shared_snps.py" />
+      <option name="PARAMETERS" value="-dataset dataset1 $USER_HOME$/Dokumenty/dataset1/ -dataset dataset2 $USER_HOME$/Dokumenty/dataset2/ -chr 1-2 -run 1 -fixed" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -543,16 +546,16 @@
       <item itemvalue="Python.boruta_classification" />
       <item itemvalue="Python.crossed_snps" />
       <item itemvalue="Python.deficient_snps" />
-      <item itemvalue="Python.get_snps_locations" />
       <item itemvalue="Python.vcf_to_matrix" />
+      <item itemvalue="Python.shared_snps" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.boruta_classification" />
+        <item itemvalue="Python.shared_snps" />
         <item itemvalue="Python.crossed_snps" />
         <item itemvalue="Python.vcf_to_matrix" />
         <item itemvalue="Python.deficient_snps" />
-        <item itemvalue="Python.get_snps_locations" />
       </list>
     </recent_temporary>
   </component>
@@ -566,20 +569,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1544007477880</updated>
-    </task>
-    <task id="LOCAL-00033" summary="Correction of parsing perc values from command parameters.">
-      <created>1552037401158</created>
-      <option name="number" value="00033" />
-      <option name="presentableId" value="LOCAL-00033" />
-      <option name="project" value="LOCAL" />
-      <updated>1552037401159</updated>
-    </task>
-    <task id="LOCAL-00034" summary="Small corrections.">
-      <created>1552037966779</created>
-      <option name="number" value="00034" />
-      <option name="presentableId" value="LOCAL-00034" />
-      <option name="project" value="LOCAL" />
-      <updated>1552037966779</updated>
     </task>
     <task id="LOCAL-00035" summary="Small corrections.">
       <created>1552038249008</created>
@@ -910,7 +899,21 @@
       <option name="project" value="LOCAL" />
       <updated>1555327437199</updated>
     </task>
-    <option name="localTasksCounter" value="82" />
+    <task id="LOCAL-00082" summary="Small corrections.">
+      <created>1555327587058</created>
+      <option name="number" value="00082" />
+      <option name="presentableId" value="LOCAL-00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1555327587058</updated>
+    </task>
+    <task id="LOCAL-00083" summary="Small corrections.">
+      <created>1555327688232</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1555327688232</updated>
+    </task>
+    <option name="localTasksCounter" value="84" />
     <servers />
   </component>
   <component name="TodoView">
@@ -931,15 +934,15 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32937366" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.19762419" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.29697624" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32289416" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.37580994" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3286638" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.27429804" />
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.3336933" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" weight="0.32937366" />
-      <window_info active="true" anchor="bottom" id="Python Console" order="10" visible="true" weight="0.19438446" />
+      <window_info anchor="bottom" id="Python Console" order="10" weight="0.19438446" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -1006,24 +1009,69 @@
           <option name="timeStamp" value="21" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/corporate_funcs.py</url>
-          <line>177</line>
-          <option name="timeStamp" value="59" />
+          <url>file://$PROJECT_DIR$/boruta_classification.py</url>
+          <line>672</line>
+          <option name="timeStamp" value="77" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/corporate_funcs.py</url>
-          <line>170</line>
-          <option name="timeStamp" value="60" />
+          <url>file://$PROJECT_DIR$/boruta_classification.py</url>
+          <line>674</line>
+          <option name="timeStamp" value="78" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/corporate_funcs.py</url>
-          <line>194</line>
-          <option name="timeStamp" value="61" />
+          <url>file://$PROJECT_DIR$/boruta_classification.py</url>
+          <line>677</line>
+          <option name="timeStamp" value="79" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/corporate_funcs.py</url>
-          <line>224</line>
-          <option name="timeStamp" value="62" />
+          <url>file://$PROJECT_DIR$/boruta_classification.py</url>
+          <line>682</line>
+          <option name="timeStamp" value="80" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/boruta_classification.py</url>
+          <line>686</line>
+          <option name="timeStamp" value="81" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/boruta_classification.py</url>
+          <line>138</line>
+          <option name="timeStamp" value="84" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/boruta_classification.py</url>
+          <line>144</line>
+          <option name="timeStamp" value="85" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/boruta_classification.py</url>
+          <line>344</line>
+          <option name="timeStamp" value="86" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/boruta_classification.py</url>
+          <line>154</line>
+          <option name="timeStamp" value="90" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/boruta_classification.py</url>
+          <line>689</line>
+          <option name="timeStamp" value="91" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/boruta_classification.py</url>
+          <line>162</line>
+          <option name="timeStamp" value="92" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/boruta_classification.py</url>
+          <line>129</line>
+          <option name="timeStamp" value="93" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/boruta_classification.py</url>
+          <line>678</line>
+          <option name="timeStamp" value="95" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -1036,8 +1084,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/make_sims_matrix.py" />
-    <entry file="file://$PROJECT_DIR$/gwas_missing_snps.py" />
     <entry file="file://$PROJECT_DIR$/exclude_snps.py" />
     <entry file="file://$PROJECT_DIR$/gwas_into_matrix.py" />
     <entry file="file://$PROJECT_DIR$/read_all_Xs.py" />
@@ -1080,13 +1126,6 @@
             <caret line="19" selection-start-line="19" selection-end-line="19" selection-end-column="9" />
           </first_editor>
           <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/exceptions.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="695">
-          <caret line="132" column="59" selection-start-line="132" selection-start-column="59" selection-end-line="132" selection-end-column="59" />
         </state>
       </provider>
     </entry>
@@ -1139,30 +1178,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/documentation.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="3990">
-            <caret line="266" column="31" selection-start-line="266" selection-start-column="31" selection-end-line="266" selection-end-column="31" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vcf_rewrite/prepreparing.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1320">
           <caret line="88" column="27" selection-start-line="88" selection-start-column="27" selection-end-line="88" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vcf_rewrite/vcf_to_matrix.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1140">
-          <caret line="77" column="11" selection-start-line="77" selection-start-column="11" selection-end-line="77" selection-end-column="11" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1173,56 +1192,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/boruta_classification.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="630">
-          <caret line="56" column="50" selection-start-line="56" selection-start-column="50" selection-end-line="56" selection-end-column="50" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SNPs_subsets/shared_snps.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="990">
-          <caret line="68" selection-start-line="68" selection-end-line="68" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/SNPs_subsets/crossed_snps.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
           <caret line="5" selection-start-line="5" selection-end-line="5" selection-end-column="31" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SNPs_subsets/subset_funcs.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="945">
-          <caret line="63" column="39" selection-start-line="63" selection-start-column="39" selection-end-line="63" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SNPs_subsets/make_bedfile.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="630">
-          <caret line="43" column="87" selection-start-line="43" selection-start-column="87" selection-end-line="43" selection-end-column="87" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/corporate_funcs.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="25" selection-start-line="25" selection-end-line="25" />
-          <folding>
-            <element signature="e#0#17#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1273,8 +1248,93 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/patients_similarities/similarity_plot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="173">
-          <caret line="157" column="26" selection-start-line="157" selection-start-column="26" selection-end-line="157" selection-end-column="26" />
+        <state relative-caret-position="493">
+          <caret line="179" column="17" lean-forward="true" selection-start-line="179" selection-start-column="17" selection-end-line="179" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vcf_rewrite/vcf_to_matrix.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="814">
+          <caret line="77" column="11" selection-start-line="77" selection-start-column="11" selection-end-line="77" selection-end-column="11" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SNPs_subsets/make_bedfile.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="237">
+          <caret line="22" column="83" selection-start-line="22" selection-start-column="83" selection-end-line="22" selection-end-column="83" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SNPs_subsets/shared_snps.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="346">
+          <caret line="68" selection-start-line="68" selection-end-line="68" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SNPs_subsets/subset_funcs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="96" selection-start-line="96" selection-end-line="96" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/exceptions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="281">
+          <caret line="105" lean-forward="true" selection-start-line="105" selection-end-line="105" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/anaconda3/envs/alzheimer_classification/lib/python3.6/site-packages/sklearn/utils/validation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="589" selection-start-line="589" selection-end-line="589" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/pydevd.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="1134" selection-start-line="1134" selection-end-line="1134" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/documentation.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="496">
+            <caret line="266" column="31" selection-start-line="266" selection-start-column="31" selection-end-line="266" selection-end-column="31" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/corporate_funcs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret line="195" lean-forward="true" selection-start-line="195" selection-end-line="195" />
+          <folding>
+            <element signature="e#0#17#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/boruta_classification.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-367">
+          <caret line="679" column="38" selection-start-line="679" selection-start-column="38" selection-end-line="679" selection-end-column="38" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>

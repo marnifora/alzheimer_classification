@@ -192,6 +192,11 @@ def load_data(ch, dataset, snpsubset, snpruns, testpat, trainpat):
                                             % (ch, list(dataset.values())[0]))
             snplist[next(iter(dataset.keys()))] = list(range(snp))
 
+    return read_Xs(ch, dataset, snp, snplist, testpat, trainpat)
+
+
+def read_Xs(ch, dataset, snp, snplist, testpat, trainpat):
+
     train_row = 0
     test_row = 0
     done = 0
