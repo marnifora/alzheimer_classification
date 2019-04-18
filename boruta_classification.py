@@ -647,12 +647,14 @@ if not boruta_only:
     elif testset:
         chrlist, testset, patruns, perc, r, snpsubset, snpruns, testpat, testsizeboruta, towrite, trainpat = \
             read_boruta_params(chrlist, False, testset, False, outdir, pat, borutarun)
+    '''
     if testsize_given:
         if testsize != testsizeboruta and not cv:
             raise exceptions.NoParameterError('cv', 'Different testsize than in the boruta was given, but number of CV ' +
                                                     'iterations was not established.')
     elif not newforest:
         testsize = testsizeboruta
+    '''
     scores_file = open('%sclass_scores_%d.txt' % (outdir, classrun), 'w', 1)
     scores_file.write('perc\tSNPs\ttrain_score\ttest_score\tAUC\n')  # writing heading to class_scores file
     if makey:
@@ -670,16 +672,22 @@ if not boruta_only:
                     raise exceptions.NoParameterError(
                         'testset', 'Test size was not given - define what set should be used as a testset.')
                 else:
+                    print('Standard classification after Boruta')
                     X_test, y_test = read_typedata(chrlist, outdir, p, borutarun, 'test')
             else:
+                print('Classification based on the testset and given forest')
                 X_test, y_test, _, _, testpat_val = build_data(borutarun, chrlist, classrun, dataset, newforest, outdir,
                                                                p, snpsubset, snpruns, testset, testsize)
         elif cv:
             if newforest:
+                print('CV classification based on testset and list of selected SNPs')
                 X_train, y_train, _, _, _ = build_data(borutarun, chrlist, classrun, dataset, False, outdir, p,
                                                        snpsubset, snpruns, testset, 0)
+            else:
+                print('CV classification based on earlier-built matrices for given set')
             X_test = y_test = None
         elif newforest:
+            print('Classification based on testset and list of selected SNPs')
             X_train, y_train, X_test, y_test, testpat_val = build_data(borutarun, chrlist, classrun, dataset, True,
                                                                        outdir, p, snpsubset, snpruns, testset, testsize)
 
@@ -687,6 +695,7 @@ if not boruta_only:
             X_train, y_train = read_typedata(chrlist, outdir, p, borutarun, 'train')
 
         # running classification and saving scores to class_scores file
+        print('Data loaded!')
         if X_train.shape[1] > 0:
             score_train, score_test, score_auc = classify(X_train, y_train, X_test, y_test, cv)
             scores_file.write('%d\t%d\t%.3f\t%.3f\t%.3f\n' % (p, X_train.shape[1], score_train, score_test, score_auc))
