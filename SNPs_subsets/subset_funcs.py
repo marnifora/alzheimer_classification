@@ -4,12 +4,12 @@ import exceptions
 import corporate_funcs as funcs
 
 
-def best_snp(directory, ch, borutarun, perc, snpsubset, snprun):
+def best_snp(borutadir, directory, ch, borutarun, perc, snpsubset, snprun):
 
     if snpsubset is not None:
         subfile = open('%s%s/%s_snps_chr%d_%d.txt' % (directory, snpsubset, snpsubset, ch, snprun), 'r')
 
-    with open('%sboruta/bestsnps_chr%d_%d_%d.txt' % (directory, ch, perc, borutarun), 'r') as file:
+    with open('%sboruta/bestsnps_chr%d_%d_%d.txt' % (borutadir, ch, perc, borutarun), 'r') as file:
         for _ in range(2):
             file.readline()
         if snpsubset is not None:

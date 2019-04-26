@@ -8,7 +8,7 @@ import corporate_funcs as funcs
 def map_rows_to_locs(borutadir, directory, ch, run, outfile, subsettype, perc, snpsubset, snprun, rsnumber):
 
     if subsettype == 'best':
-        subset = sfuncs.best_snp(borutadir, ch, run, perc, snpsubset, snprun)
+        subset = sfuncs.best_snp(borutadir, directory, ch, run, perc, snpsubset, snprun)
     elif subsettype == 'shared':
         subset = sfuncs.shared_snp(directory, ch, run)
     elif subsettype == 'crossed':
