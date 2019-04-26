@@ -5,10 +5,10 @@ import exceptions
 import corporate_funcs as funcs
 
 
-def map_rows_to_locs(directory, ch, run, outfile, subsettype, perc, snpsubset, snprun):
+def map_rows_to_locs(directory, ch, run, outfile, subsettype, perc, snpsubset, snprun, rsnumber):
 
     if subsettype == 'best':
-        subset = sfuncs.best_snp(directory, ch, run, perc, snpsubset, snprun)
+        subset = sfuncs.best_snp(borutadir, ch, run, perc, snpsubset, snprun)
     elif subsettype == 'shared':
         subset = sfuncs.shared_snp(directory, ch, run)
     elif subsettype == 'crossed':
@@ -20,7 +20,10 @@ def map_rows_to_locs(directory, ch, run, outfile, subsettype, perc, snpsubset, s
         for i, line in enumerate(snpsfile):
             if i == s:
                 snp = line.split()
-                outfile.write('chr%d\t%d\t%d\n' % (ch, int(snp[0]) - 1, int(snp[0])))
+                if rsnumber:
+                    outfile.write('chr%d\t%d\t%d\t%s\n' % (ch, int(snp[0]) - 1, int(snp[0]), snp[3]))
+                else:
+                    outfile.write('chr%d\t%d\t%d\n' % (ch, int(snp[0]) - 1, int(snp[0])))
                 try:
                     s = next(subset)
                 except StopIteration:
@@ -32,22 +35,30 @@ def map_rows_to_locs(directory, ch, run, outfile, subsettype, perc, snpsubset, s
     return 0
 
 
-def make_bedfile(name, directory, chrlist, subsettype, run, perc):
+def map_locs_to_rows(directory, infile, outfile):
+
+    bedfile = open(directory + infile, 'r')
+    pos = int(bedfile.readline().strip().split()[-1])
+
+
+def make_bedfile(name, borutadir, directory, chrlist, subsettype, run, perc, rsnumber):
 
     snpsubset, snprun = None, None
     if subsettype == 'best':
-        perc, snpsubset, snprun = sfuncs.check_borutarun(directory, run, perc)
-        outfile = open('%sboruta/locs_%s_bestsnps_%d_%d.bed' % (directory, name, perc, run), 'w')
+        perc, snpsubset, snprun = sfuncs.check_borutarun(borutadir, run, perc)
+        outfile = open('%sboruta/locs_%s_bestsnps_%d_%d.bed' % (borutadir, name, perc, run), 'w')
     else:
         outfile = open('%s%s/locs_%s_%s_snps_%d.bed' % (directory, subsettype, name, subsettype, run), 'w')
     for ch in chrlist:
-        map_rows_to_locs(directory, ch, run, outfile, subsettype, perc, snpsubset, snprun)
+        map_rows_to_locs(borutadir, directory, ch, run, outfile, subsettype, perc, snpsubset, snprun, rsnumber)
     outfile.close()
 
 
 chrlist = [i for i in range(1, 24)]
 run = None
 perc = None
+rsnumber=False
+borutadir = None
 
 for q in range(len(sys.argv)):
     if sys.argv[q] == '-dataset':
@@ -65,5 +76,12 @@ for q in range(len(sys.argv)):
         perc = int(sys.argv[q + 1])
     if sys.argv[q] == '-type':
         type = sys.argv[q + 1]
+    if sys.argv[q] == '-rsnumber':
+        rsnumber = True
+    if sys.argv[q] == '-borutadir':
+        borutadir = sys.argv[q + 1]
 
-make_bedfile(name, directory, chrlist, type, run, perc)
+if borutadir is None:
+    borutadir = directory
+
+make_bedfile(name, borutadir, directory, chrlist, type, run, perc, rsnumber)

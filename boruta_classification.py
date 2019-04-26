@@ -127,7 +127,7 @@ def build_data(borutarun, chrlist, classrun, dataset, newforest_notcv, outdir, p
 
     pat = funcs.patients(testset)
     patients = sum(pat.values())
-    if newforest_notcv:
+    if newforest_notcv and testsize != 0:
         testpat = set(random.sample(range(patients), int(patients*testsize)))
         with open('%stestpat_class_%d.txt' % (outdir, classrun), 'w') as ts:
             ts.write('\n'.join([str(s) for s in sorted(testpat)]))
@@ -642,10 +642,10 @@ if not boruta_only:
     # determination of number of class run
     classrun = funcs.establish_run('class', fixed, outdir, classrun)
     if dataset:
-        chrlist, dataset, patruns, perc, r, snpsubset, snpruns, testpat, testsizeboruta, towrite, trainpat = \
+        chrlist, dataset, patruns, perc, r, snpsubset, snpruns, testpat, _, towrite, trainpat = \
             read_boruta_params(chrlist, False, dataset, False, outdir, pat, borutarun)
     elif testset:
-        chrlist, testset, patruns, perc, r, snpsubset, snpruns, testpat, testsizeboruta, towrite, trainpat = \
+        chrlist, testset, patruns, perc, r, snpsubset, snpruns, testpat, _, towrite, trainpat = \
             read_boruta_params(chrlist, False, testset, False, outdir, pat, borutarun)
     '''
     if testsize_given:

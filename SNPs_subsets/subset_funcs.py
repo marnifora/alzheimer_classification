@@ -137,7 +137,7 @@ def check_borutarun(directory, run, perc):
                     snpsubset = None
                     snprun = None
                 else:
-                    snprun = int(line[6])
+                    snprun = int(line[6].split('+')[0])
                 perc_list = line[8].split(',')
                 if len(perc_list) > 1 and perc is None:
                     raise exceptions.NoParameterError('perc',
