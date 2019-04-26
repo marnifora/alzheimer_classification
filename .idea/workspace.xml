@@ -4,8 +4,6 @@
     <list default="true" id="7e59d8fb-d331-40d5-a096-812f3a35a38f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SNPs_subsets/make_bedfile.py" beforeDir="false" afterPath="$PROJECT_DIR$/SNPs_subsets/make_bedfile.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SNPs_subsets/subset_funcs.py" beforeDir="false" afterPath="$PROJECT_DIR$/SNPs_subsets/subset_funcs.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/boruta_classification.py" beforeDir="false" afterPath="$PROJECT_DIR$/boruta_classification.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -78,8 +76,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/SNPs_subsets/make_bedfile.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-344">
-              <caret line="10" column="42" selection-start-line="10" selection-start-column="42" selection-end-line="10" selection-end-column="42" />
+            <state relative-caret-position="-180">
+              <caret line="7" column="32" selection-start-line="7" selection-start-column="32" selection-end-line="7" selection-end-column="32" />
             </state>
           </provider>
         </entry>
@@ -538,12 +536,12 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Python.make_bedfile" />
       <item itemvalue="Python.boruta_classification" />
       <item itemvalue="Python.crossed_snps" />
       <item itemvalue="Python.deficient_snps" />
-      <item itemvalue="Python.make_bedfile" />
-      <item itemvalue="Python.shared_snps" />
       <item itemvalue="Python.vcf_to_matrix" />
+      <item itemvalue="Python.shared_snps" />
     </list>
     <recent_temporary>
       <list>
@@ -565,13 +563,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1544007477880</updated>
-    </task>
-    <task id="LOCAL-00037" summary="Small corrections.">
-      <created>1552039979382</created>
-      <option name="number" value="00037" />
-      <option name="presentableId" value="LOCAL-00037" />
-      <option name="project" value="LOCAL" />
-      <updated>1552039979382</updated>
     </task>
     <task id="LOCAL-00038" summary="Small corrections.">
       <created>1552040114704</created>
@@ -909,7 +900,14 @@
       <option name="project" value="LOCAL" />
       <updated>1555612718349</updated>
     </task>
-    <option name="localTasksCounter" value="86" />
+    <task id="LOCAL-00086" summary="Make bedfile for plink files.">
+      <created>1556272288349</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1556272288350</updated>
+    </task>
+    <option name="localTasksCounter" value="87" />
     <servers />
   </component>
   <component name="TodoView">
@@ -964,7 +962,6 @@
     </layout-to-restore>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Small correction." />
     <MESSAGE value="Adding subset-run number to boruta_classification." />
     <MESSAGE value="Correction of writing the genome_stats file." />
     <MESSAGE value="Adding two parameters to prepreparing file." />
@@ -989,7 +986,8 @@
     <MESSAGE value="Small corrections." />
     <MESSAGE value="Adding -newforest option to boruta_classification." />
     <MESSAGE value="Small corrections" />
-    <option name="LAST_COMMIT_MESSAGE" value="Small corrections" />
+    <MESSAGE value="Make bedfile for plink files." />
+    <option name="LAST_COMMIT_MESSAGE" value="Make bedfile for plink files." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1302,8 +1300,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/SNPs_subsets/make_bedfile.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-344">
-          <caret line="10" column="42" selection-start-line="10" selection-start-column="42" selection-end-line="10" selection-end-column="42" />
+        <state relative-caret-position="-180">
+          <caret line="7" column="32" selection-start-line="7" selection-start-column="32" selection-end-line="7" selection-end-column="32" />
         </state>
       </provider>
     </entry>

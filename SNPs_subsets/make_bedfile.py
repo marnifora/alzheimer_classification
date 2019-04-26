@@ -5,7 +5,7 @@ import exceptions
 import corporate_funcs as funcs
 
 
-def map_rows_to_locs(directory, ch, run, outfile, subsettype, perc, snpsubset, snprun, rsnumber):
+def map_rows_to_locs(borutadir, directory, ch, run, outfile, subsettype, perc, snpsubset, snprun, rsnumber):
 
     if subsettype == 'best':
         subset = sfuncs.best_snp(borutadir, ch, run, perc, snpsubset, snprun)
