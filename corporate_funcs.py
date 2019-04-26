@@ -70,6 +70,8 @@ def establish_run(analysistype, fixed, outdir, run):
         elif analysistype == 'deficient':
             run_file.write(
                 'run\tdata_set(s)\tboruta_run(s)\tperc\tthreshold\tnumber_of_deficient_SNPs\tpercent_of_all\n')
+        elif analysistype == 'frombed':
+            run_file.write('run\tinfile\ttemplate_dataset\tnumber_of_SNPs\tchromosomes\n')
         else:
             raise exceptions.OtherError('First line for %s run file is not defined!' % analysistype)
         print('%s run file has been made! Run number has been established! Run = %d' % (analysistype, run))

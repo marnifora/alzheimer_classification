@@ -4,6 +4,7 @@
     <list default="true" id="7e59d8fb-d331-40d5-a096-812f3a35a38f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SNPs_subsets/make_bedfile.py" beforeDir="false" afterPath="$PROJECT_DIR$/SNPs_subsets/make_bedfile.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corporate_funcs.py" beforeDir="false" afterPath="$PROJECT_DIR$/corporate_funcs.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -14,10 +15,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SNPs_subsets/shared_snps.py">
+        <entry file="file://$PROJECT_DIR$/boruta_classification.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="3" selection-start-line="3" selection-end-line="3" selection-end-column="25" />
+            <state relative-caret-position="756">
+              <caret line="629" column="44" selection-start-line="629" selection-start-column="38" selection-end-line="629" selection-end-column="44" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -40,8 +41,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SNPs_subsets/subset_funcs.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="616">
-              <caret line="139" column="55" selection-start-line="139" selection-start-column="55" selection-end-line="139" selection-end-column="55" />
+            <state relative-caret-position="136">
+              <caret line="11" column="62" selection-start-line="11" selection-start-column="62" selection-end-line="11" selection-end-column="62" />
             </state>
           </provider>
         </entry>
@@ -76,8 +77,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/SNPs_subsets/make_bedfile.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-180">
-              <caret line="7" column="32" selection-start-line="7" selection-start-column="32" selection-end-line="7" selection-end-column="32" />
+            <state relative-caret-position="427">
+              <caret line="105" column="30" lean-forward="true" selection-start-line="105" selection-start-column="30" selection-end-line="105" selection-end-column="30" />
+              <folding>
+                <element signature="e#0#29#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -109,8 +113,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/corporate_funcs.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="495">
-              <caret line="36" column="28" lean-forward="true" selection-start-line="36" selection-start-column="28" selection-end-line="36" selection-end-column="28" />
+            <state relative-caret-position="277">
+              <caret line="73" column="49" lean-forward="true" selection-start-line="73" selection-start-column="49" selection-end-line="73" selection-end-column="57" />
               <folding>
                 <element signature="e#0#17#0" expanded="true" />
               </folding>
@@ -129,8 +133,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>data</find>
-      <find>nolack</find>
       <find>auc</find>
       <find>order</find>
       <find>$1</find>
@@ -159,6 +161,8 @@
       <find>classrun</find>
       <find>idx_to_clas</find>
       <find>snprun</find>
+      <find>runs_file_add</find>
+      <find>subsetname</find>
     </findStrings>
     <replaceStrings>
       <replace>arg</replace>
@@ -175,6 +179,7 @@
       <replace>nolack</replace>
       <replace>deficient</replace>
       <replace>ch</replace>
+      <replace>analysistype</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -228,11 +233,11 @@
         <option value="$PROJECT_DIR$/vcf_rewrite/prepreparing.sh" />
         <option value="$PROJECT_DIR$/SNPs_subsets/crossed_snps.py" />
         <option value="$PROJECT_DIR$/patients_similarities/similarity_plot.py" />
-        <option value="$PROJECT_DIR$/corporate_funcs.py" />
         <option value="$PROJECT_DIR$/exceptions.py" />
         <option value="$PROJECT_DIR$/boruta_classification.py" />
         <option value="$PROJECT_DIR$/projekt1.py" />
         <option value="$PROJECT_DIR$/SNPs_subsets/subset_funcs.py" />
+        <option value="$PROJECT_DIR$/corporate_funcs.py" />
         <option value="$PROJECT_DIR$/SNPs_subsets/make_bedfile.py" />
       </list>
     </option>
@@ -300,7 +305,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.boruta_classification">
+  <component name="RunManager" selected="Python.make_bedfile">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="advent_of_code" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -398,7 +403,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/SNPs_subsets/make_bedfile.py" />
-      <option name="PARAMETERS" value="-dataset dataset1 $USER_HOME$/Dokumenty/datas-testset dataset2 $USER_HOME$/Dokumenty/dataset2/ -chr 1-2 -type best -perc 50 -run 1" />
+      <option name="PARAMETERS" value="-infile $USER_HOME$/Dokumenty/dataset1/boruta/dataset1_best_50_1_dataset2_shared_1.bed -rewrite -dataset dataset1 $USER_HOME$/Dokumenty/dataset1/ -run 1 -fixed" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -563,20 +568,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1544007477880</updated>
-    </task>
-    <task id="LOCAL-00038" summary="Small corrections.">
-      <created>1552040114704</created>
-      <option name="number" value="00038" />
-      <option name="presentableId" value="LOCAL-00038" />
-      <option name="project" value="LOCAL" />
-      <updated>1552040114704</updated>
-    </task>
-    <task id="LOCAL-00039" summary="Small corrections.">
-      <created>1552040760198</created>
-      <option name="number" value="00039" />
-      <option name="presentableId" value="LOCAL-00039" />
-      <option name="project" value="LOCAL" />
-      <updated>1552040760198</updated>
     </task>
     <task id="LOCAL-00040" summary="Small corrections.">
       <created>1552041238191</created>
@@ -907,7 +898,21 @@
       <option name="project" value="LOCAL" />
       <updated>1556272288350</updated>
     </task>
-    <option name="localTasksCounter" value="87" />
+    <task id="LOCAL-00087" summary="Small corrections.">
+      <created>1556272378906</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1556272378906</updated>
+    </task>
+    <task id="LOCAL-00088" summary="Small corrections.">
+      <created>1556272515271</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1556272515271</updated>
+    </task>
+    <option name="localTasksCounter" value="89" />
     <servers />
   </component>
   <component name="TodoView">
@@ -928,15 +933,15 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32937366" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.10907128" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.37580994" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.27701995" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.37565583" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3286638" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.27429804" />
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.3336933" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" weight="0.32937366" />
-      <window_info anchor="bottom" id="Python Console" order="10" weight="0.19438446" />
+      <window_info anchor="bottom" id="Python Console" order="10" weight="0.19412382" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -983,11 +988,11 @@
     <MESSAGE value="Correction of bug in election of crossed SNPs." />
     <MESSAGE value="Adding crossed SNPs iterator." />
     <MESSAGE value="Adding make_bedfile script." />
-    <MESSAGE value="Small corrections." />
     <MESSAGE value="Adding -newforest option to boruta_classification." />
     <MESSAGE value="Small corrections" />
     <MESSAGE value="Make bedfile for plink files." />
-    <option name="LAST_COMMIT_MESSAGE" value="Make bedfile for plink files." />
+    <MESSAGE value="Small corrections." />
+    <option name="LAST_COMMIT_MESSAGE" value="Small corrections." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1036,6 +1041,51 @@
           <url>file://$PROJECT_DIR$/boruta_classification.py</url>
           <line>129</line>
           <option name="timeStamp" value="93" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/corporate_funcs.py</url>
+          <line>8</line>
+          <option name="timeStamp" value="94" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/corporate_funcs.py</url>
+          <line>56</line>
+          <option name="timeStamp" value="97" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/corporate_funcs.py</url>
+          <line>11</line>
+          <option name="timeStamp" value="98" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/SNPs_subsets/make_bedfile.py</url>
+          <line>47</line>
+          <option name="timeStamp" value="99" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/corporate_funcs.py</url>
+          <line>9</line>
+          <option name="timeStamp" value="100" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/SNPs_subsets/make_bedfile.py</url>
+          <line>52</line>
+          <option name="timeStamp" value="101" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/SNPs_subsets/make_bedfile.py</url>
+          <line>56</line>
+          <option name="timeStamp" value="102" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/SNPs_subsets/make_bedfile.py</url>
+          <line>59</line>
+          <option name="timeStamp" value="104" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/SNPs_subsets/make_bedfile.py</url>
+          <line>62</line>
+          <option name="timeStamp" value="106" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -1203,16 +1253,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/projekt1.py" />
-    <entry file="file://$PROJECT_DIR$/boruta_classification.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="555">
-          <caret line="129" column="40" selection-start-line="129" selection-start-column="40" selection-end-line="129" selection-end-column="40" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/anaconda3/envs/alzheimer_classification/lib/python3.6/site-packages/sklearn/utils/validation.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="8580">
@@ -1257,16 +1297,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/corporate_funcs.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="36" column="28" lean-forward="true" selection-start-line="36" selection-start-column="28" selection-end-line="36" selection-end-column="28" />
-          <folding>
-            <element signature="e#0#17#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/SNPs_subsets/crossed_snps.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
@@ -1293,15 +1323,38 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/SNPs_subsets/subset_funcs.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="616">
-          <caret line="139" column="55" selection-start-line="139" selection-start-column="55" selection-end-line="139" selection-end-column="55" />
+        <state relative-caret-position="136">
+          <caret line="11" column="62" selection-start-line="11" selection-start-column="62" selection-end-line="11" selection-end-column="62" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/boruta_classification.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="756">
+          <caret line="629" column="44" selection-start-line="629" selection-start-column="38" selection-end-line="629" selection-end-column="44" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/corporate_funcs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="277">
+          <caret line="73" column="49" lean-forward="true" selection-start-line="73" selection-start-column="49" selection-end-line="73" selection-end-column="57" />
+          <folding>
+            <element signature="e#0#17#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/SNPs_subsets/make_bedfile.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-180">
-          <caret line="7" column="32" selection-start-line="7" selection-start-column="32" selection-end-line="7" selection-end-column="32" />
+        <state relative-caret-position="427">
+          <caret line="105" column="30" lean-forward="true" selection-start-line="105" selection-start-column="30" selection-end-line="105" selection-end-column="30" />
+          <folding>
+            <element signature="e#0#29#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
