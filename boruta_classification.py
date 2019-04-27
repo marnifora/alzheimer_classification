@@ -120,15 +120,15 @@ def read_typedata(chrlist, outdir, p, run, type):
     return X, y
 
 
-def build_data(borutarun, chrlist, classrun, dataset, newforest_notcv, outdir, p, snpsubset, snpruns, testset, testsize):
+def build_data(borutarun, chrlist, classrun, dataset, frombed, newforest_notcv, outdir, p, snpsubset, snpruns, testset, testsize):
 
     if snpsubset:
         snprun = next(iter(snpruns.values()))
 
     pat = funcs.patients(testset)
     patients = sum(pat.values())
-    if newforest_notcv and testsize != 0:
-        testpat = set(random.sample(range(patients), int(patients*testsize)))
+    if (newforest_notcv or frombed) and testsize != 0:
+        testpat = set(random.sample(range(patients), max(int(patients*testsize), 1)))
         with open('%stestpat_class_%d.txt' % (outdir, classrun), 'w') as ts:
             ts.write('\n'.join([str(s) for s in sorted(testpat)]))
         trainpat = [i for i in range(patients) if i not in testpat]
@@ -138,7 +138,10 @@ def build_data(borutarun, chrlist, classrun, dataset, newforest_notcv, outdir, p
 
     X, X_test = None, None
     for ch in chrlist:
-        selected_snps = read_selected_snps(ch, dataset, outdir, p, borutarun, snpsubset, snprun, testset)
+        if not frombed:
+            selected_snps = read_selected_snps(ch, dataset, outdir, p, borutarun, snpsubset, snprun, testset)
+        else:
+            selected_snps = read_frombed_snps(ch, dataset, borutarun)
 
         xx, xx_test, snp = funcs.read_Xs(ch, testset, len(next(iter(selected_snps.values()))), selected_snps, testpat, trainpat)
 
@@ -356,6 +359,15 @@ def read_selected_snps(ch, dataset, outdir, p, run, snpsubset, snprun, testset):
     return snps_test
 
 
+def read_frombed_snps(ch, dataset, run):
+
+    selected_snps = {}
+    for name, directory in dataset.items():
+        with open('%sfrombed/frombed_snps_chr%d_%d.txt' % (directory, ch, run), 'r') as file:
+            selected_snps[name] = list(map(int, file.readlines()))
+    return selected_snps
+
+
 def best_from_subset(bestfile, subsetfile, last):
 
     b = int(bestfile.readline())
@@ -421,6 +433,7 @@ class_only = False
 boruta_only = False
 borutarun = None
 classrun = None
+frombedrun = None
 run = None
 fixed = False
 patsubset = None
@@ -431,6 +444,7 @@ continuation = False
 makey = False
 cv = None
 newforest = False
+frombed = True
 
 for q in range(len(sys.argv)):
 
@@ -560,6 +574,14 @@ for q in range(len(sys.argv)):
         newforest = True
         continue
 
+    if sys.argv[q] == '-frombed':
+        frombed = True
+        continue
+
+    if sys.argv[q] == '-frombedrun':
+        frombedrun = int(sys.argv[q + 1])
+        continue
+
     if sys.argv[q].startswith('-'):
         raise exceptions.WrongParameterName(sys.argv[q])
 
@@ -641,72 +663,89 @@ if not boruta_only:
 
     # determination of number of class run
     classrun = funcs.establish_run('class', fixed, outdir, classrun)
-    if dataset:
-        chrlist, dataset, patruns, perc, r, snpsubset, snpruns, testpat, _, towrite, trainpat = \
-            read_boruta_params(chrlist, False, dataset, False, outdir, pat, borutarun)
-    elif testset:
-        chrlist, testset, patruns, perc, r, snpsubset, snpruns, testpat, _, towrite, trainpat = \
-            read_boruta_params(chrlist, False, testset, False, outdir, pat, borutarun)
-    '''
-    if testsize_given:
-        if testsize != testsizeboruta and not cv:
-            raise exceptions.NoParameterError('cv', 'Different testsize than in the boruta was given, but number of CV ' +
-                                                    'iterations was not established.')
-    elif not newforest:
-        testsize = testsizeboruta
-    '''
     scores_file = open('%sclass_scores_%d.txt' % (outdir, classrun), 'w', 1)
     scores_file.write('perc\tSNPs\ttrain_score\ttest_score\tAUC\n')  # writing heading to class_scores file
+
     if makey:
         build_y_matrices(dataset, borutarun, outdir, funcs.patients(dataset), testpat, trainpat)
 
-    if 'classperc' not in globals():
-        classperc = perc
+    if frombed:
 
-    for p in classperc:
+        if not testset and dataset:
+            testset = dataset
 
-        # establishing testing and training data based on given test set(s) or test subset of patients
-        if not cv and not newforest:
-            if not testset:
-                if testsize == 0:
-                    raise exceptions.NoParameterError(
-                        'testset', 'Test size was not given - define what set should be used as a testset.')
-                else:
-                    print('Standard classification after Boruta')
-                    X_test, y_test = read_typedata(chrlist, outdir, p, borutarun, 'test')
-            else:
-                print('Classification based on the testset and given forest')
-                X_test, y_test, _, _, testpat_val = build_data(borutarun, chrlist, classrun, dataset, newforest, outdir,
-                                                               p, snpsubset, snpruns, testset, testsize)
-        elif cv:
-            if newforest:
-                print('CV classification based on testset and list of selected SNPs')
-                X_train, y_train, _, _, _ = build_data(borutarun, chrlist, classrun, dataset, False, outdir, p,
-                                                       snpsubset, snpruns, testset, 0)
-            else:
-                print('CV classification based on earlier-built matrices for given set')
-            X_test = y_test = None
-        elif newforest:
-            print('Classification based on testset and list of selected SNPs')
-            X_train, y_train, X_test, y_test, testpat_val = build_data(borutarun, chrlist, classrun, dataset, True,
-                                                                       outdir, p, snpsubset, snpruns, testset, testsize)
+        X_train, y_train, X_test, y_test, testpat_val = build_data(frombedrun, chrlist, classrun, dataset, True,
+                                                                   newforest, outdir, None, None, None, testset, testsize)
 
-        if not newforest:
-            X_train, y_train = read_typedata(chrlist, outdir, p, borutarun, 'train')
-
-        # running classification and saving scores to class_scores file
         print('Data loaded!')
         if X_train.shape[1] > 0:
             score_train, score_test, score_auc = classify(X_train, y_train, X_test, y_test, cv)
-            scores_file.write('%d\t%d\t%.3f\t%.3f\t%.3f\n' % (p, X_train.shape[1], score_train, score_test, score_auc))
+            scores_file.write('%s\t%d\t%.3f\t%.3f\t%.3f\n' % ('frombed', X_train.shape[1], score_train, score_test, score_auc))
             # saving matrices (on which was based the classification) to file
             for name in ['X_train', 'y_train', 'X_test', 'y_test']:
-                np.save('%s%s_genome_%d_%d.npy' % (outdir, name, p, classrun), eval(name))
+                np.save('%s%s_genome_%s_%d.npy' % (outdir, name, 'frombed', classrun), eval(name))
         else:
-            print('No SNPs were chosen for perc %d' % p)
-            scores_file.write('%d\t0\t-\t-\n' % p)
+            print('No SNPs were chosen!')
+            scores_file.write('frombed\t0\t-\t-\n')
 
-        print('Scores for perc %d saved to file' % p)
+        print('Scores saved to file')
+
+    else:
+
+        if dataset:
+            chrlist, dataset, patruns, perc, r, snpsubset, snpruns, testpat, _, towrite, trainpat = \
+                read_boruta_params(chrlist, False, dataset, False, outdir, pat, borutarun)
+        elif testset:
+            chrlist, testset, patruns, perc, r, snpsubset, snpruns, testpat, _, towrite, trainpat = \
+                read_boruta_params(chrlist, False, testset, False, outdir, pat, borutarun)
+
+        if 'classperc' not in globals():
+            classperc = perc
+
+        for p in classperc:
+
+            # establishing testing and training data based on given test set(s) or test subset of patients
+            if not cv and not newforest:
+                if not testset:
+                    if testsize == 0:
+                        raise exceptions.NoParameterError(
+                            'testset', 'Test size was not given - define what set should be used as a testset.')
+                    else:
+                        print('Standard classification after Boruta')
+                        X_test, y_test = read_typedata(chrlist, outdir, p, borutarun, 'test')
+                else:
+                    print('Classification based on the testset and given forest')
+                    X_test, y_test, _, _, testpat_val = build_data(borutarun, chrlist, classrun, dataset, False, newforest, outdir,
+                                                                   p, snpsubset, snpruns, testset, testsize)
+            elif cv:
+                if newforest:
+                    print('CV classification based on testset and list of selected SNPs')
+                    X_train, y_train, _, _, _ = build_data(borutarun, chrlist, classrun, dataset, False, False, outdir, p,
+                                                           snpsubset, snpruns, testset, 0)
+                else:
+                    print('CV classification based on earlier-built matrices for given set')
+                X_test = y_test = None
+            elif newforest:
+                print('Classification based on testset and list of selected SNPs')
+                X_train, y_train, X_test, y_test, testpat_val = build_data(borutarun, chrlist, classrun, dataset, False, True,
+                                                                           outdir, p, snpsubset, snpruns, testset, testsize)
+
+            if not newforest:
+                X_train, y_train = read_typedata(chrlist, outdir, p, borutarun, 'train')
+
+            # running classification and saving scores to class_scores file
+            print('Data loaded!')
+            if X_train.shape[1] > 0:
+                score_train, score_test, score_auc = classify(X_train, y_train, X_test, y_test, cv)
+                scores_file.write('%d\t%d\t%.3f\t%.3f\t%.3f\n' % (p, X_train.shape[1], score_train, score_test, score_auc))
+                # saving matrices (on which was based the classification) to file
+                for name in ['X_train', 'y_train', 'X_test', 'y_test']:
+                    np.save('%s%s_genome_%d_%d.npy' % (outdir, name, p, classrun), eval(name))
+            else:
+                print('No SNPs were chosen for perc %d' % p)
+                scores_file.write('%d\t0\t-\t-\n' % p)
+
+            print('Scores for perc %d saved to file' % p)
 
     scores_file.close()
     print('Classification done!')
