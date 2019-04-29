@@ -135,7 +135,7 @@ def build_data(borutarun, chrlist, classrun, dataset, frombed, newforest_notcv, 
 
     X, X_test = None, None
     for ch in chrlist:
-        selected_snps = read_selected_snps(ch, dataset, frombed, outdir, p, borutarun, snpsubset, testset)
+        selected_snps = read_selected_snps(ch, dataset, frombed, outdir, p, borutarun, snpsubset, snpruns, testset)
 
         xx, xx_test, snp = funcs.read_Xs(ch, testset, len(next(iter(selected_snps.values()))), selected_snps, testpat, trainpat)
 
@@ -309,7 +309,7 @@ def update_chrlist(fixed, line, chrlist):
     return line
 
 
-def read_selected_snps(ch, dataset, frombed, outdir, p, run, snpsubset, testset):
+def read_selected_snps(ch, dataset, frombed, outdir, p, run, snpsubset, snpruns, testset):
 
     selected_snps = deque()
 
@@ -432,7 +432,7 @@ continuation = False
 makey = False
 cv = None
 newforest = False
-frombed = True
+frombed = False
 
 for q in range(len(sys.argv)):
 
@@ -662,8 +662,11 @@ if not boruta_only:
         if not testset and dataset:
             testset = dataset
 
-        X_train, y_train, X_test, y_test, testpat_val = build_data(frombedrun, chrlist, classrun, dataset, True,
-                                                                   newforest, outdir, None, None, None, testset, testsize)
+        if newforest:
+            X_train, y_train, X_test, y_test, testpat_val = build_data(frombedrun, chrlist, classrun, dataset, True,
+                                                                       newforest, outdir, None, None, None, testset, testsize)
+        else:
+            pass
 
         print('Data loaded!')
         if X_train.shape[1] > 0:
@@ -691,7 +694,7 @@ if not boruta_only:
 
         funcs.runs_file_add('class', outdir, classrun, '%d\t%s\t%d\t%d\t%s\t%d\t%s\t%s\n' %
                             (classrun, teststr, testpat_val, frombedrun, trainstr, trainpat_val,
-                             ','.join(list(map(str, classperc))), funcs.make_chrstr(chrlist)))
+                             'frombed', funcs.make_chrstr(chrlist)))
 
     else:
 
