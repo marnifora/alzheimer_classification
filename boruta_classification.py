@@ -138,10 +138,7 @@ def build_data(borutarun, chrlist, classrun, dataset, frombed, newforest_notcv, 
 
     X, X_test = None, None
     for ch in chrlist:
-        if not frombed:
-            selected_snps = read_selected_snps(ch, dataset, outdir, p, borutarun, snpsubset, snprun, testset)
-        else:
-            selected_snps = read_frombed_snps(ch, dataset, borutarun)
+        selected_snps = read_selected_snps(ch, dataset, frombed, outdir, p, borutarun, snpsubset, snprun, testset)
 
         xx, xx_test, snp = funcs.read_Xs(ch, testset, len(next(iter(selected_snps.values()))), selected_snps, testpat, trainpat)
 
@@ -315,16 +312,18 @@ def update_chrlist(fixed, line, chrlist):
     return line
 
 
-def read_selected_snps(ch, dataset, outdir, p, run, snpsubset, snprun, testset):
+def read_selected_snps(ch, dataset, frombed, outdir, p, run, snpsubset, snprun, testset):
 
     selected_snps = deque()
 
-    bestfile = open('%sbestsnps_chr%d_%d_%d.txt' % (outdir, ch, p, run), 'r')
+    if frombed:
+        bestfile = open('%sfrombed/frombed_snps_chr%d_%d.txt' % (next(iter(dataset.values())), ch, run))
+    else:
+        bestfile = open('%sbestsnps_chr%d_%d_%d.txt' % (outdir, ch, p, run), 'r')
+        for _ in range(2):  # header
+            bestfile.readline()
     if snpsubset is not None:
         subsetfile = open('%s%s/%s_snps_chr%d_%d.txt' % (next(iter(dataset.values())), snpsubset, snpsubset, ch, snprun), 'r')
-    for _ in range(2):  # header
-        bestfile.readline()
-    if snpsubset is not None:
         best, last = best_from_subset(bestfile, subsetfile, -1)
     else:
         best = int(bestfile.readline())
@@ -357,15 +356,6 @@ def read_selected_snps(ch, dataset, outdir, p, run, snpsubset, snprun, testset):
         snpfile.close()
 
     return snps_test
-
-
-def read_frombed_snps(ch, dataset, run):
-
-    selected_snps = {}
-    for name, directory in dataset.items():
-        with open('%sfrombed/frombed_snps_chr%d_%d.txt' % (directory, ch, run), 'r') as file:
-            selected_snps[name] = list(map(int, file.readlines()))
-    return selected_snps
 
 
 def best_from_subset(bestfile, subsetfile, last):
