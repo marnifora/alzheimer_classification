@@ -122,9 +122,6 @@ def read_typedata(chrlist, outdir, p, run, type):
 
 def build_data(borutarun, chrlist, classrun, dataset, frombed, newforest_notcv, outdir, p, snpsubset, snpruns, testset, testsize):
 
-    if snpsubset:
-        snprun = next(iter(snpruns.values()))
-
     pat = funcs.patients(testset)
     patients = sum(pat.values())
     if (newforest_notcv or frombed) and testsize != 0:
@@ -138,7 +135,7 @@ def build_data(borutarun, chrlist, classrun, dataset, frombed, newforest_notcv, 
 
     X, X_test = None, None
     for ch in chrlist:
-        selected_snps = read_selected_snps(ch, dataset, frombed, outdir, p, borutarun, snpsubset, snprun, testset)
+        selected_snps = read_selected_snps(ch, dataset, frombed, outdir, p, borutarun, snpsubset, testset)
 
         xx, xx_test, snp = funcs.read_Xs(ch, testset, len(next(iter(selected_snps.values()))), selected_snps, testpat, trainpat)
 
@@ -312,7 +309,7 @@ def update_chrlist(fixed, line, chrlist):
     return line
 
 
-def read_selected_snps(ch, dataset, frombed, outdir, p, run, snpsubset, snprun, testset):
+def read_selected_snps(ch, dataset, frombed, outdir, p, run, snpsubset, testset):
 
     selected_snps = deque()
 
@@ -323,6 +320,7 @@ def read_selected_snps(ch, dataset, frombed, outdir, p, run, snpsubset, snprun, 
         for _ in range(2):  # header
             bestfile.readline()
     if snpsubset is not None:
+        snprun = next(iter(snpruns.values()))
         subsetfile = open('%s%s/%s_snps_chr%d_%d.txt' % (next(iter(dataset.values())), snpsubset, snpsubset, ch, snprun), 'r')
         best, last = best_from_subset(bestfile, subsetfile, -1)
     else:
