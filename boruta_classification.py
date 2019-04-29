@@ -690,6 +690,21 @@ if not boruta_only:
 
         print('Scores saved to file')
 
+        scores_file.close()
+        print('Classification done!')
+
+        if cv:
+            teststr = 'CV-%d: %s' % (cv, '+'.join(testset))
+            trainpat_val = 0
+        else:
+            teststr = '+'.join(testset)
+            trainpat_val = sum(funcs.patients(dataset).values())
+        trainstr = '+'.join(dataset)
+
+        funcs.runs_file_add('class', outdir, classrun, '%d\t%s\t%d\t%d\t%s\t%d\t%s\t%s\n' %
+                            (classrun, teststr, testpat_val, frombedrun, trainstr, trainpat_val,
+                             ','.join(list(map(str, classperc))), funcs.make_chrstr(chrlist)))
+
     else:
 
         if dataset:
@@ -747,26 +762,27 @@ if not boruta_only:
 
             print('Scores for perc %d saved to file' % p)
 
-    scores_file.close()
-    print('Classification done!')
+        scores_file.close()
+        print('Classification done!')
 
-    # writing information about class run to class_run file
-    if newforest:
-        trainstr = 'only-SNPs: %s' % '+'.join(dataset.keys())
-    else:
-        trainstr = '+'.join(dataset.keys())
-    if 'testpat_val' not in globals():
-        testpat_val = len(testpat)
-    trainpat_val = len(trainpat)
-    if cv:
-        teststr = 'CV-%d: %s' % (cv, trainstr)
-        testpat_val = 0
-        trainpat_val = sum(pat.values())
-    elif not testset:
-        teststr = '%.2f*(%s)' % (testsize, trainstr)
-    else:
-        teststr = '+'.join(testset.keys())
+        # writing information about class run to class_run file
+        if newforest:
+            trainstr = 'only-SNPs: %s' % '+'.join(dataset.keys())
+        else:
+            trainstr = '+'.join(dataset.keys())
+        if 'testpat_val' not in globals():
+            testpat_val = len(testpat)
+        if 'trainpat' in globals():
+            trainpat_val = len(trainpat)
+        if cv:
+            teststr = 'CV-%d: %s' % (cv, trainstr)
+            testpat_val = 0
+            trainpat_val = sum(pat.values())
+        elif not testset:
+            teststr = '%.2f*(%s)' % (testsize, trainstr)
+        else:
+            teststr = '+'.join(testset.keys())
 
-    funcs.runs_file_add('class', outdir, classrun, '%d\t%s\t%d\t%d\t%s\t%d\t%s\t%s\n' %
-                        (classrun, teststr, testpat_val, borutarun, trainstr, trainpat_val,
-                         ','.join(list(map(str, classperc))), funcs.make_chrstr(chrlist)))
+        funcs.runs_file_add('class', outdir, classrun, '%d\t%s\t%d\t%d\t%s\t%d\t%s\t%s\n' %
+                            (classrun, teststr, testpat_val, borutarun, trainstr, trainpat_val,
+                             ','.join(list(map(str, classperc))), funcs.make_chrstr(chrlist)))

@@ -16,8 +16,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/boruta_classification.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="124">
-              <caret line="676" column="23" lean-forward="true" selection-start-line="676" selection-start-column="23" selection-end-line="676" selection-end-column="23" />
+            <state relative-caret-position="705">
+              <caret line="703" column="36" lean-forward="true" selection-start-line="703" selection-start-column="36" selection-end-line="703" selection-end-column="36" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -113,7 +113,7 @@
         <entry file="file://$PROJECT_DIR$/corporate_funcs.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="75">
-              <caret line="8" selection-start-line="8" selection-end-line="8" />
+              <caret line="199" column="4" selection-start-line="199" selection-start-column="4" selection-end-line="199" selection-end-column="4" />
               <folding>
                 <element signature="e#0#17#0" expanded="true" />
               </folding>
@@ -540,12 +540,12 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.make_bedfile" />
       <item itemvalue="Python.boruta_classification" />
       <item itemvalue="Python.crossed_snps" />
       <item itemvalue="Python.deficient_snps" />
-      <item itemvalue="Python.vcf_to_matrix" />
+      <item itemvalue="Python.make_bedfile" />
       <item itemvalue="Python.shared_snps" />
+      <item itemvalue="Python.vcf_to_matrix" />
     </list>
     <recent_temporary>
       <list>
@@ -567,13 +567,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1544007477880</updated>
-    </task>
-    <task id="LOCAL-00041" summary="Adding option of CV classification in boruta_classification.">
-      <created>1552166194032</created>
-      <option name="number" value="00041" />
-      <option name="presentableId" value="LOCAL-00041" />
-      <option name="project" value="LOCAL" />
-      <updated>1552166194032</updated>
     </task>
     <task id="LOCAL-00042" summary="Small corrections.">
       <created>1552166869042</created>
@@ -911,7 +904,14 @@
       <option name="project" value="LOCAL" />
       <updated>1556285766458</updated>
     </task>
-    <option name="localTasksCounter" value="90" />
+    <task id="LOCAL-00090" summary="'frombed' option in boruta_classification">
+      <created>1556358261385</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1556358261386</updated>
+    </task>
+    <option name="localTasksCounter" value="91" />
     <servers />
   </component>
   <component name="TodoView">
@@ -924,15 +924,15 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="67" y="25" width="1853" height="1055" extended-state="6" />
+    <frame x="0" y="-2" width="1920" height="1082" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.47772658" visible="true" weight="0.17486338" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.47772658" visible="true" weight="0.17448603" />
       <window_info id="Structure" order="1" sideWeight="0.5222734" side_tool="true" weight="0.17540984" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32937366" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.27645788" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.27645788" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.24344176" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -966,7 +966,6 @@
     </layout-to-restore>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Correction of writing the genome_stats file." />
     <MESSAGE value="Adding two parameters to prepreparing file." />
     <MESSAGE value="Patients similarities." />
     <MESSAGE value="Removing all_snps and Queue q from boruta_classification." />
@@ -991,7 +990,8 @@
     <MESSAGE value="Make bedfile for plink files." />
     <MESSAGE value="Small corrections." />
     <MESSAGE value="Add rewriting bedfile into rows numbers." />
-    <option name="LAST_COMMIT_MESSAGE" value="Add rewriting bedfile into rows numbers." />
+    <MESSAGE value="'frombed' option in boruta_classification" />
+    <option name="LAST_COMMIT_MESSAGE" value="'frombed' option in boruta_classification" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1234,16 +1234,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/boruta_classification.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="124">
-          <caret line="676" column="23" lean-forward="true" selection-start-line="676" selection-start-column="23" selection-end-line="676" selection-end-column="23" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/patients_similarities/similarity_plot.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2610">
@@ -1315,9 +1305,19 @@
     <entry file="file://$PROJECT_DIR$/corporate_funcs.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
-          <caret line="8" selection-start-line="8" selection-end-line="8" />
+          <caret line="199" column="4" selection-start-line="199" selection-start-column="4" selection-end-line="199" selection-end-column="4" />
           <folding>
             <element signature="e#0#17#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/boruta_classification.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="705">
+          <caret line="703" column="36" lean-forward="true" selection-start-line="703" selection-start-column="36" selection-end-line="703" selection-end-column="36" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
