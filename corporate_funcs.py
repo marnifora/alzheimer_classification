@@ -6,12 +6,12 @@ import os
 
 def establish_run(analysistype, fixed, outdir, run):
 
-    if not os.path.isdir(outdir):
-        os.mkdir(outdir)
+    directory = outdir
+    name = '-'
+    if not os.path.isdir(directory):
+        os.mkdir(directory)
     try:
-        file = '%s%s_runs.txt' % (outdir, analysistype)
-        if analysistype == 'boruta':
-            correct_boruta_runs_file(file)
+        file = '%s%s_runs.txt' % (directory, analysistype)
         run_file = open(file, 'r+')
         if run is None:
             run = 0
@@ -37,12 +37,12 @@ def establish_run(analysistype, fixed, outdir, run):
                 d.remove(el)
             if not runchanged:
                 run = min(d)
-                print('%s run number has been established! Run = %d' % (analysistype, run))
+                print('%s run number for %s has been established! Run = %d' % (analysistype, name, run))
             elif rewrite:
                 if not fixed:
                     raise exceptions.WrongValueError('-run', run,
-                                                     "Run number %d has already been conducted (%s analysis)! "
-                                                     % (run, analysistype) +
+                                                     "Run number %d has already been conducted (%s analysis for %s)! "
+                                                     % (run, analysistype, name) +
                                                      "If you want to overwrite it, please add '-fixed' atribute.")
                 else:
                     run_file.seek(0)
@@ -51,16 +51,16 @@ def establish_run(analysistype, fixed, outdir, run):
         else:
             if not runchanged:
                 run = 1
-                print('%s run number has been established! Run = %d' % (analysistype, run))
+                print('%s run number for %s has been established! Run = %d' % (analysistype, name, run))
 
     except FileNotFoundError:
         run = 1
-        run_file = open('%s%s_runs.txt' % (outdir, analysistype), 'w')
+        run_file = open('%s%s_runs.txt' % (directory, analysistype), 'w')
         if analysistype == 'boruta':
             run_file.write('run\tdata_set\tpatients\tpat_subset\tpat_runs\tSNPs_subset\tSNPs_runs\ttest_size\tperc\t' +
-                           'window_size\tchromosomes\n')
+                           'window_size\tchromosomes\toutdir\n')
         elif analysistype == 'class':
-            run_file.write('run\ttest_set\ttest_pat\ttrain_run\ttrain_set\ttrain_pat\tperc\tchromosomes\n')
+            run_file.write('run\ttest_set\ttest_pat\ttrain_run\ttrain_set\ttrain_pat\tperc\tchromosomes\toutdir\n')
         elif analysistype == 'shared':
             run_file.write('run\thome_set\tcompared_set(s)\tchromosomes\tnumber_of_shared_SNPs\n')
         elif analysistype == 'crossed':
@@ -74,7 +74,7 @@ def establish_run(analysistype, fixed, outdir, run):
             run_file.write('run\tinfile\ttemplate_dataset\tnumber_of_SNPs\tchromosomes\n')
         else:
             raise exceptions.OtherError('First line for %s run file is not defined!' % analysistype)
-        print('%s run file has been made! Run number has been established! Run = %d' % (analysistype, run))
+        print('%s run file for %s has been made! Run number has been established! Run = %d' % (analysistype, name, run))
 
     run_file.write('%d\tin progress\n' % run)
     run_file.close()

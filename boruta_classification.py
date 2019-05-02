@@ -164,7 +164,7 @@ def classify(X, y, X_test, y_test, cv):
         return rf.score(X, y), rf.score(X_test, y_test), roc_auc_score(y_test, y_score)
     else:
         kf = KFold(n_splits=cv)
-        scores = [[],[],[]]
+        scores = [[], [], []]
         for train_index, test_index in kf.split(X):
             rf.fit(X[train_index], y[train_index])
             prob = rf.predict_proba(X[test_index])
@@ -173,7 +173,7 @@ def classify(X, y, X_test, y_test, cv):
             [s.append(el) for s, el in
              zip(scores, [rf.score(X[train_index], y[train_index]), rf.score(X[test_index], y[test_index]),
                           roc_auc_score(y[test_index], y_score)])]
-        return list(map(np.mean, scores))
+        return list(map(np.mean, scores)), list(map(np.std, scores))
 
 
 def first_run(dataset, fixed, outdir, pat, patsubset, patruns, run, testsize):
@@ -670,8 +670,16 @@ if not boruta_only:
 
         print('Data loaded!')
         if X_train.shape[1] > 0:
-            score_train, score_test, score_auc = classify(X_train, y_train, X_test, y_test, cv)
-            scores_file.write('%s\t%d\t%.3f\t%.3f\t%.3f\n' % ('frombed', X_train.shape[1], score_train, score_test, score_auc))
+            if cv:
+                ((score_train, score_test, score_auc), (std_train, std_test, std_auc)) = classify(X_train, y_train, X_test, y_test, cv)
+                scores_file.write(
+                    '%s\t%d\t%.3f +- %.3f\t%.3f +- %.3f\t%.3f +- %.3f\n' % ('frombed', X_train.shape[1], score_train,
+                                                                            std_train, score_test, std_test, score_auc,
+                                                                            std_auc))
+            else:
+                score_train, score_test, score_auc = classify(X_train, y_train, X_test, y_test, cv)
+                scores_file.write('%s\t%d\t%.3f\t%.3f\t%.3f\n' % ('frombed', X_train.shape[1], score_train, score_test,
+                                                                  score_auc))
             # saving matrices (on which was based the classification) to file
             for name in ['X_train', 'y_train', 'X_test', 'y_test']:
                 np.save('%s%s_genome_%s_%d.npy' % (outdir, name, 'frombed', classrun), eval(name))
@@ -742,8 +750,17 @@ if not boruta_only:
             # running classification and saving scores to class_scores file
             print('Data loaded!')
             if X_train.shape[1] > 0:
-                score_train, score_test, score_auc = classify(X_train, y_train, X_test, y_test, cv)
-                scores_file.write('%d\t%d\t%.3f\t%.3f\t%.3f\n' % (p, X_train.shape[1], score_train, score_test, score_auc))
+                if cv:
+                    ((score_train, score_test, score_auc), (std_train, std_test, std_auc)) = \
+                        classify(X_train, y_train, X_test, y_test, cv)
+                    scores_file.write('%s\t%d\t%.3f +- %.3f\t%.3f +- %.3f\t%.3f +- %.3f\n' %
+                                      (p, X_train.shape[1], score_train, std_train, score_test, std_test, score_auc,
+                                       std_auc))
+                else:
+                    score_train, score_test, score_auc = classify(X_train, y_train, X_test, y_test, cv)
+                    scores_file.write(
+                        '%s\t%d\t%.3f\t%.3f\t%.3f\n' % (p, X_train.shape[1], score_train, score_test,
+                                                        score_auc))
                 # saving matrices (on which was based the classification) to file
                 for name in ['X_train', 'y_train', 'X_test', 'y_test']:
                     np.save('%s%s_genome_%d_%d.npy' % (outdir, name, p, classrun), eval(name))
