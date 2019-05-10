@@ -2,7 +2,7 @@ import ast
 import os
 import boruta
 from collections import Counter, OrderedDict, deque
-import csv
+import math
 import exceptions
 import multiprocessing
 import numpy as np
@@ -122,10 +122,11 @@ def read_typedata(chrlist, outdir, p, run, type):
 
 def build_data(borutarun, chrlist, classrun, dataset, frombed, newforest_notcv, outdir, p, snpsubset, snpruns, testset, testsize):
 
-    pat = funcs.patients(testset)
-    patients = sum(pat.values())
+    patients = sum(funcs.patients(testset).values())
+    case, control = funcs.patients_diagnoses(dataset, patients)
     if (newforest_notcv or frombed) and testsize != 0:
-        testpat = set(random.sample(range(patients), max(int(patients*testsize), 1)))
+        half = round(patients * testsize) / 2
+        testpat = set(random.sample(case, max(math.floor(half), 1)) + random.sample(control, max(math.ceil(half), 1)))
         with open('%stestpat_class_%d.txt' % (outdir, classrun), 'w') as ts:
             ts.write('\n'.join([str(s) for s in sorted(testpat)]))
         trainpat = [i for i in range(patients) if i not in testpat]
@@ -191,8 +192,10 @@ def first_run(dataset, fixed, outdir, pat, patsubset, patruns, run, testsize):
     else:
         patients = set([i for i in range(sum(pat.values()))])
 
+    case, control = funcs.patients_diagnoses(dataset, patients)
     if testsize != 0:
-        testpat = set(random.sample(patients, int(len(patients)*testsize)))
+        half = round(patients * testsize) / 2
+        testpat = set(random.sample(case, max(math.floor(half), 1)) + random.sample(control, max(math.ceil(half), 1)))
         trainpat = set([p for p in patients if p not in testpat])
         with open('%stestpat_%d.txt' % (outdir, run), 'w') as ts:
             ts.write('\n'.join([str(s) for s in sorted(testpat)]))
@@ -662,11 +665,8 @@ if not boruta_only:
         if not testset and dataset:
             testset = dataset
 
-        if newforest:
-            X_train, y_train, X_test, y_test, testpat_val = build_data(frombedrun, chrlist, classrun, dataset, True,
+        X_train, y_train, X_test, y_test, testpat_val = build_data(frombedrun, chrlist, classrun, dataset, True,
                                                                        newforest, outdir, None, None, None, testset, testsize)
-        else:
-            pass
 
         print('Data loaded!')
         if X_train.shape[1] > 0:

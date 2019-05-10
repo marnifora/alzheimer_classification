@@ -248,3 +248,19 @@ def patients(dataset):
         pat[name] = p
         g.close()
     return pat
+
+
+def patients_diagnoses(dataset, patients):
+    case, control = [], []
+    done = 0
+    for name in dataset.keys():
+        with open('%smatrices/Y_chr.csv' % dataset[name], 'r') as file:
+            for i, line in enumerate(file):
+                if i in patients:
+                    line = list(map(int, line.split(',')))
+                    if line[1] == 0:
+                        control.append(done + line[0])
+                    else:
+                        case.append(done + line[0])
+        done += i
+    return case, control
