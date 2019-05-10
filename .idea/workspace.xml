@@ -3,9 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="7e59d8fb-d331-40d5-a096-812f3a35a38f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/boruta_classification.py" beforeDir="false" afterPath="$PROJECT_DIR$/boruta_classification.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/corporate_funcs.py" beforeDir="false" afterPath="$PROJECT_DIR$/corporate_funcs.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/feature_selection.py" beforeDir="false" afterPath="$PROJECT_DIR$/feature_selection.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -18,8 +15,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/boruta_classification.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="514">
-              <caret line="254" column="19" selection-start-line="254" selection-start-column="19" selection-end-line="254" selection-end-column="19" />
+            <state relative-caret-position="-4166">
+              <caret line="257" column="26" lean-forward="true" selection-start-line="257" selection-start-column="26" selection-end-line="257" selection-end-column="26" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -547,9 +544,9 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Python.make_bedfile" />
       <item itemvalue="Python.boruta_classification" />
       <item itemvalue="Python.crossed_snps" />
-      <item itemvalue="Python.make_bedfile" />
       <item itemvalue="Python.shared_snps" />
       <item itemvalue="Python.test" />
       <item itemvalue="Python.vcf_to_matrix" />
@@ -574,13 +571,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1544007477880</updated>
-    </task>
-    <task id="LOCAL-00047" summary="Small corrections.">
-      <created>1553197610176</created>
-      <option name="number" value="00047" />
-      <option name="presentableId" value="LOCAL-00047" />
-      <option name="project" value="LOCAL" />
-      <updated>1553197610176</updated>
     </task>
     <task id="LOCAL-00048" summary="Adding get_snps_locations script which rewrites selected SNPs to bed file.">
       <created>1553251370268</created>
@@ -918,7 +908,14 @@
       <option name="project" value="LOCAL" />
       <updated>1556791737678</updated>
     </task>
-    <option name="localTasksCounter" value="96" />
+    <task id="LOCAL-00096" summary="Adding proportional division of patients into train and test subset based on their diagnoses.">
+      <created>1557481405921</created>
+      <option name="number" value="00096" />
+      <option name="presentableId" value="LOCAL-00096" />
+      <option name="project" value="LOCAL" />
+      <updated>1557481405921</updated>
+    </task>
+    <option name="localTasksCounter" value="97" />
     <servers />
   </component>
   <component name="TodoView">
@@ -973,7 +970,6 @@
     </layout-to-restore>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Adding two parameters to prepreparing file." />
     <MESSAGE value="Patients similarities." />
     <MESSAGE value="Removing all_snps and Queue q from boruta_classification." />
     <MESSAGE value="Adding -makeY to boruta_classification." />
@@ -998,7 +994,8 @@
     <MESSAGE value="Add rewriting bedfile into rows numbers." />
     <MESSAGE value="'frombed' option in boruta_classification" />
     <MESSAGE value="Small corrections." />
-    <option name="LAST_COMMIT_MESSAGE" value="Small corrections." />
+    <MESSAGE value="Adding proportional division of patients into train and test subset based on their diagnoses." />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding proportional division of patients into train and test subset based on their diagnoses." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1331,8 +1328,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/boruta_classification.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="514">
-          <caret line="254" column="19" selection-start-line="254" selection-start-column="19" selection-end-line="254" selection-end-column="19" />
+        <state relative-caret-position="-4166">
+          <caret line="257" column="26" lean-forward="true" selection-start-line="257" selection-start-column="26" selection-end-line="257" selection-end-column="26" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>

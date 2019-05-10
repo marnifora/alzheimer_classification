@@ -194,7 +194,7 @@ def first_run(dataset, fixed, outdir, pat, patsubset, patruns, run, testsize):
 
     case, control = funcs.patients_diagnoses(dataset, patients)
     if testsize != 0:
-        half = round(patients * testsize) / 2
+        half = round(len(patients) * testsize) / 2
         testpat = set(random.sample(case, max(math.floor(half), 1)) + random.sample(control, max(math.ceil(half), 1)))
         trainpat = set([p for p in patients if p not in testpat])
         with open('%stestpat_%d.txt' % (outdir, run), 'w') as ts:
