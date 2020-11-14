@@ -171,9 +171,13 @@ def classify(X, y, X_test, y_test, cv):
             prob = rf.predict_proba(X[test_index])
             order = [i for i, c in enumerate(rf.classes_) if c == 1]
             y_score = prob[:, order]
-            [s.append(el) for s, el in
-             zip(scores, [rf.score(X[train_index], y[train_index]), rf.score(X[test_index], y[test_index]),
-                          roc_auc_score(y[test_index], y_score)])]
+            try:
+                [s.append(el) for s, el in
+                 zip(scores, [rf.score(X[train_index], y[train_index]), rf.score(X[test_index], y[test_index]),
+                              roc_auc_score(y[test_index], y_score)])]
+            except ValueError:
+                scores[0].append(rf.score(X[train_index], y[train_index]))
+                scores[1].append(rf.score(X[test_index], y[test_index]))
         return list(map(np.mean, scores)), list(map(np.std, scores))
 
 
