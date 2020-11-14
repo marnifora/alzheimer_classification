@@ -69,7 +69,7 @@ It iteratively removes the features which are proved by a statistical test to be
 ##### Additional analysis
 
 - analysis of subset of SNPs (e.g. SNPs shared between two data sets)
-- removing of outlier patients
+- removing outlier patients
 
 
 <br></br>
