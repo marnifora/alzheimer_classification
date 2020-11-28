@@ -19,24 +19,28 @@ See readme.txt for input, output and possible options.
 '''
 
 
-def pooling(chrlist, classperc, dataset, outdir, pat, perc, r, run, snpsubset, snpruns, testpat, trainpat):
+def pooling(num_cores, chrlist, classperc, dataset, outdir, pat, perc, r, run, snpsubset, snpruns, testpat, trainpat):
     """
     Running function one_process for every chr on chrlist.
     """
-    procs = []
+    if num_cores is None:
+        num_cores = len(chrlist)
 
     ytrain, _ = build_y_matrices(dataset, run, outdir, pat, testpat, trainpat)
 
-    for ch in chrlist:
+    for chrlist_subset in [chrlist[i*num_cores:(i+1)*num_cores] for i in range(math.ceil(len(chrlist)/num_cores))]:
 
-        p = multiprocessing.Process(target=one_process,
-                                    args=(ch, classperc, dataset, outdir, perc, r, run, snpsubset, snpruns,
-                                          testpat, trainpat, ytrain))
-        procs.append(p)
-        p.start()
+        procs = []
+        for ch in chrlist_subset:
 
-    for p in procs:
-        p.join()
+            p = multiprocessing.Process(target=one_process,
+                                        args=(ch, classperc, dataset, outdir, perc, r, run, snpsubset, snpruns,
+                                              testpat, trainpat, ytrain))
+            procs.append(p)
+            p.start()
+
+        for p in procs:
+            p.join()
 
     return 0
 
@@ -440,6 +444,7 @@ makey = False
 cv = None
 newforest = False
 frombed = False
+num_cores = None
 
 for q in range(len(sys.argv)):
 
@@ -577,6 +582,10 @@ for q in range(len(sys.argv)):
         frombedrun = int(sys.argv[q + 1])
         continue
 
+    if sys.argv[q] == '-num_cores':
+        num_cores = int(sys.argv[q + 1])
+        continue
+
     if sys.argv[q].startswith('-'):
         raise exceptions.WrongParameterName(sys.argv[q])
 
@@ -631,7 +640,7 @@ if not class_only:
     if 'classperc' not in globals():
         classperc = perc
     # running Boruta analysis
-    pooling(chrlist, classperc, dataset, outdir, pat, perc, r, borutarun, snpsubset, snpruns, testpat, trainpat)
+    pooling(num_cores, chrlist, classperc, dataset, outdir, pat, perc, r, borutarun, snpsubset, snpruns, testpat, trainpat)
 
     # saving information about done run to boruta_runs file
     if not continuation:

@@ -296,6 +296,71 @@ snpruns = None
 continuation = False
 
 
+dataset = OrderedDict()
+testsize = 0.1
+perc = [90]
+chrlist = [i for i in range(1, 24)]
+
+
+class DatasetAction(argparse.Action):
+
+    def __call__(self, parser, namespace, values, option_string=None):
+        if values[1][0] not in ['.', '~', '/']:
+            parser.error("After name of data set should appear a directory to folder with it")
+        global dataset
+        dataset[values[0]] = values[1]
+
+
+class TestAction(argparse.Action):
+
+    def __call__(self, parser, namespace, values, option_string=None):
+        if values < 0 or values > 1:
+            parser.error("Value of test parameter must be in range 0-1")
+        global testsize
+        testsize = values
+
+
+class PercAction(argparse.Action):
+
+    def __call__(self, parser, namespace, values, option_string=None):
+        if values < 0 or values > 100:
+            parser.error("Value of perc parameter must be in range 0-100")
+        global perc
+        perc.append(values)
+
+
+class ChrAction(argparse.Action):
+
+    def __call__(self, parser, namespace, values, option_string=None):
+        global chrlist
+        chrlist = funcs.read_chrstr(values)
+
+
+class SnprunAction(argparse.Action):
+
+    def __call__(self, parser, namespace, values, option_string=None):
+        global snprun
+        if len(values) == 2:
+            snprun[values[0]] = int(values[1])
+        elif len(values) == 1:
+            rr = int(values)
+        else:
+            chrlist = funcs.read_chrstr(values)
+
+
+parser = argparse.ArgumentParser()
+parser.add_argument('-dataset', action=DatasetAction, nargs=2, metavar=('NAME', 'DIRECTORY'),
+                    help='declare set(s) of data to analyze')
+parser.add_argument('-test', action=TestAction, type=float, metavar='VALUE', help='size of test subset')
+parser.add_argument('-perc', action=PercAction, type=int, metavar='VALUE',
+                    help="value of 'perc' parameter in Boruta algorithm")
+parser.add_argument('-chr', action=ChrAction, metavar='RANGE', help='range of chromosomes to analyse')
+parser.add_argument('-run', action='store', type=int, metavar='NUMBER', default=None, help='run number of the analysis')
+parser.add_argument('-fixed', action='store_true', default=False, help='flag if run number should be fixed')
+parser.add_argument('-snpsubset', action='store', type=str, metavar='NAME', default=None, help='name of SNP subset')
+parser.add_argument('-snprun', action=SnprunAction, nargs='*', metavar='')
+args = parser.parse_args()
+
 for q in range(len(sys.argv)):
 
     if sys.argv[q] == '-dataset':
