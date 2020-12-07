@@ -126,7 +126,7 @@ def read_typedata(chrlist, outdir, p, run, type):
 
 def build_data(borutarun, chrlist, classrun, dataset, frombed, newforest_notcv, outdir, p, snpsubset, snpruns, testset, testsize):
 
-    patients = sum(funcs.patients(testset).values())
+    patients = set([i for i in range(sum(funcs.patients(testset).values()))])
     case, control = funcs.patients_diagnoses(dataset, patients)
     if (newforest_notcv or frombed) and testsize != 0:
         half = round(patients * testsize) / 2
