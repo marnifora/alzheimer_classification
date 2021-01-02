@@ -1,10 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="7e59d8fb-d331-40d5-a096-812f3a35a38f" name="Default Changelist" comment="Small corrections.">
+    <list default="true" id="7e59d8fb-d331-40d5-a096-812f3a35a38f" name="Default Changelist" comment="Small corrections">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/boruta_classification.py" beforeDir="false" afterPath="$PROJECT_DIR$/boruta_classification.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/feature_selection.py" beforeDir="false" afterPath="$PROJECT_DIR$/feature_selection.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,6 +34,9 @@
         <option value="Python Script" />
       </list>
     </option>
+  </component>
+  <component name="Git.Pull.Settings">
+    <option name="BRANCH" value="master" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -298,34 +318,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1544007477880</updated>
-    </task>
-    <task id="LOCAL-00049" summary="Adding AUC score option in boruta_classification.">
-      <created>1553617325831</created>
-      <option name="number" value="00049" />
-      <option name="presentableId" value="LOCAL-00049" />
-      <option name="project" value="LOCAL" />
-      <updated>1553617325831</updated>
-    </task>
-    <task id="LOCAL-00050" summary="Adding deficient SNPs subset.">
-      <created>1553805426268</created>
-      <option name="number" value="00050" />
-      <option name="presentableId" value="LOCAL-00050" />
-      <option name="project" value="LOCAL" />
-      <updated>1553805426270</updated>
-    </task>
-    <task id="LOCAL-00051" summary="Small corrections.">
-      <created>1553807285619</created>
-      <option name="number" value="00051" />
-      <option name="presentableId" value="LOCAL-00051" />
-      <option name="project" value="LOCAL" />
-      <updated>1553807285619</updated>
-    </task>
-    <task id="LOCAL-00052" summary="Small corrections.">
-      <created>1553807556199</created>
-      <option name="number" value="00052" />
-      <option name="presentableId" value="LOCAL-00052" />
-      <option name="project" value="LOCAL" />
-      <updated>1553807556199</updated>
     </task>
     <task id="LOCAL-00053" summary="Adding mapping rows to locations.">
       <created>1553851554186</created>
@@ -642,7 +634,35 @@
       <option name="project" value="LOCAL" />
       <updated>1557481798549</updated>
     </task>
-    <option name="localTasksCounter" value="98" />
+    <task id="LOCAL-00098" summary="AUC only if more than one class in a batch.">
+      <created>1605364546464</created>
+      <option name="number" value="00098" />
+      <option name="presentableId" value="LOCAL-00098" />
+      <option name="project" value="LOCAL" />
+      <updated>1605364546465</updated>
+    </task>
+    <task id="LOCAL-00099" summary="Num_cores parameter to boruta_classification.py">
+      <created>1606570914916</created>
+      <option name="number" value="00099" />
+      <option name="presentableId" value="LOCAL-00099" />
+      <option name="project" value="LOCAL" />
+      <updated>1606570914917</updated>
+    </task>
+    <task id="LOCAL-00100" summary="Small corrections">
+      <created>1607363023078</created>
+      <option name="number" value="00100" />
+      <option name="presentableId" value="LOCAL-00100" />
+      <option name="project" value="LOCAL" />
+      <updated>1607363023079</updated>
+    </task>
+    <task id="LOCAL-00101" summary="Small corrections">
+      <created>1607363141251</created>
+      <option name="number" value="00101" />
+      <option name="presentableId" value="LOCAL-00101" />
+      <option name="project" value="LOCAL" />
+      <updated>1607363141251</updated>
+    </task>
+    <option name="localTasksCounter" value="102" />
     <servers />
   </component>
   <component name="TodoView">
@@ -654,9 +674,19 @@
       <is-autoscroll-to-source value="true" />
     </todo-panel>
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Patients similarities." />
-    <MESSAGE value="Removing all_snps and Queue q from boruta_classification." />
     <MESSAGE value="Adding -makeY to boruta_classification." />
     <MESSAGE value="Scripts for similar subset of patients." />
     <MESSAGE value="Changing structure of folders for output files." />
@@ -674,27 +704,15 @@
     <MESSAGE value="Adding crossed SNPs iterator." />
     <MESSAGE value="Adding make_bedfile script." />
     <MESSAGE value="Adding -newforest option to boruta_classification." />
-    <MESSAGE value="Small corrections" />
     <MESSAGE value="Make bedfile for plink files." />
     <MESSAGE value="Add rewriting bedfile into rows numbers." />
     <MESSAGE value="'frombed' option in boruta_classification" />
     <MESSAGE value="Adding proportional division of patients into train and test subset based on their diagnoses." />
     <MESSAGE value="Small corrections." />
-    <option name="LAST_COMMIT_MESSAGE" value="Small corrections." />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="451" y="1234" width="1084" height="762" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1604852280307">
-      <screen x="0" y="1024" width="1920" height="1080" />
-    </state>
-    <state x="451" y="1234" width="1084" height="762" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.1024.1920.1080/316.0.1280.1024@0.1024.1920.1080" timestamp="1604852280307" />
-    <state x="167" y="1149" width="1653" height="855" key="DiffContextDialog" timestamp="1604856199861">
-      <screen x="0" y="1024" width="1920" height="1080" />
-    </state>
-    <state x="167" y="1149" width="1653" height="855" key="DiffContextDialog/0.1024.1920.1080/316.0.1280.1024@0.1024.1920.1080" timestamp="1604856199861" />
-    <state x="776" y="1334" width="424" height="484" key="FileChooserDialogImpl" timestamp="1604856198664">
-      <screen x="0" y="1024" width="1920" height="1080" />
-    </state>
-    <state x="776" y="1334" width="424" height="484" key="FileChooserDialogImpl/0.1024.1920.1080/316.0.1280.1024@0.1024.1920.1080" timestamp="1604856198664" />
+    <MESSAGE value="AUC only if more than one class in a batch." />
+    <MESSAGE value="Num_cores parameter to boruta_classification.py" />
+    <MESSAGE value="Small corrections" />
+    <option name="LAST_COMMIT_MESSAGE" value="Small corrections" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -711,17 +729,17 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/boruta_classification.py</url>
-          <line>351</line>
+          <line>355</line>
           <option name="timeStamp" value="86" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/boruta_classification.py</url>
-          <line>152</line>
+          <line>156</line>
           <option name="timeStamp" value="90" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/boruta_classification.py</url>
-          <line>160</line>
+          <line>164</line>
           <option name="timeStamp" value="92" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">

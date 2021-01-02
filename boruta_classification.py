@@ -568,6 +568,7 @@ for q in range(len(sys.argv)):
 
     if sys.argv[q] == '-cv':
         cv = int(sys.argv[q+1])
+        testsize = 0
         continue
 
     if sys.argv[q] == '-newforest':
@@ -623,7 +624,7 @@ if 'pp' in globals():
             patruns[name] = pp
 
 # determination number of patient in given data set
-pat = funcs.patients(dataset)
+pat = funcs.patients(dataset | testset)
 
 if not class_only:
 
@@ -679,7 +680,7 @@ if not boruta_only:
             testset = dataset
 
         X_train, y_train, X_test, y_test, testpat_val = build_data(frombedrun, chrlist, classrun, dataset, True,
-                                                                       newforest, outdir, None, None, None, testset, testsize)
+                                                                   newforest, outdir, None, None, None, testset, testsize)
 
         print('Data loaded!')
         if X_train.shape[1] > 0:
