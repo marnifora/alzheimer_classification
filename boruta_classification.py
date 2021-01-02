@@ -624,7 +624,8 @@ if 'pp' in globals():
             patruns[name] = pp
 
 # determination number of patient in given data set
-pat = funcs.patients(dataset | testset)
+pat = funcs.patients({el: la for el, la in zip(list(dataset.keys())+list(testset.keys()),
+                                               list(dataset.values())+list(testset.values()))})
 
 if not class_only:
 
