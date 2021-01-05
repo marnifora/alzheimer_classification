@@ -1,6 +1,5 @@
-import subset_funcs as sfuncs
+import SNPs_subsets.subset_funcs as sfuncs
 import sys
-sys.path.insert(0, '../')
 import exceptions
 import corporate_funcs as funcs
 
