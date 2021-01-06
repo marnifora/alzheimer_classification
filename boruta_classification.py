@@ -140,7 +140,14 @@ def build_data(borutarun, chrlist, classrun, dataset, frombed, newforest_notcv, 
 
     X, X_test = None, None
     for ch in chrlist:
-        selected_snps = read_selected_snps(ch, dataset, frombed, outdir, p, borutarun, snpsubset, snpruns, testset)
+        if frombed:
+            selected_snps = {
+                next(iter(testset.keys())):
+                    open(os.path.join(next(iter(dataset.values())), 'frombed', 'frombed_snps_chr{}_{}.txt'.
+                                      format(ch, borutarun)), 'r').read().strip().split('\n')
+            }
+        else:
+            selected_snps = read_selected_snps(ch, dataset, frombed, outdir, p, borutarun, snpsubset, snpruns, testset)
 
         xx, xx_test, snp = funcs.read_Xs(ch, testset, len(next(iter(selected_snps.values()))), selected_snps, testpat, trainpat)
 
