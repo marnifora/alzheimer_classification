@@ -680,9 +680,15 @@ if not boruta_only:
         if not testset and dataset:
             testset = dataset
 
-        X_train, y_train, X_test, y_test, testpat_val = build_data(frombedrun, chrlist, classrun, dataset, True,
-                                                                   newforest, outdir, None, None, None, testset, testsize)
+        if testsize != 0:
+            X_train, y_train, X_test, y_test, testpat_val = build_data(frombedrun, chrlist, classrun, dataset, True,
+                                                                       newforest, outdir, None, None, None, testset, testsize)
+        else:
+            X_test, y_test, _, _, testpat_val = build_data(borutarun, chrlist, classrun, dataset, True, newforest,
+                                                           outdir, None, None, None, testset, testsize)
+            X_train, y_train = read_typedata(chrlist, outdir, perc[0], borutarun, 'train')
 
+        print('X train shape: {}, X test shape: {}'.format(X_train.shape, X_test.shape))
         print('Data loaded!')
         if X_train.shape[1] > 0:
             if cv:
