@@ -200,7 +200,7 @@ def classify_cv_both(X_dataset, y_dataset, X_testset, y_testset, cv=10):
     kf = KFold(n_splits=cv)
     scores = [[], [], []]
     scores_testset = [[], []]
-    for train_index, test_index in kf.split(X):
+    for train_index, test_index in kf.split(X_dataset):
         rf.fit(X_dataset[train_index], y_dataset[train_index])
         order = [i for i, c in enumerate(rf.classes_) if c == 1]
 
