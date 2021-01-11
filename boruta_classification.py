@@ -717,8 +717,8 @@ if not boruta_only:
     if makey:
         build_y_matrices(dataset, borutarun, outdir, funcs.patients(dataset), testpat, trainpat)
 
-    if cv and testset:
-        assert frombed and testsize != 0
+    if cv and dataset and testset:
+        assert frombed
         X_test, y_test, _, _, testpat_val = build_data(borutarun, chrlist, classrun, dataset, frombed, newforest,
                                                        outdir, None, None, None, testset, testsize)
         X_train, y_train = read_typedata(chrlist, outdir, perc[0], borutarun, 'train')
