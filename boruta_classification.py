@@ -127,8 +127,8 @@ def read_typedata(chrlist, outdir, p, run, type):
 def build_data(borutarun, chrlist, classrun, dataset, frombed, newforest_notcv, outdir, p, snpsubset, snpruns, testset, testsize):
 
     patients = sum(funcs.patients(testset).values())
-    case, control = funcs.patients_diagnoses(dataset, set([i for i in range(patients)]))
     if (newforest_notcv or frombed) and testsize != 0:
+        case, control = funcs.patients_diagnoses(dataset, set([i for i in range(patients)]))
         half = round(patients * testsize) / 2
         testpat = set(random.sample(case, max(math.floor(half), 1)) + random.sample(control, max(math.ceil(half), 1)))
         with open('%stestpat_class_%d.txt' % (outdir, classrun), 'w') as ts:
@@ -191,6 +191,37 @@ def classify(X, y, X_test, y_test, cv):
                 scores[0].append(rf.score(X[train_index], y[train_index]))
                 scores[1].append(rf.score(X[test_index], y[test_index]))
         return list(map(np.mean, scores)), list(map(np.std, scores))
+
+
+def classify_cv_both(X_dataset, y_dataset, X_testset, y_testset, cv=10):
+
+    rf = RandomForestClassifier(n_estimators=500)
+
+    kf = KFold(n_splits=cv)
+    scores = [[], [], []]
+    scores_testset = [[], []]
+    for train_index, test_index in kf.split(X):
+        rf.fit(X_dataset[train_index], y_dataset[train_index])
+        order = [i for i, c in enumerate(rf.classes_) if c == 1]
+
+        prob = rf.predict_proba(X_dataset[test_index])
+        y_score = prob[:, order]
+        scores[0].append(rf.score(X_dataset[train_index], y_dataset[train_index]))
+        scores[1].append(rf.score(X_dataset[test_index], y_dataset[test_index]))
+        try:
+            scores[2].append(roc_auc_score(y_dataset[test_index], y_score))
+        except ValueError:
+            pass
+
+        prob = rf.predict_proba(X_testset)
+        y_score = prob[:, order]
+        scores_testset[0].append(rf.score(X_testset, y_testset))
+        try:
+            scores_testset[1].append(roc_auc_score(y_testset, y_score))
+        except ValueError:
+            pass
+    return list(map(np.mean, scores)), list(map(np.std, scores)), \
+           list(map(np.mean, scores_testset)), list(map(np.std, scores_testset))
 
 
 def first_run(dataset, fixed, outdir, pat, patsubset, patruns, run, testsize):
@@ -678,10 +709,29 @@ if not boruta_only:
     # determination of number of class run
     classrun = funcs.establish_run('class', fixed, outdir, classrun)
     scores_file = open('%sclass_scores_%d.txt' % (outdir, classrun), 'w', 1)
-    scores_file.write('perc\tSNPs\ttrain_score\ttest_score\tAUC\n')  # writing heading to class_scores file
+    if frombed and cv:
+        scores_file.write('perc\tSNPs\tdataset_train_score\tdataset_test_score\tdataset_AUC\ttestset_score\ttestset_AUC\n')
+    else:
+        scores_file.write('perc\tSNPs\ttrain_score\ttest_score\tAUC\n')  # writing heading to class_scores file
 
     if makey:
         build_y_matrices(dataset, borutarun, outdir, funcs.patients(dataset), testpat, trainpat)
+
+    if cv and testset:
+        assert frombed and testsize != 0
+        X_test, y_test, _, _, testpat_val = build_data(borutarun, chrlist, classrun, dataset, frombed, newforest,
+                                                       outdir, None, None, None, testset, testsize)
+        X_train, y_train = read_typedata(chrlist, outdir, perc[0], borutarun, 'train')
+        print('X train shape: {}, X test shape: {}'.format(X_train.shape, X_test.shape))
+        print('Data loaded!')
+        if X_train.shape[1] > 0:
+            ((score_train, score_test, score_auc), (std_train, std_test, std_auc),
+             (score_test_testset, score_auc_testset), (std_score_testset, std_auc_testset)) = \
+                classify_cv_both(X_train, y_train, X_test, y_test, cv)
+            scores_file.write(
+                '%s\t%d\t%.3f +- %.3f\t%.3f +- %.3f\t%.3f +- %.3f\t%.3f +- %.3f\t%.3f +- %.3f\n' %
+                ('cv-frombed', X_train.shape[1], score_train, std_train, score_test, std_test, score_auc,
+                 std_auc, score_test_testset, std_test_testset, score_auc_testset, std_auc_testset))
 
     if frombed:
 
