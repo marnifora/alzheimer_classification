@@ -731,7 +731,7 @@ if not boruta_only:
             scores_file.write(
                 '%s\t%d\t%.3f +- %.3f\t%.3f +- %.3f\t%.3f +- %.3f\t%.3f +- %.3f\t%.3f +- %.3f\n' %
                 ('cv-frombed', X_train.shape[1], score_train, std_train, score_test, std_test, score_auc,
-                 std_auc, score_test_testset, std_test_testset, score_auc_testset, std_auc_testset))
+                 std_auc, score_test_testset, std_score_testset, score_auc_testset, std_auc_testset))
 
     if frombed:
 
