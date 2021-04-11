@@ -3,6 +3,7 @@ from collections import deque
 import sys
 import csv
 import exceptions
+import os
 
 '''
 See readme.txt for input, output and possible options.
@@ -82,9 +83,9 @@ def check_pidfiles(indir):
     """
     Checking if number of patients and their order in vcf files for every chromosomes is the same.
     """
-
+    pid_files = [os.path.join(indir, el) for el in os.listdir(indir) if el.startswith('pid_chr') and el.endswith('.txt')]
     try:
-        stat = open('%spid_chr1.txt' % indir, 'r')
+        stat = open(pid_files[0], 'r')
     except FileNotFoundError:
         try:
             open("%spid_chr.txt" % outdir, 'r')
@@ -119,9 +120,9 @@ def check_pidfiles(indir):
 
     stat.close()
 
-    for c in range(2, 24):
-
-        stat = open('%spid_chr%d.txt' % (indir, c), 'r')
+    for file in pid_files[1:]:
+        c = file.split('pid_chr')[-1].replace('.txt', '')
+        stat = open(file, 'r')
 
         ss = deque(sample)
         s = ss.popleft()
@@ -150,9 +151,10 @@ def write_files(dataset, dd, indir, outdir):
     :param dd: (dict) keys - IDs of patients, values - diagnoses
     :return: (str) Info about written diagnoses
     """
-
+    pid_files = [os.path.join(indir, el) for el in os.listdir(indir) if
+                 el.startswith('pid_chr') and el.endswith('.txt')]
     try:
-        o = open('%spid_chr1.txt' % indir, 'r')
+        o = open(pid_files[0], 'r')
         fp = open("%spid_chr.txt" % outdir, 'w')
     except FileNotFoundError:
         try:
@@ -211,6 +213,8 @@ if 'indir' not in globals():
 if 'outdir' not in globals():
     outdir = '%smatrices/' % dir
 
+if dataset == 'test':
+    dataset = 'adni'
 if dataset == 'adni':
     dfiles = ['dxsum.csv']
     dd = adni_mapping(dfiles, diagdir)

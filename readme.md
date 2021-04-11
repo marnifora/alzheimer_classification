@@ -32,6 +32,42 @@ Selection of attributes and classification:
 - boruta_classification.py
 
 <br></br>
+#### Steps of an examplary analysis
+- prepare csv matrices from vcf files
+```
+./prepreparing.sh -all -tar -gz -stats -matrix -base test -vcf test_chr_SNPs.vcf -dir ${PWD}/testing/
+```
+- prepare file with diagnoses
+```
+python make_pid-diagnoses.py -dir ${PWD}/testing/ -diagdir ${PWD}/testing/diagnoses/ -dataset test
+```
+- build Y vectors (containing diagnosis for each patient)
+```
+python makeY.py -dir ${PWD}/testing/
+```
+- build X matrices
+```
+./makeX_pooling.sh -all -dir ${PWD}/testing/
+```
+- run boruta in the correct way (train/test split before selection of important SNPs)
+```
+python boruta_classification.py -boruta -dataset test ${PWD}/testing/ -borutarun 1 -test 0.1
+```
+- run boruta in the wrong way (no train/test slit before selection of important SNPs)
+```
+python boruta_classification.py -boruta -dataset test ${PWD}/testing/ -borutarun 2
+```
+- build random classifier based on SNPs selected from the first run of boruta, proceed classification
+```
+python boruta_classification.py -class -dataset test ${PWD}/testing/ -borutarun 1 -classrun 1
+```
+- build random classifier based on SNPs selected from the second run of boruta, proceed classification
+```
+python boruta_classification.py -class -dataset test ${PWD}/testing/ -borutarun 2 -classrun 2 -test 0.1
+```
+Results of the correct classification procedure are saved in "./testing/dataset/boruta/class_results_1.txt".
+Results of the wrong classification procedure are saved in "./testing/dataset/boruta/class_results_2.txt".
+<br></br>
 #### Description
 
 Project initially started as the part of my Bachelor's degree thesis, named "Classification of patients with Alzheimer's 
