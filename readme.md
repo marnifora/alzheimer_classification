@@ -30,9 +30,9 @@ Processing vcf files:
 Selection of attributes and classification:
 
 - boruta_classification.py
-
 <br></br>
 #### Steps of an examplary analysis
+Using testing dataset prepared based on ADNI data (0.1% randomly chosen SNPs from each chromosome).
 - prepare csv matrices from vcf files
 ```
 ./prepreparing.sh -all -tar -gz -stats -matrix -base test -vcf test_chr_SNPs.vcf -dir ${PWD}/testing/
@@ -67,6 +67,7 @@ python boruta_classification.py -class -dataset test ${PWD}/testing/ -borutarun 
 ```
 Results of the correct classification procedure are saved in "./testing/dataset/boruta/class_results_1.txt".
 Results of the wrong classification procedure are saved in "./testing/dataset/boruta/class_results_2.txt".
+
 <br></br>
 #### Description
 
