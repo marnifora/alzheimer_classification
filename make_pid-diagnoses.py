@@ -79,14 +79,24 @@ def adni_mapping(files, indir):
     return dd
 
 
+def test_mapping(files, indir):
+    assert len(files) == 1, files
+    dd = {}
+    with open(os.path.join(indir, files[0]), 'r') as f:
+        for line in f:
+            l = line.strip().split('\t')
+            dd[l[0]] = l[1]
+    return dd
+
+
 def check_pidfiles(indir):
     """
     Checking if number of patients and their order in vcf files for every chromosomes is the same.
     """
-    pid_files = [os.path.join(indir, el) for el in os.listdir(indir) if el.startswith('pid_chr') and el.endswith('.txt')]
-    try:
+    pid_files = [os.path.join(indir, el) for el in os.listdir(indir) if el.startswith('pid_chr') and el.endswith('.txt') and el != 'pid_chr.txt']
+    if pid_files and os.path.exists(pid_files[0]):
         stat = open(pid_files[0], 'r')
-    except FileNotFoundError:
+    else:
         try:
             open("%spid_chr.txt" % outdir, 'r')
         except FileNotFoundError:
@@ -214,7 +224,8 @@ if 'outdir' not in globals():
     outdir = '%smatrices/' % dir
 
 if dataset == 'test':
-    dataset = 'adni'
+    dfiles = ['test_diagnoses.tsv']
+    dd = test_mapping(dfiles, diagdir)
 if dataset == 'adni':
     dfiles = ['dxsum.csv']
     dd = adni_mapping(dfiles, diagdir)

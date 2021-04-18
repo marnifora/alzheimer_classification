@@ -9,6 +9,8 @@ import numpy as np
 import pandas as pd
 import random
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import KFold
 from sklearn.metrics import roc_auc_score
 import sys
@@ -165,9 +167,14 @@ def build_data(borutarun, chrlist, classrun, dataset, frombed, newforest_notcv, 
     return X, y, X_test, y_test, patients
 
 
-def classify(X, y, X_test, y_test, cv):
+def classify(X, y, X_test, y_test, cv, classifier=None):
 
-    rf = RandomForestClassifier(n_estimators=500)
+    if classifier == 'tree':
+        rf = DecisionTreeClassifier()
+    elif classifier == 'logreg':
+        rf = LogisticRegression()
+    else:
+        rf = RandomForestClassifier(n_estimators=500)
 
     if not cv:
         rf.fit(X, y)
@@ -193,9 +200,14 @@ def classify(X, y, X_test, y_test, cv):
         return list(map(np.mean, scores)), list(map(np.std, scores))
 
 
-def classify_cv_both(X_dataset, y_dataset, X_testset, y_testset, cv=10):
+def classify_cv_both(X_dataset, y_dataset, X_testset, y_testset, cv=10, classifier=None):
 
-    rf = RandomForestClassifier(n_estimators=500)
+    if classifier == 'tree':
+        rf = DecisionTreeClassifier()
+    elif classifier == 'logreg':
+        rf = LogisticRegression()
+    else:
+        rf = RandomForestClassifier(n_estimators=500)
 
     kf = KFold(n_splits=cv)
     scores = [[], [], []]
@@ -484,6 +496,7 @@ cv = None
 newforest = False
 frombed = False
 num_cores = None
+method = 'rforest'
 
 for q in range(len(sys.argv)):
 
@@ -626,6 +639,10 @@ for q in range(len(sys.argv)):
         num_cores = int(sys.argv[q + 1])
         continue
 
+    if sys.argv[q] == '-method':
+        method = sys.argv[q + 1]
+        continue
+
     if sys.argv[q].startswith('-'):
         raise exceptions.WrongParameterName(sys.argv[q])
 
@@ -727,7 +744,7 @@ if not boruta_only:
         if X_train.shape[1] > 0:
             ((score_train, score_test, score_auc), (std_train, std_test, std_auc),
              (score_test_testset, score_auc_testset), (std_score_testset, std_auc_testset)) = \
-                classify_cv_both(X_train, y_train, X_test, y_test, cv)
+                classify_cv_both(X_train, y_train, X_test, y_test, cv, classifier=method)
             scores_file.write(
                 '%s\t%d\t%.3f +- %.3f\t%.3f +- %.3f\t%.3f +- %.3f\t%.3f +- %.3f\t%.3f +- %.3f\n' %
                 ('cv-frombed', X_train.shape[1], score_train, std_train, score_test, std_test, score_auc,
@@ -750,13 +767,14 @@ if not boruta_only:
         print('Data loaded!')
         if X_train.shape[1] > 0:
             if cv:
-                ((score_train, score_test, score_auc), (std_train, std_test, std_auc)) = classify(X_train, y_train, X_test, y_test, cv)
+                ((score_train, score_test, score_auc), (std_train, std_test, std_auc)) = \
+                    classify(X_train, y_train, X_test, y_test, cv, classifier=method)
                 scores_file.write(
                     '%s\t%d\t%.3f +- %.3f\t%.3f +- %.3f\t%.3f +- %.3f\n' % ('frombed', X_train.shape[1], score_train,
                                                                             std_train, score_test, std_test, score_auc,
                                                                             std_auc))
             else:
-                score_train, score_test, score_auc = classify(X_train, y_train, X_test, y_test, cv)
+                score_train, score_test, score_auc = classify(X_train, y_train, X_test, y_test, cv, classifier=method)
                 scores_file.write('%s\t%d\t%.3f\t%.3f\t%.3f\n' % ('frombed', X_train.shape[1], score_train, score_test,
                                                                   score_auc))
             # saving matrices (on which was based the classification) to file
@@ -779,9 +797,9 @@ if not boruta_only:
             trainpat_val = sum(funcs.patients(dataset).values())
         trainstr = '+'.join(dataset)
 
-        funcs.runs_file_add('class', outdir, classrun, '%d\t%s\t%d\t%d\t%s\t%d\t%s\t%s\n' %
+        funcs.runs_file_add('class', outdir, classrun, '%d\t%s\t%d\t%d\t%s\t%d\t%s\t%s\t%s\n' %
                             (classrun, teststr, testpat_val, frombedrun, trainstr, trainpat_val,
-                             'frombed', funcs.make_chrstr(chrlist)))
+                             'frombed', funcs.make_chrstr(chrlist), method))
 
     else:
 
@@ -831,12 +849,13 @@ if not boruta_only:
             if X_train.shape[1] > 0:
                 if cv:
                     ((score_train, score_test, score_auc), (std_train, std_test, std_auc)) = \
-                        classify(X_train, y_train, X_test, y_test, cv)
+                        classify(X_train, y_train, X_test, y_test, cv, classifier=method)
                     scores_file.write('%s\t%d\t%.3f +- %.3f\t%.3f +- %.3f\t%.3f +- %.3f\n' %
                                       (p, X_train.shape[1], score_train, std_train, score_test, std_test, score_auc,
                                        std_auc))
                 else:
-                    score_train, score_test, score_auc = classify(X_train, y_train, X_test, y_test, cv)
+                    score_train, score_test, score_auc = \
+                        classify(X_train, y_train, X_test, y_test, cv, classifier=method)
                     scores_file.write(
                         '%s\t%d\t%.3f\t%.3f\t%.3f\n' % (p, X_train.shape[1], score_train, score_test,
                                                         score_auc))
@@ -870,6 +889,6 @@ if not boruta_only:
         else:
             teststr = '+'.join(testset.keys())
 
-        funcs.runs_file_add('class', outdir, classrun, '%d\t%s\t%d\t%d\t%s\t%d\t%s\t%s\n' %
+        funcs.runs_file_add('class', outdir, classrun, '%d\t%s\t%d\t%d\t%s\t%d\t%s\t%s\t%s\n' %
                             (classrun, teststr, testpat_val, borutarun, trainstr, trainpat_val,
-                             ','.join(list(map(str, classperc))), funcs.make_chrstr(chrlist)))
+                             ','.join(list(map(str, classperc))), funcs.make_chrstr(chrlist), method))

@@ -12,13 +12,14 @@ def find_weak(ch, indir):
                       dtype=np.int32)
     x = x[:, 1:]  # skip first column
     print('matrix loaded: {}'.format(x.shape))
-    weak_ratio = np.apply_along_axis(lambda row: sum(row == -1) / len(row), 0, x)
+    num_genes = x.shape[1]
+    weak_ratio = np.apply_along_axis(lambda row: sum(row == -1), 0, x) / num_genes
     print('weak ratio: {}'.format(weak_ratio.shape))
     median = np.median(weak_ratio)
     q1 = np.quantile(weak_ratio, 0.25)
     q3 = np.quantile(weak_ratio, 0.75)
     iqr = q3 - q1
-    down_whisker_mask = weak_ratio > (q1 - (1.5 * iqr))
+    down_whisker_mask = weak_ratio >= (q1 - (1.5 * iqr))
     fliers = []
     num_all_fliers = 0
     if down_whisker_mask.any():
@@ -30,7 +31,7 @@ def find_weak(ch, indir):
     else:
         down_whisker = np.nan
         down_fliers = []
-    up_whisker_mask = weak_ratio < (q3 + (1.5 * iqr))
+    up_whisker_mask = weak_ratio <= (q3 + (1.5 * iqr))
     if up_whisker_mask.any():
         up_whisker = max(weak_ratio[up_whisker_mask])
         up_fliers = [el for el in weak_ratio if el > up_whisker]
@@ -57,7 +58,7 @@ def find_weak(ch, indir):
     else:
         print('number of all fliers: {}, unique: {}'.format(num_all_fliers, num_unique_fliers))
     result = {
-        'label': 'chr {}'.format(ch),
+        'label': 'chr{} (outliers {:.2f}%)'.format(ch, num_all_fliers/num_genes*100),
         'whislo': down_whisker,
         'q1': q1,
         'med': median,
@@ -90,6 +91,7 @@ def plot_boxplot(indir, title, outdir=None, fromchr=1, tochr=23, new=False):
     ax.set_ylabel("Ratio of lack of data")
     ax.set_ylim(-0.1, 1.1)
     ax.set_title(title)
+    ax.tick_params(axis='x', labelrotation=60, ha='right')
     if outdir is None:
         outdir = '.'
     outfile = os.path.join(outdir, "{}_{}-{}.png".format(title.replace(' ', '-'), fromchr, tochr))

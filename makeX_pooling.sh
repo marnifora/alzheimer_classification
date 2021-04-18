@@ -17,7 +17,7 @@ function make(){
 ch=0
 all=0
 from=1
-to=24
+to=23
 dir='./'
 
 while [[ "$1" != "" ]]; do
