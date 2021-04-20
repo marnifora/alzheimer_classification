@@ -203,10 +203,13 @@ def classify(X, y, X_test, y_test, cv, classifier=None):
 def classify_cv_both(X_dataset, y_dataset, X_testset, y_testset, cv=10, classifier=None):
 
     if classifier == 'tree':
+        print('Tree classifier')
         rf = DecisionTreeClassifier()
     elif classifier == 'logreg':
+        print('Logistic regression')
         rf = LogisticRegression()
     else:
+        print('Random forest')
         rf = RandomForestClassifier(n_estimators=500)
 
     kf = KFold(n_splits=cv)
