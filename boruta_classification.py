@@ -11,10 +11,12 @@ import random
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.linear_model import LogisticRegression
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis, QuadraticDiscriminantAnalysis
 from sklearn.model_selection import KFold
 from sklearn.metrics import roc_auc_score
 import sys
 import corporate_funcs as funcs
+import resource
 
 '''
 See readme.txt for input, output and possible options.
@@ -97,11 +99,12 @@ def best_snps(perc, r, snp, X, y):
                 break
             else:
                 snps[p] += [el + n * r for el in result]
-
     return snps
 
 
 def run_boruta(X, y, p):
+    import time
+    t = time.time()
     rf = RandomForestClassifier(n_jobs=-1, class_weight='balanced', max_depth=5)
     feat_selector = boruta.BorutaPy(rf, n_estimators='auto', random_state=1, perc=p)
     feat_selector.fit(X, y)
@@ -109,6 +112,7 @@ def run_boruta(X, y, p):
     for i, value in enumerate(feat_selector.support_):
         if value:
             chosen.append(i)
+    print('RUNNING BORUTA TIME: {} min'.format((time.time()-t)/60))
     return chosen
 
 
@@ -168,12 +172,20 @@ def build_data(borutarun, chrlist, classrun, dataset, frombed, newforest_notcv, 
 
 
 def classify(X, y, X_test, y_test, cv, classifier=None):
-
     if classifier == 'tree':
+        print('Tree classifier')
         rf = DecisionTreeClassifier()
     elif classifier == 'logreg':
+        print('Logistic regression')
         rf = LogisticRegression()
+    elif classifier == 'lda':
+        print('Linear Discriminant Analysis')
+        rf = LinearDiscriminantAnalysis()
+    elif classifier == 'qda':
+        print('Quadratic Discriminant Analysis')
+        rf = QuadraticDiscriminantAnalysis()
     else:
+        print('Random forest')
         rf = RandomForestClassifier(n_estimators=500)
 
     if not cv:
@@ -208,6 +220,12 @@ def classify_cv_both(X_dataset, y_dataset, X_testset, y_testset, cv=10, classifi
     elif classifier == 'logreg':
         print('Logistic regression')
         rf = LogisticRegression()
+    elif classifier == 'lda':
+        print('Linear Discriminant Analysis')
+        rf = LinearDiscriminantAnalysis()
+    elif classifier == 'qda':
+        print('Quadratic Discriminant Analysis')
+        rf = QuadraticDiscriminantAnalysis()
     else:
         print('Random forest')
         rf = RandomForestClassifier(n_estimators=500)
@@ -895,3 +913,4 @@ if not boruta_only:
         funcs.runs_file_add('class', outdir, classrun, '%d\t%s\t%d\t%d\t%s\t%d\t%s\t%s\t%s\n' %
                             (classrun, teststr, testpat_val, borutarun, trainstr, trainpat_val,
                              ','.join(list(map(str, classperc))), funcs.make_chrstr(chrlist), method))
+print(resource.getrusage(resource.RUSAGE_CHILDREN).ru_maxrss)
