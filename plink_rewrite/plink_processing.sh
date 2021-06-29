@@ -64,7 +64,7 @@ fi
 
 # convert binary to text format
 if [[ ${binary} -eq 1 ]]; then
-    ${plinkdir}plink-1.9/plink --bfile ${indir}${plink} --recode --not-chr 0 --out ${indir}${plink}
+    ${plinkdir}/plink --bfile ${indir}${plink} --recode --not-chr 0 --out ${indir}${plink}
     echo "Convertion of binary plink files into text format done!"
 fi
 
