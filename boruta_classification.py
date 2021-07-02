@@ -60,11 +60,13 @@ def one_process(ch, classperc, dataset, outdir, perc, r, run, snpsubset, snpruns
 
     Xtrain, Xtest, snp = funcs.load_data(ch, dataset, snpsubset, snpruns, testpat, trainpat)
 
-    print('matrices X and y for chromosome %d have been loaded\n' % ch)
+    print('matrices X and y for chromosome {} have been loaded, Xtrain: {}, Xtest: {}, snp: {}\n'.
+          format(ch, Xtrain.shape, Xtest.shape, snp))
 
     snps = best_snps(perc, r, snp, Xtrain, ytrain)
 
-    print('best SNPs for chromosome %d have been selected by Boruta\n' % ch)
+    print('best SNPs for chromosome {} have been selected by Boruta, num of selected SNPs: {}\n'.
+          format(ch, ', '.join(['perc {} - {}'.format(el, len(la)) for el, la in snps.items()])))
 
     for p in classperc:
         np.save('%sX_train_chr%d_%d_%d.npy' % (outdir, ch, p, run), Xtrain[:, snps[p]])
