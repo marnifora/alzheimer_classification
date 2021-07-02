@@ -91,25 +91,22 @@ def one_process(ch, classperc, dataset, outdir, perc, r, run, snpsubset, snpruns
 
 def best_snps(perc, r, snp, X, y):
     s = snp // r
-    print('SSSSS = {}'.format(s))
     snps = {a: [] for a in perc}
 
     for n in range(s + 1):
 
         if n != s:
-            print(n * r, n * r + r)
             xx = X[:, n * r:n * r + r]
         elif n == s and snp % r != 0:
-            print(n * r, X.shape[1])
             xx = X[:, n * r:]
+        else:
+            continue
 
         for p in perc:
-            print(xx.shape, y.shape)
             result = run_boruta(xx, y, p)
             if not result:
                 break
             else:
-                print(result[:10], n*r)
                 snps[p] += [el + n * r for el in result]
     return snps
 
