@@ -31,6 +31,7 @@ def pooling(num_cores, chrlist, classperc, dataset, outdir, pat, perc, r, run, s
         num_cores = len(chrlist)
 
     ytrain, _ = build_y_matrices(dataset, run, outdir, pat, testpat, trainpat)
+    print('y_train: {}'.format(ytrain.shape))
 
     for chrlist_subset in [chrlist[i*num_cores:(i+1)*num_cores] for i in range(math.ceil(len(chrlist)/num_cores))]:
 
@@ -60,8 +61,12 @@ def one_process(ch, classperc, dataset, outdir, perc, r, run, snpsubset, snpruns
 
     Xtrain, Xtest, snp = funcs.load_data(ch, dataset, snpsubset, snpruns, testpat, trainpat)
 
-    print('matrices X and y for chromosome {} have been loaded, Xtrain: {}, Xtest: {}, snp: {}\n'.
-          format(ch, Xtrain.shape, Xtest.shape, snp))
+    if Xtest is None:
+        print('matrices X and y for chromosome {} have been loaded, Xtrain: {}, Xtest: None, snp: {}\n'.
+              format(ch, Xtrain.shape, snp))
+    else:
+        print('matrices X and y for chromosome {} have been loaded, Xtrain: {}, Xtest: {}, snp: {}\n'.
+              format(ch, Xtrain.shape, Xtest.shape, snp))
 
     snps = best_snps(perc, r, snp, Xtrain, ytrain)
 
@@ -717,6 +722,7 @@ if not class_only:
     else:
         dataset, patruns, perc, r, snpsubset, snpruns, testpat, testsize, towrite, trainpat = \
             read_boruta_params(chrlist, continuation, dataset, fixed, outdir, pat, borutarun)
+    print('Train patients: {}, test patients: {}'.format(len(trainpat), len(testpat)))
 
     if 'classperc' not in globals():
         classperc = perc
